@@ -126,11 +126,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const works = [
     {
       id: 1,
-      title: "Tarea 1: Estadística Descriptiva",
+      title: "Tarea 1: Ensayo",
       type: "individual",
-      date: "2026-04-20",
-      desc: "Cálculo de medidas de tendencia central y dispersión con datos de rendimiento escolar.",
-      file: "assets/docs/tarea-01.pdf"
+      date: "2026-04-15",
+      desc: "Ensayo sobre la investogación relizada por los docentes de la carrera",
+      file: "https://drive.google.com/file/d/1lYUMgiLg-QSYau52TXiuuEjpa5kP4vKy/preview"
       // Google Drive: "https://drive.google.com/file/d/XXXX/preview"
     }
     // Copia este bloque para agregar más:
