@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       id: 3,
       title: "TRABJO 1: Media, mediana y moda ",
-      type: "individual",
+      type: "grupal",
       date: "2026-04-25",
       desc: "Realizar los calculos de 100 datos",
       file: "https://drive.google.com/file/d/1vGLejn4JQJcjEK3BHeErJnkx5ZmQcoeE/preview"
