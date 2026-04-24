@@ -132,6 +132,15 @@ document.addEventListener('DOMContentLoaded', () => {
       desc: "Ensayo sobre la investigación relizada por los docentes de la carrera",
       file: "https://drive.google.com/file/d/1lYUMgiLg-QSYau52TXiuuEjpa5kP4vKy/preview"
       // Google Drive: "https://drive.google.com/file/d/XXXX/preview"
+    },
+    {
+      id: 2,
+      title: "Tarea 2: Mapa mental: Pelicula Mente Brillante",
+      type: "individual",
+      date: "2026-04-25",
+      desc: "Mapa mental acerca de la Pelicula Mente Brillante",
+      file: "https://drive.google.com/file/d/1jmkhCAeOH0C8uYLoT1y01Wv4NdKXgZcW/preview"
+      // Google Drive: "https://drive.google.com/file/d/XXXX/preview"
     }
     // Copia este bloque para agregar más:
     // {
