@@ -141,6 +141,15 @@ document.addEventListener('DOMContentLoaded', () => {
       desc: "Mapa mental acerca de la Pelicula Mente Brillante",
       file: "https://drive.google.com/file/d/1jmkhCAeOH0C8uYLoT1y01Wv4NdKXgZcW/preview"
       // Google Drive: "https://drive.google.com/file/d/XXXX/preview"
+    },
+    {
+      id: 3,
+      title: "TRABJO 1: Media, mediana y moda ",
+      type: "individual",
+      date: "2026-04-25",
+      desc: "Realizar los calculos de 100 datos",
+      file: "https://drive.google.com/file/d/1vGLejn4JQJcjEK3BHeErJnkx5ZmQcoeE/preview"
+      // Google Drive: "https://drive.google.com/file/d/XXXX/preview"
     }
     // Copia este bloque para agregar más:
     // {
