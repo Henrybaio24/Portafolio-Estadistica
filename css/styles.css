@@ -326,7 +326,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); line
 }
 .work-type--individual { background: #DBEAFE; color: #1E40AF; }
 .work-type--grupal     { background: #D1FAE5; color: #065F46; }
-.work-type--practica   { background: #FEF3C7; color: #92400E; }
+.work-type--mapas      { background: #FEF3C7; color: #92400E; }
 .work-card h3 { font-size: 0.96rem; font-weight: 600; line-height: 1.3; }
 .work-card p  { color: var(--text-light); font-size: 0.83rem; flex: 1; }
 .work-date {
@@ -421,7 +421,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); line
 }
 .wbadge--individual { background: #DBEAFE; color: #1E40AF; }
 .wbadge--grupal     { background: #D1FAE5; color: #065F46; }
-.wbadge--practica   { background: #FEF3C7; color: #92400E; }
+.wbadge--mapas      { background: #FEF3C7; color: #92400E; }
 .works-cover__body { flex: 1; min-width: 200px; }
 .works-cover__body h3 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; line-height: 1.3; }
 .works-cover__body p { font-size: 0.9rem; color: var(--text-light); line-height: 1.6; }
@@ -513,7 +513,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); line
 }
 .wcard__type--individual { background: #DBEAFE; color: #1E40AF; }
 .wcard__type--grupal     { background: #D1FAE5; color: #065F46; }
-.wcard__type--practica   { background: #FEF3C7; color: #92400E; }
+.wcard__type--mapas      { background: #FEF3C7; color: #92400E; }
 .wcard__title { font-size: 0.92rem; font-weight: 600; line-height: 1.35; color: var(--text); }
 .wcard__desc  { font-size: 0.81rem; color: var(--text-light); line-height: 1.5; flex: 1; }
 .wcard__date  {

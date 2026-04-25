@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "Tarea 1: Ensayo",
+    "type": "individual",
+    "date": "2026-04-15",
+    "desc": "Ensayo sobre la investigación realizada por los docentes de la carrera",
+    "file": "https://drive.google.com/file/d/1lYUMgiLg-QSYau52TXiuuEjpa5kP4vKy/preview"
+  },
+  {
+    "id": 2,
+    "title": "Mapa 1: Pelicula Mente Brillante",
+    "type": "mapas",
+    "date": "2026-04-25",
+    "desc": "Mapa mental acerca de la Pelicula Mente Brillante",
+    "file": "https://drive.google.com/file/d/1jmkhCAeOH0C8uYLoT1y01Wv4NdKXgZcW/preview"
+  },
+  {
+    "id": 3,
+    "title": "Trabajo 1: Media, mediana y moda",
+    "type": "grupal",
+    "date": "2026-04-25",
+    "desc": "Realizar los calculos de 100 datos",
+    "file": "https://drive.google.com/file/d/1vGLejn4JQJcjEK3BHeErJnkx5ZmQcoeE/preview"
+  }
+]

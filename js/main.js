@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 
   // ══════════════════════════════════════════
   // ANIMACIÓN CANVAS — PORTADA
@@ -123,46 +123,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // type: "individual" | "grupal" | "practica"
   // file: ruta local O enlace de Google Drive con /preview al final
   // ══════════════════════════════════════════
-  const works = [
-    {
-      id: 1,
-      title: "Tarea 1: Ensayo",
-      type: "individual",
-      date: "2026-04-15",
-      desc: "Ensayo sobre la investigación relizada por los docentes de la carrera",
-      file: "https://drive.google.com/file/d/1lYUMgiLg-QSYau52TXiuuEjpa5kP4vKy/preview"
-      // Google Drive: "https://drive.google.com/file/d/XXXX/preview"
-    },
-    {
-      id: 2,
-      title: "Tarea 2: Mapa mental: Pelicula Mente Brillante",
-      type: "individual",
-      date: "2026-04-25",
-      desc: "Mapa mental acerca de la Pelicula Mente Brillante",
-      file: "https://drive.google.com/file/d/1jmkhCAeOH0C8uYLoT1y01Wv4NdKXgZcW/preview"
-      // Google Drive: "https://drive.google.com/file/d/XXXX/preview"
-    },
-    {
-      id: 3,
-      title: "TRABAJO 1: Media, mediana y moda ",
-      type: "grupal",
-      date: "2026-04-25",
-      desc: "Realizar los calculos de 100 datos",
-      file: "https://drive.google.com/file/d/1vGLejn4JQJcjEK3BHeErJnkx5ZmQcoeE/preview"
-      // Google Drive: "https://drive.google.com/file/d/XXXX/preview"
-    }
-    // Copia este bloque para agregar más:
-    // {
-    //   id: 2,
-    //   title: "Proyecto Grupal",
-    //   type: "grupal",
-    //   date: "2026-05-01",
-    //   desc: "Descripción del trabajo.",
-    //   file: "https://drive.google.com/file/d/XXXX/preview"
-    // },
-  ];
+  let works = [];
+  try {
+    const res = await fetch('data/works.json');
+    works = await res.json();
+  } catch (e) {
+    console.error('No se pudo cargar works.json', e);
+  }
 
-  const typeLabels = { individual: 'Individual', grupal: 'Grupal', practica: 'Práctica' };
+  const typeLabels = { individual: 'Individual', grupal: 'Grupal', mapas: 'Mapas Mentales' };
 
 
   // ══════════════════════════════════════════
