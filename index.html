@@ -5,120 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portafolio | Estadística Aplicada a la Educación</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/progress.css">
 </head>
 <body>
 
   <!-- ==================== PORTADA ==================== -->
-  <section class="cover" id="portada">
-    <canvas id="cover-canvas"></canvas>
-    <div class="cover__content">
-      <div class="cover__institution">
-        <div class="cover__icon">
-          <svg width="38" height="38" viewBox="0 0 40 40" fill="none">
-            <rect x="4"  y="28" width="6"  height="8"  rx="1" fill="white" opacity="0.5"/>
-            <rect x="13" y="20" width="6"  height="16" rx="1" fill="white" opacity="0.75"/>
-            <rect x="22" y="23" width="6"  height="13" rx="1" fill="white" opacity="0.6"/>
-            <rect x="31" y="14" width="6"  height="22" rx="1" fill="white"/>
-            <polyline points="7,27 16,19 25,22 34,13" stroke="rgba(255,210,190,1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <circle cx="7"  cy="27" r="2.2" fill="rgba(255,210,190,1)"/>
-            <circle cx="16" cy="19" r="2.2" fill="rgba(255,210,190,1)"/>
-            <circle cx="25" cy="22" r="2.2" fill="rgba(255,210,190,1)"/>
-            <circle cx="34" cy="13" r="2.2" fill="rgba(255,210,190,1)"/>
-          </svg>
-        </div>
-        <div class="cover__inst-text">
-          <p class="cover__uni">Universidad Central del Ecuador</p>
-          <p class="cover__faculty">Facultad de Filosofía, Letras y Ciencias de la Educación</p>
-        </div>
-      </div>
-      <div class="cover__divider"></div>
-      <h1 class="cover__title">Estadística Aplicada<br>a la Educación</h1>
-      <p class="cover__subtitle">Henry Jesús Montenegro Alvarez</p>
-      <div class="cover__meta">
-        <span class="cover__chip">
-          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="5.5" r="3"/><path d="M2.5 14.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg>
-          Docente: Diego Tipán
-        </span>
-        <span class="cover__chip">
-          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
-          Período 2026–2026
-        </span>
-      </div>
-      <div class="cover__actions">
-        <a href="#inicio" class="cover__btn-primary">Ver Portafolio</a>
-        <button class="cover__btn-ghost open-preview" data-title="Currículum Vitae" data-file="https://henrybaio24.github.io/mi_cv/">Ver CV</button>
-      </div>
-    </div>
-    <a href="#inicio" class="cover__scroll" aria-label="Ir al contenido">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.8" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
-    </a>
-  </section>
+<section class="cover" id="portada">
+  <canvas id="cover-canvas"></canvas>
+  <div class="cover__content">
 
-  <!-- ==================== HEADER ==================== -->
-  <header class="header" id="main-header">
-    <nav class="nav container">
-      <a href="#portada" class="nav__logo">EAE · UCE</a>
-      <button class="nav__toggle" aria-label="Abrir menú">☰</button>
-      <ul class="nav__menu">
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#silabo">Sílabo</a></li>
-        <li><a href="#trabajos">Trabajos</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-      </ul>
-    </nav>
-  </header>
-  <div id="nav-overlay" class="nav__overlay"></div>
+    <!-- COLUMNAS -->
+    <div class="cover__columns">
 
-  <main>
-
-    <!-- INICIO -->
-    <section id="inicio" class="section welcome">
-      <div class="container">
-        <div class="welcome__inner">
-
-          <div class="welcome__text reveal">
-            <p class="section__eyebrow">Bienvenido</p>
-            <h2 class="welcome__title">Portafolio<br>Académico</h2>
-            <div class="section__line"></div>
-            <p class="welcome__desc">
-              Este espacio documenta el aprendizaje de
-              <strong>Estadística Aplicada a la Educación</strong>
-              correspondiente a la carrera de Pedagogía de las Ciencias Experimentales Informática
-              en la Facultad de Filosofía, Letras y Ciencias de la Educación
-              de la Universidad Central del Ecuador,
-              bajo la guía del docente <strong>Diego Tipán</strong> — período 2026–2026.
-            </p>
-            <div class="welcome__pills">
-              <span class="welcome__pill">
-                #estadística
-              </span>
-              <span class="welcome__pill">
-                #educacion
-              </span>
-              <span class="welcome__pill">
-                #uce
-              </span>
-              <span class="welcome__pill">
-                #4semestre
-              </span>
-            </div>
+      <!-- COLUMNA IZQUIERDA -->
+      <div class="cover__col-left">
+        <div class="welcome__text reveal">
+          <p class="welcome__eyebrow">Portafolio Académico</p>
+          <h2 class="welcome__title">
+            Estadística<br><em>Aplicada</em><br>a la Educación
+          </h2>
+          <div class="cover__name-block">
+            <p class="cover__name-label">Estudiante</p>
+            <p class="cover__name-main">Henry Jesús<br>Montenegro Alvarez</p>
           </div>
+          <div class="welcome__meta">
+            <span class="cover__chip">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="5.5" r="3"/><path d="M2.5 14.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg>
+              Docente: Diego Tipán
+            </span>
+            <span class="cover__chip">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+              Período 2026
+            </span>
+          </div>
+        </div>
+      </div>
 
-          <div class="welcome__avatar-wrap reveal delay-2">
-            <div class="welcome__avatar-glow"></div>
-            <div class="welcome__avatar">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 480" fill="none" class="avatar-svg">
-                <defs>
-                  <filter id="sh" x="-15%" y="-15%" width="130%" height="130%">
-                    <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="rgba(0,0,0,0.13)"/>
-                  </filter>
-                  <filter id="sh2" x="-30%" y="-30%" width="160%" height="160%">
-                    <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.10)"/>
-                  </filter>
-                </defs>
-                <rect x="55" y="390" width="210" height="14" rx="7" fill="#D1D5DB"/>
+      <!-- COLUMNA DERECHA -->
+      <div class="cover__col-right">
+        <div class="cover__avatar-full">
+          <div class="welcome__avatar-frame">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 480" fill="none" class="avatar-svg">
+              <defs>
+                <filter id="sh" x="-15%" y="-15%" width="130%" height="130%">
+                  <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="rgba(0,0,0,0.13)"/>
+                </filter>
+                <filter id="sh2" x="-30%" y="-30%" width="160%" height="160%">
+                  <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.10)"/>
+                </filter>
+              </defs>
+              <rect x="55" y="390" width="210" height="14" rx="7" fill="#D1D5DB"/>
                 <rect x="75" y="404" width="170" height="10" rx="5" fill="#E5E7EB"/>
                 <rect x="115" y="414" width="90" height="30" rx="5" fill="#9CA3AF"/>
                 <rect x="108" y="442" width="104" height="12" rx="6" fill="#6B7280"/>
@@ -197,122 +135,265 @@
                 <g class="av-chip3" filter="url(#sh2)">
                   <rect x="20" y="240" width="52" height="36" rx="9" fill="white"/>
                   <text x="28" y="264" font-family="Georgia,serif" font-size="22" fill="#B8321F" font-weight="700">Σ</text>
-                </g>
-              </svg>
-            </div>
-          </div>
-
-        </div><!-- /welcome__inner -->
-      </div><!-- /container -->
-    </section>
-
-    <!-- SÍLABO -->
-    <section id="silabo" class="section">
-      <div class="container">
-        <div class="card reveal">
-          <div class="section__header">
-            <p class="section__eyebrow">Contenido</p>
-            <h2>Sílabo de la Materia</h2>
-            <div class="section__line"></div>
-          </div>
-          <p style="margin-bottom:1.5rem;">El curso aborda métodos estadísticos descriptivos e inferenciales aplicados al análisis de datos educativos. Se desarrollarán competencias en interpretación de indicadores, diseño de instrumentos y uso de software especializado.</p>
-          <div class="timeline">
-            <div class="timeline-item reveal delay-1">
-              <h4>Unidad 1 — Estadística Descriptiva</h4>
-              <p>
-                Describe los fenomenos educativos investigados a través de medidas de tendencia central,
-                posición, dispersión y desarrollo con técnicas la estadistica descriptiva.
-              </p>
-            </div>
-            <div class="timeline-item reveal delay-2">
-              <h4>Unidad 2 — Organización de Datos</h4>
-              <p>
-                Organiza los datos de forma numérica y gráfica para el análisis e interpretación de los
-                fenomenos educativos investigados de manera clara y precisa.
-              </p>
-            </div>
-            <div class="timeline-item reveal delay-3">
-              <h4>Unidad 3 — Recolección y Tabulación de los Datos</h4>
-              <p>
-                Recolecta y tabula los datos de fenómenos educativos de poblaciones o muestras mediante 
-                herramientas informáticas que procesen datos confiables para la investigación.
-              </p>
-            </div>
-            <div class="timeline-item reveal delay-4">
-              <h4>Unidad 4 — Estadistica Inferencial</h4>
-              <p>
-                Demuestra hipótesis de fenomenos educativos mediante la estadistica inferencial con
-                análisis paramétrio de las diversas variables, dimensiones e indicadores de la investigación.
-              </p>
-            </div>
-          </div>
-          <div style="margin-top:1.5rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
-            <button class="btn btn--outline open-preview" data-title="Sílabo del Curso" data-file="https://drive.google.com/file/d/18E24WpOY2Jx7rh2B8nomHSlnk_9hw8Ye/preview">👁 Ver Sílabo</button>
+                </g><!-- ... todo el contenido SVG del avatar sin cambios ... -->
+            </svg>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- TRABAJOS & EVIDENCIAS -->
-    <section id="trabajos" class="section">
+    </div><!-- fin .cover__columns -->
+
+    <!-- BOTONES: DENTRO de cover__content, DESPUÉS de las columnas -->
+    <div class="cover__actions-centered">
+      <a href="#silabo" class="cover__btn-primary">Ver Portafolio</a>
+      <button class="cover__btn-ghost open-preview"
+              data-title="Currículum Vitae"
+              data-file="https://henrybaio24.github.io/mi_cv/">Ver CV</button>
+    </div>
+
+    <!-- FLECHA SCROLL -->
+    <a href="#inicio" class="cover__scroll" aria-label="Ir al contenido">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+           stroke="rgba(255,255,255,0.45)" stroke-width="1.8" stroke-linecap="round">
+        <path d="M5 8l5 5 5-5"/>
+      </svg>
+    </a>
+
+  </div><!-- fin .cover__content -->
+</section>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="header" id="main-header">
+    <nav class="nav container">
+
+      <!-- LOGO: institución completa -->
+      <a href="#portada" class="nav__logo">
+        <div class="nav__logo-icon">
+          <svg width="22" height="22" viewBox="0 0 40 40" fill="none">
+            <rect x="4"  y="28" width="6"  height="8"  rx="1" fill="white" opacity="0.5"/>
+            <rect x="13" y="20" width="6"  height="16" rx="1" fill="white" opacity="0.75"/>
+            <rect x="22" y="23" width="6"  height="13" rx="1" fill="white" opacity="0.6"/>
+            <rect x="31" y="14" width="6"  height="22" rx="1" fill="white"/>
+            <polyline points="7,27 16,19 25,22 34,13" stroke="rgba(255,210,190,1)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <circle cx="7"  cy="27" r="2.2" fill="rgba(255,210,190,1)"/>
+            <circle cx="16" cy="19" r="2.2" fill="rgba(255,210,190,1)"/>
+            <circle cx="25" cy="22" r="2.2" fill="rgba(255,210,190,1)"/>
+            <circle cx="34" cy="13" r="2.2" fill="rgba(255,210,190,1)"/>
+          </svg>
+        </div>
+
+        <!-- Se ve en la portada (sin scroll) -->
+        <div class="nav__logo-text nav__logo--cover">
+          <span class="nav__logo-uni">Universidad Central del Ecuador</span>
+          <span class="nav__logo-faculty">Facultad de Filosofía, Letras y Ciencias de la Educación</span>
+        </div>
+
+        <!-- Se ve al hacer scroll -->
+        <div class="nav__logo-text nav__logo--scrolled">
+          <span class="nav__logo-uni">Mi Portafolio</span>
+          <span class="nav__logo-faculty">Henry Jesús Montenegro Alvarez</span>
+        </div>
+      </a>
+
+      <button class="nav__toggle" aria-label="Abrir menú">☰</button>
+
+      <ul class="nav__menu">
+        <li><a href="#portada">Inicio</a></li>
+        <li><a href="#silabo">Sílabo</a></li>
+        <li><a href="#trabajos">Trabajos</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="nav-overlay" class="nav__overlay"></div>
+
+  <main>
+
+    <!-- ==================== SÍLABO ==================== -->
+    <section id="silabo" class="section silabo-section">
       <div class="container">
-        <div class="card reveal">
-          <div class="section__header">
-            <p class="section__eyebrow">Evidencias</p>
-            <h2>Trabajos &amp; Evidencias</h2>
-            <div class="section__line"></div>
-          </div>
 
-          <div class="works-cover">
-            <div class="works-cover__deco">
-              <div class="works-cover__icon-wrap">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--primary)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="2" y="3"  width="12" height="15" rx="2"/>
-                  <rect x="18" y="3"  width="12" height="15" rx="2"/>
-                  <rect x="2" y="22" width="12" height="7"  rx="2"/>
-                  <rect x="18" y="22" width="12" height="7"  rx="2"/>
+        <!-- ENCABEZADO EN 2 COLUMNAS -->
+        <div class="silabo__header reveal">
+          <div class="silabo__header-left">
+            <p class="evidencias__eyebrow">Contenido del Curso</p>
+            <h2 class="silabo__title">Sílabo de la <em>Materia</em></h2>
+            <p class="silabo__intro">El curso aborda métodos estadísticos descriptivos e inferenciales aplicados al análisis de datos educativos. Se desarrollarán competencias en interpretación de indicadores, diseño de instrumentos y uso de software especializado.</p>
+          </div>
+          <div class="silabo__header-right reveal delay-1">
+            <svg viewBox="0 0 280 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="silabo__svg">
+              <rect x="10" y="10" width="260" height="180" rx="18" fill="rgba(184,50,31,0.06)" stroke="rgba(184,50,31,0.12)" stroke-width="1.5"/>
+              <line x1="40" y1="155" x2="250" y2="155" stroke="rgba(184,50,31,0.25)" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="40" y1="155" x2="40"  y2="30"  stroke="rgba(184,50,31,0.25)" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="40" y1="120" x2="250" y2="120" stroke="rgba(0,0,0,0.05)" stroke-width="1" stroke-dasharray="4,4"/>
+              <line x1="40" y1="85"  x2="250" y2="85"  stroke="rgba(0,0,0,0.05)" stroke-width="1" stroke-dasharray="4,4"/>
+              <line x1="40" y1="50"  x2="250" y2="50"  stroke="rgba(0,0,0,0.05)" stroke-width="1" stroke-dasharray="4,4"/>
+              <rect x="58"  y="110" width="28" height="45" rx="5" fill="rgba(184,50,31,0.18)"/>
+              <rect x="98"  y="85"  width="28" height="70" rx="5" fill="rgba(184,50,31,0.35)"/>
+              <rect x="138" y="60"  width="28" height="95" rx="5" fill="rgba(184,50,31,0.55)"/>
+              <rect x="178" y="40"  width="28" height="115" rx="5" fill="#B8321F"/>
+              <rect x="218" y="70"  width="28" height="85"  rx="5" fill="rgba(184,50,31,0.45)"/>
+              <polyline points="72,105 112,80 152,55 192,35 232,65" stroke="#B8321F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <circle cx="72"  cy="105" r="4" fill="white" stroke="#B8321F" stroke-width="2"/>
+              <circle cx="112" cy="80"  r="4" fill="white" stroke="#B8321F" stroke-width="2"/>
+              <circle cx="152" cy="55"  r="4" fill="white" stroke="#B8321F" stroke-width="2"/>
+              <circle cx="192" cy="35"  r="5" fill="#B8321F" stroke="white" stroke-width="2"/>
+              <circle cx="232" cy="65"  r="4" fill="white" stroke="#B8321F" stroke-width="2"/>
+              <rect x="148" y="15" width="90" height="26" rx="8" fill="#B8321F"/>
+              <text x="158" y="32" font-family="'DM Sans',sans-serif" font-size="11" fill="white" font-weight="600">Σ Estadística</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- UNIDADES -->
+        <div class="silabo__units">
+          <div class="silabo__unit-card reveal delay-1">
+            <div class="silabo__unit-num">01</div>
+            <div class="silabo__unit-body">
+              <div class="silabo__unit-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                  <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+                  <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
                 </svg>
               </div>
-              <div class="works-cover__badges">
-                <span class="wbadge wbadge--individual">Individuales</span>
-                <span class="wbadge wbadge--grupal">Grupales</span>
-                <span class="wbadge wbadge--mapas">Mapas Mentales</span>
+              <div>
+                <h4>Estadística Descriptiva</h4>
+                <p>Medidas de tendencia central, posición y dispersión para describir fenómenos educativos investigados.</p>
               </div>
             </div>
-            <div class="works-cover__body">
-              <h3>Colección de Evidencias del Semestre</h3>
-              <p>Tareas, proyectos y prácticas desarrolladas a lo largo del curso. Cada documento evidencia el proceso de aprendizaje en estadística aplicada a la educación.</p>
+            <div class="silabo__unit-tag">Unidad 1</div>
+          </div>
+
+          <div class="silabo__unit-card reveal delay-2">
+            <div class="silabo__unit-num">02</div>
+            <div class="silabo__unit-body">
+              <div class="silabo__unit-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                  <rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/>
+                  <rect x="17" y="3" width="4" height="18" rx="1"/>
+                </svg>
+              </div>
+              <div>
+                <h4>Organización de Datos</h4>
+                <p>Representación numérica y gráfica para análisis e interpretación de fenómenos educativos de forma clara.</p>
+              </div>
             </div>
-            <button class="works-cover__btn" id="open-works-modal">
-              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="1" y="1" width="6" height="6" rx="1.2"/>
-                <rect x="9" y="1" width="6" height="6" rx="1.2"/>
-                <rect x="1" y="9" width="6" height="6" rx="1.2"/>
-                <rect x="9" y="9" width="6" height="6" rx="1.2"/>
-              </svg>
-              Ver trabajos
-            </button>
+            <div class="silabo__unit-tag">Unidad 2</div>
+          </div>
+
+          <div class="silabo__unit-card reveal delay-3">
+            <div class="silabo__unit-num">03</div>
+            <div class="silabo__unit-body">
+              <div class="silabo__unit-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                  <path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/>
+                  <path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/>
+                </svg>
+              </div>
+              <div>
+                <h4>Recolección y Tabulación</h4>
+                <p>Herramientas informáticas para recolectar y tabular datos confiables de poblaciones o muestras.</p>
+              </div>
+            </div>
+            <div class="silabo__unit-tag">Unidad 3</div>
+          </div>
+
+          <div class="silabo__unit-card reveal delay-4">
+            <div class="silabo__unit-num">04</div>
+            <div class="silabo__unit-body">
+              <div class="silabo__unit-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                  <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                </svg>
+              </div>
+              <div>
+                <h4>Estadística Inferencial</h4>
+                <p>Demostración de hipótesis mediante análisis paramétrico de variables, dimensiones e indicadores.</p>
+              </div>
+            </div>
+            <div class="silabo__unit-tag">Unidad 4</div>
           </div>
         </div>
+
+        <!-- BOTÓN AL FINAL -->
+        <div class="silabo__cta reveal">
+          <button class="silabo__btn open-preview"
+                  data-title="Sílabo del Curso"
+                  data-file="https://drive.google.com/file/d/18E24WpOY2Jx7rh2B8nomHSlnk_9hw8Ye/preview">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="12" y1="18" x2="12" y2="12"/>
+              <line x1="9" y1="15" x2="15" y2="15"/>
+            </svg>
+            Ver Sílabo completo
+          </button>
+        </div>
+
       </div>
     </section>
 
-    <!-- CONTACTO -->
+    <!-- ==================== TRABAJOS & EVIDENCIAS ==================== -->
+    <section id="trabajos" class="evidencias">
+      <div class="container">
+
+        <!-- ENCABEZADO -->
+        <div class="evidencias__header reveal">
+          <div>
+            <p class="evidencias__eyebrow">Colección del Semestre</p>
+            <h2 class="evidencias__title">Trabajos &amp; <em>Evidencias</em></h2>
+            <p class="evidencias__desc">Documentación de actividades, prácticas y evidencias desarrolladas durante el semestre en Estadística Aplicada a la Educación.</p>
+          </div>
+        </div>
+
+        
+
+        <!-- BARRAS DE PROGRESO -->
+        <div class="ev__progress-section reveal delay-2" id="ev-progress"></div>
+
+        <!-- CTA ÚNICO -->
+        <div class="ev__cta reveal delay-3">
+          <button class="ev__cta-btn" id="open-works-modal">
+            <span class="ev__cta-btn-inner">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+              </svg>
+              Ver colección completa
+            </span>
+            <span class="ev__cta-btn-count" id="stat-total-2">0</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== CONTACTO ==================== -->
     <section id="contacto" class="section container">
       <div class="contact-card reveal">
-        <h2>Contacto</h2>
-        <p>¿Tienes alguna consulta sobre este portafolio?</p>
-        <a href="mailto:tu.correo@universidad.edu" class="contact-link">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="12" height="9" rx="2"/><path d="M2 5l6 4.5L14 5"/></svg>
+        <h2>¿Tienes alguna consulta?</h2>
+        <p>Puedes contactarme directamente por correo institucional.</p>
+        <a href="mailto:hjmontenegro@uce.edu.ec" class="contact-link">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="12" height="9" rx="2"/><path d="M2 5l6 4.5L14 5"/></svg>
           hjmontenegro@uce.edu.ec
         </a>
+        <div class="contact-social">
+          <a href="#" class="contact-social__icon" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://github.com" class="contact-social__icon" aria-label="GitHub">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          </a>
+        </div>
       </div>
       <p class="footer-copy">&copy; 2026 Henry Montenegro · Portafolio Académico · Estadística Aplicada a la Educación · UCE</p>
     </section>
 
   </main>
 
-  <!-- MODAL FULLSCREEN — VISOR DE TRABAJOS -->
+  <!-- ==================== MODAL VISOR DE TRABAJOS ==================== -->
   <div id="works-modal" class="wmodal" aria-hidden="true" role="dialog" aria-label="Visor de trabajos">
     <div class="wmodal__panel">
       <div class="wmodal__header">
@@ -342,7 +423,7 @@
     </div>
   </div>
 
-  <!-- MODAL VISOR DE DOCUMENTO (PDF) -->
+  <!-- ==================== MODAL VISOR PDF ==================== -->
   <div id="pdf-modal" class="modal" aria-hidden="true">
     <div class="modal__content">
       <div class="modal__header">

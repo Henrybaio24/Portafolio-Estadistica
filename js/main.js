@@ -119,46 +119,45 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
   // ══════════════════════════════════════════
-  // 📦 TRABAJOS — Agrega tus archivos aquí
-  // type: "individual" | "grupal" | "practica"
-  // file: ruta local O enlace de Google Drive con /preview al final
+  // VARIABLES DE MODALES — al inicio del scope
   // ══════════════════════════════════════════
-  let works = [];
-  try {
-    const res = await fetch('data/works.json');
-    works = await res.json();
-  } catch (e) {
-    console.error('No se pudo cargar works.json', e);
-  }
+  const pdfModal   = document.getElementById('pdf-modal');
+  const pdfFrame   = document.getElementById('pdf-frame');
+  const modalTitle = document.getElementById('modal-title');
+  const modalClose = document.getElementById('modal-close');
 
-  const typeLabels = { individual: 'Individual', grupal: 'Grupal', mapas: 'Mapas Mentales' };
+  const worksModal    = document.getElementById('works-modal');
+  const openWorksBtn  = document.getElementById('open-works-modal');
+  const closeWorksBtn = document.getElementById('close-works-modal');
+  const wmodalGrid    = document.getElementById('wmodal-grid');
+  const wmodalEmpty   = document.getElementById('wmodal-empty');
+  const wmodalFilters = document.querySelectorAll('.wmodal__filter');
 
 
   // ══════════════════════════════════════════
-  // MODAL VISOR PDF (documento individual)
+  // MODAL VISOR PDF
   // ══════════════════════════════════════════
-  const pdfModal    = document.getElementById('pdf-modal');
-  const pdfFrame    = document.getElementById('pdf-frame');
-  const modalTitle  = document.getElementById('modal-title');
-  const modalClose  = document.getElementById('modal-close');
-
   function openPdfModal(title, file) {
+    if (!pdfModal) return;
     modalTitle.textContent = title;
     pdfFrame.src = file;
     pdfModal.classList.add('active');
     pdfModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
   }
+
   function closePdfModal() {
+    if (!pdfModal) return;
     pdfModal.classList.remove('active');
     pdfModal.setAttribute('aria-hidden', 'true');
     pdfFrame.src = '';
-    if (!worksModal.classList.contains('wmodal--open')) {
+    if (!worksModal || !worksModal.classList.contains('wmodal--open')) {
       document.body.style.overflow = '';
     }
   }
-  modalClose.addEventListener('click', closePdfModal);
-  pdfModal.addEventListener('click', e => { if (e.target === pdfModal) closePdfModal(); });
+
+  if (modalClose) modalClose.addEventListener('click', closePdfModal);
+  if (pdfModal)   pdfModal.addEventListener('click', e => { if (e.target === pdfModal) closePdfModal(); });
 
   document.querySelectorAll('.open-preview').forEach(btn => {
     btn.addEventListener('click', () => openPdfModal(btn.dataset.title, btn.dataset.file));
@@ -166,19 +165,106 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
   // ══════════════════════════════════════════
+  // 📦 TRABAJOS — data/works.json
+  // ══════════════════════════════════════════
+  const typeLabels = {
+    individual: 'Individual',
+    grupal:     'Grupal',
+    practica:   'Práctica',
+    mapas:      'Mapas Mentales'
+  };
+
+  // Configuración de barras por tipo
+  const typeConfig = [
+    { type: 'individual', label: 'Individual',    color: 'individual' },
+    { type: 'grupal',     label: 'Grupal',         color: 'grupal'     },
+    { type: 'mapas',      label: 'Mapas Mentales', color: 'mapas'      },
+    { type: 'practica',   label: 'Práctica',       color: 'practica'   },
+  ];
+
+  let works      = [];
+  let worksLoaded  = false;
+  let currentFilter = 'todos';
+
+  try {
+    const res = await fetch('data/works.json');
+    works = await res.json();
+    updateWorksUI(works);
+  } catch (e) {
+    console.error('No se pudo cargar works.json', e);
+  }
+
+  function updateWorksUI(works) {
+    // — Stats banner —
+    const statIds = {
+      'stat-total':      () => works.length,
+      'stat-individual': () => works.filter(w => w.type === 'individual').length,
+      'stat-grupal':     () => works.filter(w => w.type === 'grupal').length,
+      'stat-mapas':      () => works.filter(w => w.type === 'mapas').length,
+      'stat-practica':   () => works.filter(w => w.type === 'practica').length,
+    };
+    Object.entries(statIds).forEach(([id, fn]) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = fn();
+    });
+
+    // — Stat botón CTA —
+    const statTotal2 = document.getElementById('stat-total-2');
+    if (statTotal2) statTotal2.textContent = works.length;
+
+    // — Barras de progreso —
+    renderProgressBars(works);
+  }
+
+
+  // ══════════════════════════════════════════
+  // BARRAS DE PROGRESO — reemplaza el preview
+  // ══════════════════════════════════════════
+  function renderProgressBars(works) {
+    const container = document.getElementById('ev-progress');
+    if (!container) return;
+
+    const total = works.length || 1;
+    container.innerHTML = '';
+
+    typeConfig.forEach(({ type, label, color }) => {
+      const count = works.filter(w => w.type === type).length;
+      const pct   = Math.round((count / total) * 100);
+
+      const row = document.createElement('div');
+      row.className = 'ev__progress-row';
+      row.innerHTML = `
+        <div class="ev__progress-label-row">
+          <span class="ev__progress-name">${label}</span>
+          <span class="ev__progress-count">${count} trabajo${count !== 1 ? 's' : ''} · ${pct}%</span>
+        </div>
+        <div class="ev__progress-track">
+          <div class="ev__progress-fill ev__progress-fill--${color}" data-pct="${pct}"></div>
+        </div>`;
+      container.appendChild(row);
+    });
+
+    // Animar barras al entrar en viewport
+    const fills = container.querySelectorAll('.ev__progress-fill');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const fill = entry.target;
+          setTimeout(() => { fill.style.width = fill.dataset.pct + '%'; }, 120);
+          obs.unobserve(fill);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    fills.forEach(fill => obs.observe(fill));
+  }
+
+
+  // ══════════════════════════════════════════
   // MODAL FULLSCREEN — VISOR DE TRABAJOS
   // ══════════════════════════════════════════
-  const worksModal      = document.getElementById('works-modal');
-  const openWorksBtn    = document.getElementById('open-works-modal');
-  const closeWorksBtn   = document.getElementById('close-works-modal');
-  const wmodalGrid      = document.getElementById('wmodal-grid');
-  const wmodalEmpty     = document.getElementById('wmodal-empty');
-  const wmodalFilters   = document.querySelectorAll('.wmodal__filter');
-
-  let currentFilter = 'todos';
-  let worksLoaded   = false;
-
   function openWorksModal() {
+    if (!worksModal) return;
     worksModal.classList.add('wmodal--open');
     worksModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -186,25 +272,26 @@ document.addEventListener('DOMContentLoaded', async () => {
       renderWorksInModal('todos');
       worksLoaded = true;
     }
-    closeWorksBtn.focus();
+    if (closeWorksBtn) closeWorksBtn.focus();
   }
 
   function closeWorksModal() {
+    if (!worksModal) return;
     worksModal.classList.remove('wmodal--open');
     worksModal.setAttribute('aria-hidden', 'true');
-    if (!pdfModal.classList.contains('active')) {
+    if (!pdfModal || !pdfModal.classList.contains('active')) {
       document.body.style.overflow = '';
     }
-    openWorksBtn.focus();
+    if (openWorksBtn) openWorksBtn.focus();
   }
 
-  openWorksBtn.addEventListener('click', openWorksModal);
-  closeWorksBtn.addEventListener('click', closeWorksModal);
+  if (openWorksBtn)  openWorksBtn.addEventListener('click', openWorksModal);
+  if (closeWorksBtn) closeWorksBtn.addEventListener('click', closeWorksModal);
 
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-      if (pdfModal.classList.contains('active')) { closePdfModal(); return; }
-      if (worksModal.classList.contains('wmodal--open')) closeWorksModal();
+      if (pdfModal && pdfModal.classList.contains('active')) { closePdfModal(); return; }
+      if (worksModal && worksModal.classList.contains('wmodal--open')) closeWorksModal();
     }
   });
 
@@ -218,14 +305,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   function renderWorksInModal(filter) {
+    if (!wmodalGrid) return;
     wmodalGrid.innerHTML = '';
     const filtered = filter === 'todos' ? works : works.filter(w => w.type === filter);
 
     if (filtered.length === 0) {
-      wmodalEmpty.style.display = 'block';
+      if (wmodalEmpty) wmodalEmpty.style.display = 'block';
       return;
     }
-    wmodalEmpty.style.display = 'none';
+    if (wmodalEmpty) wmodalEmpty.style.display = 'none';
 
     filtered.forEach((work, i) => {
       const card = document.createElement('article');
@@ -256,17 +344,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3">
               <rect x="1" y="2" width="10" height="9" rx="1.5"/><path d="M4 1v2M8 1v2M1 5h10"/>
             </svg>
-            ${new Date(work.date).toLocaleDateString('es-ES', { year:'numeric', month:'long', day:'numeric' })}
+            ${new Date(work.date + 'T00:00:00').toLocaleDateString('es-ES', { year:'numeric', month:'long', day:'numeric' })}
           </div>
         </div>`;
       wmodalGrid.appendChild(card);
     });
   }
 
-  wmodalGrid.addEventListener('click', e => {
-    const card = e.target.closest('.wcard');
-    if (card) openPdfModal(card.dataset.title, card.dataset.file);
-  });
+  if (wmodalGrid) {
+    wmodalGrid.addEventListener('click', e => {
+      const card = e.target.closest('.wcard');
+      if (card) openPdfModal(card.dataset.title, card.dataset.file);
+    });
+  }
 
 
   // ══════════════════════════════════════════
@@ -275,16 +365,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   const mainHeader = document.getElementById('main-header');
   const navLinks   = document.querySelectorAll('.nav__menu a');
 
-  // — Estado scrolled (glassmorphism) —
   function updateNavbar() {
+    if (!mainHeader) return;
     const threshold = window.innerHeight * 0.08;
     mainHeader.classList.toggle('scrolled', window.scrollY > threshold);
   }
   updateNavbar();
   window.addEventListener('scroll', updateNavbar, { passive: true });
 
-  // — Link activo basado en scrollY —
-  // Mapea cada href a su sección
   const sectionMap = [];
   navLinks.forEach(link => {
     const id = link.getAttribute('href').replace('#', '');
@@ -295,17 +383,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   function updateActiveLink() {
     const scrollMid = window.scrollY + window.innerHeight * 0.35;
     let current = sectionMap[0];
-
     sectionMap.forEach(item => {
-      if (item.el.offsetTop <= scrollMid) {
-        current = item;
-      }
+      if (item.el.offsetTop <= scrollMid) current = item;
     });
-
     navLinks.forEach(l => l.classList.remove('active'));
     if (current) current.link.classList.add('active');
   }
-
   updateActiveLink();
   window.addEventListener('scroll', updateActiveLink, { passive: true });
 
@@ -317,29 +400,36 @@ document.addEventListener('DOMContentLoaded', async () => {
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-  // — Menú móvil con overlay —
+  // — Menú móvil —
   const mobileToggle = document.querySelector('.nav__toggle');
   const navMenu      = document.querySelector('.nav__menu');
   const navOverlay   = document.getElementById('nav-overlay');
 
   function openMobileMenu() {
+    if (!navMenu || !navOverlay) return;
     navMenu.classList.add('open');
     navOverlay.classList.add('visible');
     mobileToggle.textContent = '✕';
     document.body.style.overflow = 'hidden';
   }
   function closeMobileMenu() {
+    if (!navMenu || !navOverlay) return;
     navMenu.classList.remove('open');
     navOverlay.classList.remove('visible');
     mobileToggle.textContent = '☰';
     document.body.style.overflow = '';
   }
 
-  mobileToggle.addEventListener('click', () => {
-    navMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
-  });
-  navOverlay.addEventListener('click', closeMobileMenu);
-  navMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', closeMobileMenu);
-  });
+  if (mobileToggle) {
+    mobileToggle.addEventListener('click', () => {
+      navMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
+    });
+  }
+  if (navOverlay) navOverlay.addEventListener('click', closeMobileMenu);
+  if (navMenu) {
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+  }
+
 });
