@@ -1,0 +1,52 @@
+#silabo { background: #EDE9E3; position: relative; overflow: hidden; border-top: 1px solid var(--border); }
+.silabo-section { background: var(--bg); padding: 6rem 0; position: relative; overflow: hidden; }
+.silabo__header { display: grid; grid-template-columns: 1fr 280px; gap: 3rem; align-items: start; margin-bottom: 3rem; }
+.silabo__title { font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 400; color: var(--text); line-height: 1.1; margin-bottom: 1rem; }
+.silabo__title em { font-style: italic; color: var(--primary); }
+.silabo__intro { font-size: 0.97rem; color: var(--text-light); line-height: 1.8; max-width: 520px; }
+.silabo__units { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.silabo__unit-card {
+  background: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.85);
+  border-radius: 16px; padding: 1.75rem 1.5rem; position: relative;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+.silabo__unit-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: rgba(184,50,31,0.2); }
+.silabo__unit-num {
+  font-family: var(--serif); font-size: 3.5rem; font-weight: 400;
+  color: rgba(184,50,31,0.08); line-height: 1;
+  position: absolute; top: 1rem; right: 1.25rem; pointer-events: none;
+}
+.silabo__unit-body { display: flex; gap: 1rem; align-items: flex-start; }
+.silabo__unit-icon {
+  width: 44px; height: 44px; flex-shrink: 0;
+  background: rgba(184,50,31,0.07); border: 1px solid rgba(184,50,31,0.12);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  color: var(--primary); transition: background 0.22s;
+}
+.silabo__unit-body h4 { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; }
+.silabo__unit-body p { font-size: 0.84rem; color: var(--text-light); line-height: 1.65; }
+.silabo__unit-tag {
+  display: inline-block; margin-top: 1.1rem; font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--primary);
+  background: rgba(184,50,31,0.07); border: 1px solid rgba(184,50,31,0.12);
+  padding: 0.2rem 0.65rem; border-radius: 2rem;
+}
+.silabo__svg { width: 100%; max-width: 280px; height: auto; filter: drop-shadow(0 4px 16px rgba(184,50,31,0.1)); }
+.silabo__cta { display: flex; justify-content: center; margin-top: 2.5rem; }
+.silabo__btn {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.55rem 1.25rem; background: var(--primary); color: white;
+  border: 1.5px solid rgba(184,50,31,0.35); border-radius: 10px;
+  font-size: 0.92rem; font-weight: 600; font-family: var(--font); cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+.silabo__btn:hover { background: var(--primary-dark); color: white; border-color: var(--primary); transform: translateY(-2px); }
+
+/* Responsive silabo */
+@media (max-width: 900px) {
+  .silabo__header { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+@media (max-width: 768px) {
+  .silabo__units { grid-template-columns: 1fr; }
+  .silabo__unit-num { font-size: 2.5rem; }
+}

@@ -6,162 +6,174 @@
   <title>Portafolio | Estadística Aplicada a la Educación</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+  <!-- CSS MODULAR -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/cover.css">
+  <link rel="stylesheet" href="css/silabo.css">
+  <link rel="stylesheet" href="css/evidencias.css">
+  <link rel="stylesheet" href="css/contacto.css">
+  <link rel="stylesheet" href="css/modales.css">
+
   <link rel="stylesheet" href="css/progress.css">
 </head>
 <body>
 
   <!-- ==================== PORTADA ==================== -->
-<section class="cover" id="portada">
-  <canvas id="cover-canvas"></canvas>
-  <div class="cover__content">
+  <section class="cover" id="portada">
+    <canvas id="cover-canvas"></canvas>
+    <div class="cover__content">
+      <h2 id="cover-title"></h2>
 
-    <!-- COLUMNAS -->
-    <div class="cover__columns">
+      <!-- COLUMNAS -->
+      <div class="cover__columns">
 
-      <!-- COLUMNA IZQUIERDA -->
-      <div class="cover__col-left">
-        <div class="welcome__text reveal">
-          <p class="welcome__eyebrow">Portafolio Académico</p>
-          <h2 class="welcome__title">
-            Estadística<br><em>Aplicada</em><br>a la Educación
-          </h2>
-          <div class="cover__name-block">
-            <p class="cover__name-label">Estudiante</p>
-            <p class="cover__name-main">Henry Jesús<br>Montenegro Alvarez</p>
-          </div>
-          <div class="welcome__meta">
-            <span class="cover__chip">
-              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="5.5" r="3"/><path d="M2.5 14.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg>
-              Docente: Diego Tipán
-            </span>
-            <span class="cover__chip">
-              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
-              Período 2026
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <!-- COLUMNA DERECHA -->
-      <div class="cover__col-right">
-        <div class="cover__avatar-full">
-          <div class="welcome__avatar-frame">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 480" fill="none" class="avatar-svg">
-              <defs>
-                <filter id="sh" x="-15%" y="-15%" width="130%" height="130%">
-                  <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="rgba(0,0,0,0.13)"/>
-                </filter>
-                <filter id="sh2" x="-30%" y="-30%" width="160%" height="160%">
-                  <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.10)"/>
-                </filter>
-              </defs>
-              <rect x="55" y="390" width="210" height="14" rx="7" fill="#D1D5DB"/>
-                <rect x="75" y="404" width="170" height="10" rx="5" fill="#E5E7EB"/>
-                <rect x="115" y="414" width="90" height="30" rx="5" fill="#9CA3AF"/>
-                <rect x="108" y="442" width="104" height="12" rx="6" fill="#6B7280"/>
-                <rect x="90" y="452" width="140" height="10" rx="5" fill="#4B5563"/>
-                <rect x="60" y="300" width="200" height="92" rx="10" fill="#1F2937"/>
-                <rect x="65" y="305" width="190" height="82" rx="7" fill="#111827"/>
-                <rect x="72" y="312" width="55" height="62" rx="3" fill="#1a2332"/>
-                <rect x="75" y="316" width="8" height="40" rx="2" fill="#B8321F" opacity="0.55"/>
-                <rect x="85" y="310" width="8" height="46" rx="2" fill="#B8321F" opacity="0.75"/>
-                <rect x="95" y="313" width="8" height="43" rx="2" fill="#B8321F" opacity="0.60"/>
-                <rect x="105" y="307" width="8" height="49" rx="2" fill="#B8321F" opacity="0.85"/>
-                <rect x="115" y="316" width="8" height="40" rx="2" fill="#B8321F" opacity="0.50"/>
-                <polyline points="79,316 89,310 99,313 109,307 119,316" stroke="rgba(255,180,150,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                <rect x="134" y="312" width="113" height="62" rx="3" fill="#1a2332"/>
-                <rect x="139" y="317" width="50" height="5" rx="2" fill="#B8321F" opacity="0.6"/>
-                <rect x="139" y="326" width="72" height="4" rx="2" fill="#6B7280" opacity="0.5"/>
-                <rect x="139" y="334" width="60" height="4" rx="2" fill="#6366F1" opacity="0.5"/>
-                <rect x="139" y="342" width="80" height="4" rx="2" fill="#10B981" opacity="0.45"/>
-                <rect x="139" y="350" width="55" height="4" rx="2" fill="#F59E0B" opacity="0.5"/>
-                <rect x="139" y="358" width="68" height="4" rx="2" fill="#6B7280" opacity="0.4"/>
-                <rect x="55" y="390" width="210" height="10" rx="5" fill="#374151"/>
-                <rect x="100" y="270" width="120" height="8" rx="4" fill="#9CA3AF"/>
-                <rect x="95" y="200" width="130" height="80" rx="8" fill="#B8321F"/>
-                <path d="M130 200 L160 225 L190 200" fill="#8A2517"/>
-                <rect x="103" y="213" width="22" height="18" rx="3" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-                <rect x="106" y="215" width="16" height="12" rx="1" fill="rgba(255,255,255,0.08)"/>
-                <rect x="100" y="265" width="16" height="14" rx="7" fill="#F5CBA7"/>
-                <rect x="204" y="265" width="16" height="14" rx="7" fill="#F5CBA7"/>
-                <path d="M95 205 Q75 210 68 240 Q62 265 72 285 Q80 298 100 290" stroke="#B8321F" stroke-width="22" stroke-linecap="round" fill="none"/>
-                <path d="M225 205 Q245 210 252 240 Q258 265 248 285 Q240 298 220 290" stroke="#B8321F" stroke-width="22" stroke-linecap="round" fill="none"/>
-                <ellipse cx="74" cy="278" rx="18" ry="13" fill="#F5CBA7"/>
-                <ellipse cx="246" cy="278" rx="18" ry="13" fill="#F5CBA7"/>
-                <rect x="60" y="280" width="10" height="14" rx="5" fill="#F5CBA7"/>
-                <rect x="72" y="282" width="10" height="15" rx="5" fill="#F5CBA7"/>
-                <rect x="84" y="280" width="10" height="14" rx="5" fill="#F5CBA7"/>
-                <rect x="236" y="280" width="10" height="14" rx="5" fill="#F5CBA7"/>
-                <rect x="248" y="282" width="10" height="15" rx="5" fill="#F5CBA7"/>
-                <rect x="260" y="280" width="10" height="14" rx="5" fill="#F5CBA7"/>
-                <ellipse cx="160" cy="148" rx="50" ry="52" fill="#F5CBA7"/>
-                <ellipse cx="110" cy="152" rx="9" ry="12" fill="#F5CBA7"/>
-                <ellipse cx="210" cy="152" rx="9" ry="12" fill="#F5CBA7"/>
-                <path d="M110 130 Q110 86 160 84 Q210 86 210 130 Q210 106 194 97 Q178 90 160 90 Q142 90 126 97 Q110 106 110 130Z" fill="#1C1C1C"/>
-                <rect x="108" y="128" width="10" height="22" rx="5" fill="#1C1C1C"/>
-                <rect x="202" y="128" width="10" height="22" rx="5" fill="#1C1C1C"/>
-                <path d="M108 118 Q125 105 160 103 Q195 105 212 118 Q216 112 216 125 Q216 100 160 96 Q104 100 104 125 Q104 112 108 118Z" fill="#B8321F"/>
-                <rect x="104" y="114" width="112" height="14" rx="7" fill="#B8321F"/>
-                <path d="M104 121 Q108 108 160 106 Q212 108 216 121" fill="#B8321F"/>
-                <rect x="140" y="106" width="40" height="6" rx="3" fill="#8A2517"/>
-                <rect x="128" y="108" width="64" height="6" rx="3" fill="#8A2517"/>
-                <rect x="104" y="118" width="112" height="8" rx="4" fill="#8A2517"/>
-                <ellipse cx="144" cy="150" rx="8" ry="9" fill="white"/>
-                <ellipse cx="176" cy="150" rx="8" ry="9" fill="white"/>
-                <circle cx="146" cy="152" r="5" fill="#1C1C1C"/>
-                <circle cx="178" cy="152" r="5" fill="#1C1C1C"/>
-                <circle cx="148" cy="150" r="2" fill="white"/>
-                <circle cx="180" cy="150" r="2" fill="white"/>
-                <path d="M136 140 Q144 136 152 140" stroke="#1C1C1C" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                <path d="M168 140 Q176 136 184 140" stroke="#1C1C1C" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                <path d="M157 160 Q156 167 160 168 Q164 167 163 160" stroke="#E8A87C" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-                <path d="M148 174 Q160 183 172 174" stroke="#C27A4A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-                <g class="av-chip1" filter="url(#sh2)">
-                  <rect x="244" y="115" width="58" height="36" rx="9" fill="white"/>
-                  <rect x="251" y="122" width="16" height="16" rx="3" fill="#EEF2FF"/>
-                  <text x="254" y="134" font-family="monospace" font-size="11" fill="#6366F1" font-weight="700">{}</text>
-                  <rect x="272" y="126" width="22" height="3" rx="1" fill="#D1D5DB"/>
-                  <rect x="272" y="132" width="16" height="3" rx="1" fill="#E5E7EB"/>
-                </g>
-                <g class="av-chip2" filter="url(#sh2)">
-                  <rect x="18" y="148" width="58" height="36" rx="9" fill="white"/>
-                  <rect x="25" y="159" width="6" height="18" rx="2" fill="#B8321F" opacity="0.5"/>
-                  <rect x="33" y="153" width="6" height="24" rx="2" fill="#B8321F" opacity="0.75"/>
-                  <rect x="41" y="156" width="6" height="21" rx="2" fill="#B8321F" opacity="0.6"/>
-                  <rect x="49" y="149" width="6" height="28" rx="2" fill="#B8321F"/>
-                  <polyline points="28,159 36,153 44,156 52,149" stroke="rgba(184,50,31,0.7)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                </g>
-                <g class="av-chip3" filter="url(#sh2)">
-                  <rect x="20" y="240" width="52" height="36" rx="9" fill="white"/>
-                  <text x="28" y="264" font-family="Georgia,serif" font-size="22" fill="#B8321F" font-weight="700">Σ</text>
-                </g><!-- ... todo el contenido SVG del avatar sin cambios ... -->
-            </svg>
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="cover__col-left">
+          <div class="welcome__text reveal">
+            <p class="welcome__eyebrow">Portafolio Académico</p>
+            <h2 class="welcome__title">
+              Estadística<br><em>Aplicada</em><br>a la Educación
+            </h2>
+            <div class="cover__name-block">
+              <p class="cover__name-label">Estudiante</p>
+              <p class="cover__name-main">Henry Jesús<br> Montenegro Alvarez </p>
+            </div>
+            <div class="welcome__meta">
+              <span class="cover__chip">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="5.5" r="3"/><path d="M2.5 14.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg>
+                Docente: Diego Tipán
+              </span>
+              <span class="cover__chip">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+                Período 2026
+              </span>
+            </div>
           </div>
         </div>
-      </div>
 
-    </div><!-- fin .cover__columns -->
+        <!-- COLUMNA DERECHA -->
+        <div class="cover__col-right">
 
-    <!-- BOTONES: DENTRO de cover__content, DESPUÉS de las columnas -->
-    <div class="cover__actions-centered">
-      <a href="#silabo" class="cover__btn-primary">Ver Portafolio</a>
-      <button class="cover__btn-ghost open-preview"
-              data-title="Currículum Vitae"
-              data-file="https://henrybaio24.github.io/mi_cv/">Ver CV</button>
-    </div>
+          <!-- Solo el avatar aquí, SIN los botones dentro -->
+          <div class="cover__avatar-full">
+            <div class="welcome__avatar-frame">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 480" fill="none" class="avatar-svg">
+                <defs>
+                  <filter id="sh" x="-15%" y="-15%" width="130%" height="130%">
+                    <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="rgba(0,0,0,0.13)"/>
+                  </filter>
+                  <filter id="sh2" x="-30%" y="-30%" width="160%" height="160%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.10)"/>
+                  </filter>
+                </defs>
+                <rect x="55" y="390" width="210" height="14" rx="7" fill="#D1D5DB"/>
+                  <rect x="75" y="404" width="170" height="10" rx="5" fill="#E5E7EB"/>
+                  <rect x="115" y="414" width="90" height="30" rx="5" fill="#9CA3AF"/>
+                  <rect x="108" y="442" width="104" height="12" rx="6" fill="#6B7280"/>
+                  <rect x="90" y="452" width="140" height="10" rx="5" fill="#4B5563"/>
+                  <rect x="60" y="300" width="200" height="92" rx="10" fill="#1F2937"/>
+                  <rect x="65" y="305" width="190" height="82" rx="7" fill="#111827"/>
+                  <rect x="72" y="312" width="55" height="62" rx="3" fill="#1a2332"/>
+                  <rect x="75" y="316" width="8" height="40" rx="2" fill="#B8321F" opacity="0.55"/>
+                  <rect x="85" y="310" width="8" height="46" rx="2" fill="#B8321F" opacity="0.75"/>
+                  <rect x="95" y="313" width="8" height="43" rx="2" fill="#B8321F" opacity="0.60"/>
+                  <rect x="105" y="307" width="8" height="49" rx="2" fill="#B8321F" opacity="0.85"/>
+                  <rect x="115" y="316" width="8" height="40" rx="2" fill="#B8321F" opacity="0.50"/>
+                  <polyline points="79,316 89,310 99,313 109,307 119,316" stroke="rgba(255,180,150,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                  <rect x="134" y="312" width="113" height="62" rx="3" fill="#1a2332"/>
+                  <rect x="139" y="317" width="50" height="5" rx="2" fill="#B8321F" opacity="0.6"/>
+                  <rect x="139" y="326" width="72" height="4" rx="2" fill="#6B7280" opacity="0.5"/>
+                  <rect x="139" y="334" width="60" height="4" rx="2" fill="#6366F1" opacity="0.5"/>
+                  <rect x="139" y="342" width="80" height="4" rx="2" fill="#10B981" opacity="0.45"/>
+                  <rect x="139" y="350" width="55" height="4" rx="2" fill="#F59E0B" opacity="0.5"/>
+                  <rect x="139" y="358" width="68" height="4" rx="2" fill="#6B7280" opacity="0.4"/>
+                  <rect x="55" y="390" width="210" height="10" rx="5" fill="#374151"/>
+                  <rect x="100" y="270" width="120" height="8" rx="4" fill="#9CA3AF"/>
+                  <rect x="95" y="200" width="130" height="80" rx="8" fill="#B8321F"/>
+                  <path d="M130 200 L160 225 L190 200" fill="#8A2517"/>
+                  <rect x="103" y="213" width="22" height="18" rx="3" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                  <rect x="106" y="215" width="16" height="12" rx="1" fill="rgba(255,255,255,0.08)"/>
+                  <rect x="100" y="265" width="16" height="14" rx="7" fill="#F5CBA7"/>
+                  <rect x="204" y="265" width="16" height="14" rx="7" fill="#F5CBA7"/>
+                  <path d="M95 205 Q75 210 68 240 Q62 265 72 285 Q80 298 100 290" stroke="#B8321F" stroke-width="22" stroke-linecap="round" fill="none"/>
+                  <path d="M225 205 Q245 210 252 240 Q258 265 248 285 Q240 298 220 290" stroke="#B8321F" stroke-width="22" stroke-linecap="round" fill="none"/>
+                  <ellipse cx="74" cy="278" rx="18" ry="13" fill="#F5CBA7"/>
+                  <ellipse cx="246" cy="278" rx="18" ry="13" fill="#F5CBA7"/>
+                  <rect x="60" y="280" width="10" height="14" rx="5" fill="#F5CBA7"/>
+                  <rect x="72" y="282" width="10" height="15" rx="5" fill="#F5CBA7"/>
+                  <rect x="84" y="280" width="10" height="14" rx="5" fill="#F5CBA7"/>
+                  <rect x="236" y="280" width="10" height="14" rx="5" fill="#F5CBA7"/>
+                  <rect x="248" y="282" width="10" height="15" rx="5" fill="#F5CBA7"/>
+                  <rect x="260" y="280" width="10" height="14" rx="5" fill="#F5CBA7"/>
+                  <ellipse cx="160" cy="148" rx="50" ry="52" fill="#F5CBA7"/>
+                  <ellipse cx="110" cy="152" rx="9" ry="12" fill="#F5CBA7"/>
+                  <ellipse cx="210" cy="152" rx="9" ry="12" fill="#F5CBA7"/>
+                  <path d="M110 130 Q110 86 160 84 Q210 86 210 130 Q210 106 194 97 Q178 90 160 90 Q142 90 126 97 Q110 106 110 130Z" fill="#1C1C1C"/>
+                  <rect x="108" y="128" width="10" height="22" rx="5" fill="#1C1C1C"/>
+                  <rect x="202" y="128" width="10" height="22" rx="5" fill="#1C1C1C"/>
+                  <path d="M108 118 Q125 105 160 103 Q195 105 212 118 Q216 112 216 125 Q216 100 160 96 Q104 100 104 125 Q104 112 108 118Z" fill="#B8321F"/>
+                  <rect x="104" y="114" width="112" height="14" rx="7" fill="#B8321F"/>
+                  <path d="M104 121 Q108 108 160 106 Q212 108 216 121" fill="#B8321F"/>
+                  <rect x="140" y="106" width="40" height="6" rx="3" fill="#8A2517"/>
+                  <rect x="128" y="108" width="64" height="6" rx="3" fill="#8A2517"/>
+                  <rect x="104" y="118" width="112" height="8" rx="4" fill="#8A2517"/>
+                  <ellipse cx="144" cy="150" rx="8" ry="9" fill="white"/>
+                  <ellipse cx="176" cy="150" rx="8" ry="9" fill="white"/>
+                  <circle cx="146" cy="152" r="5" fill="#1C1C1C"/>
+                  <circle cx="178" cy="152" r="5" fill="#1C1C1C"/>
+                  <circle cx="148" cy="150" r="2" fill="white"/>
+                  <circle cx="180" cy="150" r="2" fill="white"/>
+                  <path d="M136 140 Q144 136 152 140" stroke="#1C1C1C" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                  <path d="M168 140 Q176 136 184 140" stroke="#1C1C1C" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                  <path d="M157 160 Q156 167 160 168 Q164 167 163 160" stroke="#E8A87C" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                  <path d="M148 174 Q160 183 172 174" stroke="#C27A4A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+                  <g class="av-chip1" filter="url(#sh2)">
+                    <rect x="244" y="115" width="58" height="36" rx="9" fill="white"/>
+                    <rect x="251" y="122" width="16" height="16" rx="3" fill="#EEF2FF"/>
+                    <text x="254" y="134" font-family="monospace" font-size="11" fill="#6366F1" font-weight="700">{}</text>
+                    <rect x="272" y="126" width="22" height="3" rx="1" fill="#D1D5DB"/>
+                    <rect x="272" y="132" width="16" height="3" rx="1" fill="#E5E7EB"/>
+                  </g>
+                  <g class="av-chip2" filter="url(#sh2)">
+                    <rect x="18" y="148" width="58" height="36" rx="9" fill="white"/>
+                    <rect x="25" y="159" width="6" height="18" rx="2" fill="#B8321F" opacity="0.5"/>
+                    <rect x="33" y="153" width="6" height="24" rx="2" fill="#B8321F" opacity="0.75"/>
+                    <rect x="41" y="156" width="6" height="21" rx="2" fill="#B8321F" opacity="0.6"/>
+                    <rect x="49" y="149" width="6" height="28" rx="2" fill="#B8321F"/>
+                    <polyline points="28,159 36,153 44,156 52,149" stroke="rgba(184,50,31,0.7)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                  </g>
+                  <g class="av-chip3" filter="url(#sh2)">
+                    <rect x="20" y="240" width="52" height="36" rx="9" fill="white"/>
+                    <text x="28" y="264" font-family="Georgia,serif" font-size="22" fill="#B8321F" font-weight="700">Σ</text>
+                  </g>
+              </svg>
+            </div>
+          </div>
 
-    <!-- FLECHA SCROLL -->
-    <a href="#inicio" class="cover__scroll" aria-label="Ir al contenido">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-           stroke="rgba(255,255,255,0.45)" stroke-width="1.8" stroke-linecap="round">
-        <path d="M5 8l5 5 5-5"/>
-      </svg>
-    </a>
+          <!-- ✅ FIX: botones FUERA de cover__avatar-full, hijo directo de cover__col-right -->
+          <div class="cover__actions">
+            <a href="#silabo" class="cover__btn-primary">Ver Portafolio</a>
+            <button class="cover__btn-ghost open-preview"
+                    data-title="Currículum Vitae"
+                    data-file="https://henrybaio24.github.io/mi_cv/">Ver CV</button>
+          </div>
 
-  </div><!-- fin .cover__content -->
-</section>
+        </div><!-- fin .cover__col-right -->
 
+      </div><!-- fin .cover__columns -->
+
+      <!-- FLECHA SCROLL -->
+      <a href="#inicio" class="cover__scroll" aria-label="Ir al contenido">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+            stroke="rgba(255,255,255,0.45)" stroke-width="1.8" stroke-linecap="round">
+          <path d="M5 8l5 5 5-5"/>
+        </svg>
+      </a>
+
+    </div><!-- fin .cover__content -->
+  </section>
   <!-- ==================== HEADER ==================== -->
   <header class="header" id="main-header">
     <nav class="nav container">
@@ -344,6 +356,38 @@
             <h2 class="evidencias__title">Trabajos &amp; <em>Evidencias</em></h2>
             <p class="evidencias__desc">Documentación de actividades, prácticas y evidencias desarrolladas durante el semestre en Estadística Aplicada a la Educación.</p>
           </div>
+
+          <div class="evidencias__header-img reveal delay-1">
+            <svg viewBox="0 0 280 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Fondo -->
+            <rect x="10" y="10" width="260" height="180" rx="18"
+                  fill="rgba(184,50,31,0.06)" stroke="rgba(184,50,31,0.12)" stroke-width="1.5"/>
+
+            <!-- Carpeta grande -->
+            <rect x="65" y="75" width="150" height="100" rx="10" fill="rgba(184,50,31,0.15)" stroke="rgba(184,50,31,0.3)" stroke-width="1.5"/>
+            <rect x="65" y="62" width="70" height="20" rx="7" fill="rgba(184,50,31,0.2)" stroke="rgba(184,50,31,0.3)" stroke-width="1.5"/>
+
+            <!-- Documentos dentro -->
+            <rect x="85"  y="95" width="44" height="58" rx="5" fill="white" opacity="0.9"/>
+            <rect x="90"  y="104" width="26" height="3" rx="1" fill="rgba(184,50,31,0.5)"/>
+            <rect x="90"  y="111" width="34" height="2.5" rx="1" fill="#D1D5DB"/>
+            <rect x="90"  y="117" width="28" height="2.5" rx="1" fill="#D1D5DB"/>
+            <rect x="90"  y="123" width="32" height="2.5" rx="1" fill="#D1D5DB"/>
+            <rect x="90"  y="129" width="22" height="2.5" rx="1" fill="#D1D5DB"/>
+            <rect x="90"  y="135" width="30" height="2.5" rx="1" fill="#D1D5DB"/>
+
+            <rect x="135" y="88" width="44" height="58" rx="5" fill="white" opacity="0.75"/>
+            <rect x="140" y="97" width="26" height="3" rx="1" fill="rgba(184,50,31,0.4)"/>
+            <rect x="140" y="104" width="30" height="2.5" rx="1" fill="#D1D5DB"/>
+            <rect x="140" y="110" width="22" height="2.5" rx="1" fill="#D1D5DB"/>
+            <rect x="140" y="116" width="28" height="2.5" rx="1" fill="#D1D5DB"/>
+
+            <!-- Check badge -->
+            <circle cx="195" cy="80" r="16" fill="#B8321F"/>
+            <polyline points="187,80 192,86 203,71" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+            </svg>
+          </div>
         </div>
 
         
@@ -371,25 +415,52 @@
     </section>
 
     <!-- ==================== CONTACTO ==================== -->
-    <section id="contacto" class="section container">
-      <div class="contact-card reveal">
-        <h2>¿Tienes alguna consulta?</h2>
-        <p>Puedes contactarme directamente por correo institucional.</p>
-        <a href="mailto:hjmontenegro@uce.edu.ec" class="contact-link">
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="12" height="9" rx="2"/><path d="M2 5l6 4.5L14 5"/></svg>
-          hjmontenegro@uce.edu.ec
-        </a>
-        <div class="contact-social">
-          <a href="#" class="contact-social__icon" aria-label="LinkedIn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+    <footer class="site-footer" id="contacto">
+      <div class="footer-inner container">
+
+        <div class="footer-brand">
+          <div class="footer-logo">HM</div>
+          <div>
+            <p class="footer-name">Henry Jesús Montenegro</p>
+            <p class="footer-sub">Estadística Aplicada a la Educación · UCE</p>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <a href="#portada">Inicio</a>
+          <a href="#silabo">Sílabo</a>
+          <a href="#trabajos">Trabajos</a>
+          <a href="mailto:hjmontenegro@uce.edu.ec">Contacto</a>
+        </div>
+
+        <div class="footer-social">
+          <a href="#" aria-label="LinkedIn" class="footer-social-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/>
+              <rect x="2" y="9" width="4" height="12"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
           </a>
-          <a href="https://github.com" class="contact-social__icon" aria-label="GitHub">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          <a href="https://github.com" aria-label="GitHub" class="footer-social-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/>
+            </svg>
+          </a>
+          <a href="mailto:hjmontenegro@uce.edu.ec" aria-label="Email" class="footer-social-btn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="4" width="12" height="9" rx="2"/>
+              <path d="M2 5l6 4.5L14 5"/>
+            </svg>
           </a>
         </div>
+
       </div>
-      <p class="footer-copy">&copy; 2026 Henry Montenegro · Portafolio Académico · Estadística Aplicada a la Educación · UCE</p>
-    </section>
+
+      <div class="footer-bottom container">
+        <p>&copy; 2026 Henry Montenegro · Portafolio Académico · UCE</p>
+      </div>
+
+    </footer>
 
   </main>
 
@@ -437,5 +508,6 @@
   </div>
 
   <script src="js/main.js"></script>
+  <script src="js/estilos.js"></script>
 </body>
 </html>

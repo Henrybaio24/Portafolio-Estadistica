@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     { type: 'individual', label: 'Individual',    color: 'individual' },
     { type: 'grupal',     label: 'Grupal',         color: 'grupal'     },
     { type: 'mapas',      label: 'Mapas Mentales', color: 'mapas'      },
-    { type: 'practica',   label: 'Práctica',       color: 'practica'   },
+    //{ type: 'practica',   label: 'Práctica',       color: 'practica'   },
   ];
 
   let works      = [];
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       'stat-individual': () => works.filter(w => w.type === 'individual').length,
       'stat-grupal':     () => works.filter(w => w.type === 'grupal').length,
       'stat-mapas':      () => works.filter(w => w.type === 'mapas').length,
-      'stat-practica':   () => works.filter(w => w.type === 'practica').length,
+      //'stat-practica':   () => works.filter(w => w.type === 'practica').length,
     };
     Object.entries(statIds).forEach(([id, fn]) => {
       const el = document.getElementById(id);
@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
   // ══════════════════════════════════════════
-  // BARRAS DE PROGRESO — reemplaza el preview
+  //            BARRAS DE PROGRESO 
   // ══════════════════════════════════════════
   function renderProgressBars(works) {
     const container = document.getElementById('ev-progress');
@@ -227,36 +227,130 @@ document.addEventListener('DOMContentLoaded', async () => {
     const total = works.length || 1;
     container.innerHTML = '';
 
-    typeConfig.forEach(({ type, label, color }) => {
+    // Calcular estadísticas
+    const stats = typeConfig.map(({ type, label, color }) => {
       const count = works.filter(w => w.type === type).length;
-      const pct   = Math.round((count / total) * 100);
+      const pct = Math.round((count / total) * 100);
+      return { type, label, color, count, pct };
+    });
 
+    // Crear filas de gráfico
+    stats.forEach(({ type, label, color, count, pct }, index) => {
       const row = document.createElement('div');
       row.className = 'ev__progress-row';
+      row.style.animationDelay = `${index * 0.1}s`;
+      
       row.innerHTML = `
         <div class="ev__progress-label-row">
           <span class="ev__progress-name">${label}</span>
-          <span class="ev__progress-count">${count} trabajo${count !== 1 ? 's' : ''} · ${pct}%</span>
+          <span class="ev__progress-count">n = <span class="counter" data-target="${count}">0</span> (${pct}%)</span>
         </div>
-        <div class="ev__progress-track">
-          <div class="ev__progress-fill ev__progress-fill--${color}" data-pct="${pct}"></div>
-        </div>`;
+        <div class="ev__chart-container">
+          <div class="ev__chart-grid">
+            <div class="ev__chart-grid-line"></div>
+            <div class="ev__chart-grid-line"></div>
+            <div class="ev__chart-grid-line"></div>
+            <div class="ev__chart-grid-line"></div>
+            <div class="ev__chart-grid-line"></div>
+          </div>
+          <div class="ev__progress-track">
+            <div class="ev__progress-fill ev__progress-fill--${color}" data-pct="${pct}">
+              <span class="ev__progress-value">${pct}%</span>
+            </div>
+          </div>
+        </div>
+      `;
+      
       container.appendChild(row);
     });
 
-    // Animar barras al entrar en viewport
-    const fills = container.querySelectorAll('.ev__progress-fill');
-    const obs = new IntersectionObserver(entries => {
+    // Agregar leyenda estadística
+    const legendHTML = `
+      <div class="ev__legend">
+        <div class="ev__legend-item">
+          <span>Total:</span>
+          <strong style="color: var(--primary); font-family: 'JetBrains Mono', monospace;">N = ${total}</strong>
+        </div>
+        <div class="ev__legend-item">
+          <span>Distribución por tipo de trabajo</span>
+        </div>
+      </div>
+    `;
+    container.insertAdjacentHTML('beforeend', legendHTML);
+
+    // Animar con Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const fill = entry.target;
-          setTimeout(() => { fill.style.width = fill.dataset.pct + '%'; }, 120);
-          obs.unobserve(fill);
+          const row = entry.target;
+          const fill = row.querySelector('.ev__progress-fill');
+          const counter = row.querySelector('.counter');
+          
+          // Animar barra
+          if (fill) {
+            setTimeout(() => {
+              fill.style.width = fill.dataset.pct + '%';
+              fill.classList.add('animate');
+            }, 200);
+          }
+          
+          // Animar contador
+          if (counter) {
+            animateCounter(counter, parseInt(counter.dataset.target));
+          }
+          
+          observer.unobserve(row);
         }
       });
     }, { threshold: 0.3 });
 
-    fills.forEach(fill => obs.observe(fill));
+    document.querySelectorAll('.ev__progress-row').forEach(row => {
+      observer.observe(row);
+    });
+  }
+
+  function animateCounter(element, target) {
+    const duration = 800;
+    const startTime = performance.now();
+    
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing lineal para conteo estadístico
+      const current = Math.floor(progress * target);
+      element.textContent = current;
+      
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    }
+    
+    requestAnimationFrame(update);
+  }
+
+  // Función para animar números
+  function animateCounter(element, target) {
+    const duration = 1200; // ms
+    const start = 0;
+    const startTime = performance.now();
+    
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function (easeOutQuart)
+      const easeProgress = 1 - Math.pow(1 - progress, 4);
+      
+      const current = Math.floor(easeProgress * (target - start) + start);
+      element.textContent = current;
+      
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    }
+    
+    requestAnimationFrame(update);
   }
 
 

@@ -1,50 +1,180 @@
 /* ══════════════════════════════════════════
-   BARRAS DE PROGRESO — por tipo de trabajo
+   GRÁFICOS DE BARRAS — Estadístico Profesional
    ══════════════════════════════════════════ */
+
 .ev__progress-section {
-  margin: 2.5rem 0 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  margin: 3rem 0 2.5rem;
+  background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem 1.75rem;
+  box-shadow: var(--shadow);
+}
+
+.ev__progress-row {
+  margin-bottom: 1.75rem;
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: slideInRight 0.5s ease forwards;
+}
+
+.ev__progress-row:nth-child(1) { animation-delay: 0.1s; }
+.ev__progress-row:nth-child(2) { animation-delay: 0.2s; }
+.ev__progress-row:nth-child(3) { animation-delay: 0.3s; }
+.ev__progress-row:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes slideInRight {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .ev__progress-label-row {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.35rem;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .ev__progress-name {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  color: var(--text);
   text-transform: uppercase;
-  color: var(--text-muted, #a0a0b0);
+  letter-spacing: 0.05em;
 }
 
 .ev__progress-count {
-  font-size: 0.78rem;
-  color: var(--text-muted, #a0a0b0);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--primary);
+  font-family: 'JetBrains Mono', monospace;
 }
 
-.ev__progress-track {
-  width: 100%;
-  height: 7px;
-  background: rgba(255,255,255,0.07);
-  border-radius: 99px;
+/* Contenedor del gráfico con grid */
+.ev__chart-container {
+  position: relative;
+  height: 32px;
+  background: #f8f9fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
   overflow: hidden;
+}
+
+/* Grid vertical de referencia */
+.ev__chart-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2px;
+  pointer-events: none;
+}
+
+.ev__chart-grid-line {
+  width: 1px;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    #e5e7eb 0px,
+    #e5e7eb 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  opacity: 0.5;
+}
+
+/* Barra de progreso estadística */
+.ev__progress-track {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  display: flex;
+  align-items: center;
 }
 
 .ev__progress-fill {
   height: 100%;
-  border-radius: 99px;
+  border-radius: 4px;
   width: 0%;
-  transition: width 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Colores por tipo — ajusta si tienes variables propias */
-.ev__progress-fill--individual { background: linear-gradient(90deg, #6ee7f7, #3b82f6); }
-.ev__progress-fill--grupal     { background: linear-gradient(90deg, #a78bfa, #7c3aed); }
-.ev__progress-fill--mapas      { background: linear-gradient(90deg, #6ee7b7, #10b981); }
-.ev__progress-fill--practica   { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
+/* Valor porcentual dentro de la barra */
+.ev__progress-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.3s ease 0.5s, transform 0.3s ease 0.5s;
+}
+
+.ev__progress-fill.animate .ev__progress-value {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Colores estadísticos sobrios */
+.ev__progress-fill--individual { 
+  background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
+}
+.ev__progress-fill--grupal { 
+  background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
+}
+.ev__progress-fill--mapas { 
+  background: linear-gradient(90deg, #059669 0%, #10b981 100%);
+}
+.ev__progress-fill--practica { 
+  background: linear-gradient(90deg, #d97706 0%, #f59e0b 100%);
+}
+
+/* Leyenda estadística inferior */
+.ev__legend {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
+
+.ev__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ev__legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ev__progress-section {
+    padding: 1.5rem 1.25rem;
+  }
+  
+  .ev__chart-container {
+    height: 28px;
+  }
+}
