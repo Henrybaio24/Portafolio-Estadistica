@@ -438,10 +438,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       card.dataset.title = work.title;
       card.innerHTML = `
         <div class="wcard__thumb">
-          ${work.thumb
-            ? `<img src="${work.thumb}" alt="${work.title}" style="width:100%;height:100%;object-fit:cover;">`
-            : `<iframe src="${work.file}#toolbar=0&navpanes=0&scrollbar=0&page=1&view=FitH" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>`
-          }
+          <iframe src="${work.file}#toolbar=0&navpanes=0&scrollbar=0&page=1&view=FitH" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
           <div class="wcard__thumb-overlay">
             <div class="wcard__view-btn">
               <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
