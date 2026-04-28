@@ -10,14 +10,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   const typeLabels = {
     individual: 'Individual',
     grupal:     'Grupal',
-    mapas:      'Mapas Mentales',
+    mapas:      'Mapa Mental',
     // practica: 'Práctica',
   };
 
   const typeConfig = [
     { type: 'individual', label: 'Individual',    color: 'individual' },
     { type: 'grupal',     label: 'Grupal',         color: 'grupal'     },
-    { type: 'mapas',      label: 'Mapas Mentales', color: 'mapas'      },
+    { type: 'mapas',      label: 'Mapa Mental', color: 'mapas'      },
     // { type: 'practica', label: 'Práctica',       color: 'practica'   },
   ];
 
@@ -269,13 +269,44 @@ document.addEventListener('DOMContentLoaded', async () => {
   let worksLoaded   = false;
   let currentFilter = 'todos';
 
+  // ══════════════════════════════════════════
+  // 5. CARGA DE DATOS — Google Sheet CSV
+  // ══════════════════════════════════════════
+  const loader         = document.getElementById('page-loader');
+  const loaderProgress = document.getElementById('loader-progress');
+
+  function setLoaderProgress(pct) {
+    if (loaderProgress) loaderProgress.style.width = pct + '%';
+  }
+
+  function hideLoader() {
+    if (!loader) return;
+    loader.classList.add('loader--hidden');
+    // Elimina del DOM después de la transición para no bloquear nada
+    loader.addEventListener('transitionend', () => loader.remove(), { once: true });
+  }
+
+  // Simula progreso visual mientras espera el fetch
+  setLoaderProgress(15);
+  const progressSim = setInterval(() => {
+    const current = parseFloat(loaderProgress?.style.width || '15');
+    if (current < 80) setLoaderProgress(current + (Math.random() * 6));
+  }, 300);
+
   try {
     const res  = await fetch(SHEET_URL);
+    setLoaderProgress(90);
     const text = await res.text();
     works = parseCSV(text);
     updateWorksUI(works);
+    setLoaderProgress(100);
   } catch (e) {
     console.error('No se pudo cargar el Google Sheet:', e);
+    setLoaderProgress(100);
+  } finally {
+    clearInterval(progressSim);
+    // Pequeño delay para que el 100% sea visible antes de desaparecer
+    setTimeout(hideLoader, 380);
   }
 
 
@@ -379,7 +410,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelectorAll('.ev__progress-row').forEach(row => observer.observe(row));
   }
 
-
   // ══════════════════════════════════════════
   // 7. MODAL FULLSCREEN — VISOR DE TRABAJOS
   // ══════════════════════════════════════════
@@ -389,13 +419,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   const wmodalGrid    = document.getElementById('wmodal-grid');
   const wmodalEmpty   = document.getElementById('wmodal-empty');
   const wmodalFilters = document.querySelectorAll('.wmodal__filter');
+  const searchInput   = document.getElementById('wmodal-search');
+  const searchClear   = document.getElementById('wmodal-search-clear');
+
+  let currentSearch = '';
+  currentFilter = 'todos';
 
   function openWorksModal() {
     if (!worksModal) return;
     worksModal.classList.add('wmodal--open');
     worksModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    if (!worksLoaded) { renderWorksInModal('todos'); worksLoaded = true; }
+    if (!worksLoaded) { applyFilters(); worksLoaded = true; }
     if (closeWorksBtn) closeWorksBtn.focus();
   }
 
@@ -407,6 +442,45 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (openWorksBtn) openWorksBtn.focus();
   }
 
+  // Filtra por tipo + búsqueda de texto
+  function applyFilters() {
+    const query = currentSearch.toLowerCase().trim();
+
+    let filtered = currentFilter === 'todos'
+      ? works
+      : works.filter(w => w.type === currentFilter);
+
+    if (query) {
+      filtered = filtered.filter(w =>
+        (w.title || '').toLowerCase().includes(query) ||
+        (w.desc  || '').toLowerCase().includes(query) ||
+        (w.type  || '').toLowerCase().includes(query)
+      );
+    }
+
+    renderWorksInModal(filtered);
+  }
+
+  // Buscador
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      currentSearch = searchInput.value;
+      searchClear.classList.toggle('visible', currentSearch.length > 0);
+      applyFilters();
+    });
+  }
+
+  if (searchClear) {
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      currentSearch = '';
+      searchClear.classList.remove('visible');
+      searchInput.focus();
+      applyFilters();
+    });
+  }
+
+  // Filtros por tipo
   if (openWorksBtn)  openWorksBtn.addEventListener('click', openWorksModal);
   if (closeWorksBtn) closeWorksBtn.addEventListener('click', closeWorksModal);
 
@@ -415,17 +489,22 @@ document.addEventListener('DOMContentLoaded', async () => {
       wmodalFilters.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       currentFilter = btn.dataset.filter;
-      renderWorksInModal(currentFilter);
+      applyFilters();
     });
   });
 
-  function renderWorksInModal(filter) {
+  function renderWorksInModal(filtered) {
     if (!wmodalGrid) return;
     wmodalGrid.innerHTML = '';
-    const filtered = filter === 'todos' ? works : works.filter(w => w.type === filter);
 
     if (filtered.length === 0) {
-      if (wmodalEmpty) wmodalEmpty.style.display = 'block';
+      const query = currentSearch.trim();
+      wmodalGrid.innerHTML = `
+        <div class="wmodal__no-results">
+          <strong>${query ? `Sin resultados para "${query}"` : 'Sin trabajos en esta categoría'}</strong>
+          ${query ? 'Intenta con otras palabras clave.' : 'Aún no hay trabajos agregados.'}
+        </div>`;
+      if (wmodalEmpty) wmodalEmpty.style.display = 'none';
       return;
     }
     if (wmodalEmpty) wmodalEmpty.style.display = 'none';
@@ -436,9 +515,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       card.style.animationDelay = (i * 0.07) + 's';
       card.dataset.file  = work.file;
       card.dataset.title = work.title;
+
       card.innerHTML = `
         <div class="wcard__thumb">
-          <iframe src="${work.file}#toolbar=0&navpanes=0&scrollbar=0&page=1&view=FitH" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+          <div class="wcard__skeleton-overlay"></div>
+          <iframe src="${work.file}#toolbar=0&navpanes=0&scrollbar=0&page=1&view=FitH"
+                  loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
           <div class="wcard__thumb-overlay">
             <div class="wcard__view-btn">
               <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -450,17 +532,44 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
         <div class="wcard__body">
           <span class="wcard__type wcard__type--${work.type}">${typeLabels[work.type] || work.type}</span>
-          <p class="wcard__title">${work.title}</p>
-          <p class="wcard__desc">${work.desc}</p>
+          <p class="wcard__title">${highlightMatch(work.title, currentSearch)}</p>
+          <p class="wcard__desc">${highlightMatch(work.desc, currentSearch)}</p>
           <div class="wcard__date">
             <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3">
-              <rect x="1" y="2" width="10" height="9" rx="1.5"/><path d="M4 1v2M8 1v2M1 5h10"/>
+              <rect x="1" y="2" width="10" height="9" rx="1.5"/>
+              <path d="M4 1v2M8 1v2M1 5h10"/>
             </svg>
             ${new Date(work.date + 'T00:00:00').toLocaleDateString('es-ES', { year:'numeric', month:'long', day:'numeric' })}
           </div>
         </div>`;
+
+      const iframe  = card.querySelector('iframe');
+      const overlay = card.querySelector('.wcard__skeleton-overlay');
+
+      iframe.addEventListener('load', () => {
+        overlay.style.opacity = '0';
+        setTimeout(() => overlay.remove(), 400);
+      }, { once: true });
+
+      setTimeout(() => {
+        if (overlay.parentNode) {
+          overlay.style.opacity = '0';
+          setTimeout(() => overlay.remove(), 400);
+        }
+      }, 8000);
+
       wmodalGrid.appendChild(card);
     });
+  }
+
+  // Resalta el texto buscado dentro del título/descripción
+  function highlightMatch(text, query) {
+    if (!query || !text) return text || '';
+    const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return text.replace(
+      new RegExp(`(${escaped})`, 'gi'),
+      '<mark style="background:rgba(184,50,31,0.18);color:var(--primary);border-radius:3px;padding:0 2px;">$1</mark>'
+    );
   }
 
   if (wmodalGrid) {
@@ -470,5 +579,260 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
+  ////////////////////////////////////////////////
+
+  // ══════════════════════════════════════════
+  // ANIMACIÓN CANVAS — SÍLABO
+  // ══════════════════════════════════════════
+  (function initSilaboCanvas() {
+    const canvas = document.getElementById('silabo-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width  = canvas.offsetWidth  * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const W = () => canvas.offsetWidth;
+    const H = () => canvas.offsetHeight;
+
+    const COLS = 7;
+    const bars = Array.from({ length: COLS }, (_, i) => ({
+      col: i,
+      currentH: Math.random() * 0.1 + 0.05,
+      target:   Math.random() * 0.55 + 0.1,
+      speed:    Math.random() * 0.006 + 0.003,
+      dir: 1
+    }));
+
+    const pts = Array.from({ length: 38 }, () => ({
+      x:  Math.random() * W(),
+      y:  Math.random() * H(),
+      vx: (Math.random() - 0.5) * 0.55,
+      vy: (Math.random() - 0.5) * 0.55,
+      r:  Math.random() * 2 + 0.8
+    }));
+
+    function tick() {
+      const w = W(), h = H();
+
+      // Fondo oscuro
+      const bg = ctx.createLinearGradient(0, 0, w, h);
+      bg.addColorStop(0, '#1a0f0c');
+      bg.addColorStop(1, '#2d1510');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, w, h);
+
+      // Grid sutil
+      ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+      ctx.lineWidth = 0.5;
+      for (let i = 1; i < 5; i++) {
+        const y = h * i / 5;
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+      }
+
+      // Barras animadas
+      bars.forEach(b => {
+        b.currentH += b.speed * b.dir;
+        if (b.currentH >= b.target) { b.dir = -1; }
+        if (b.currentH <= b.target * 0.2) {
+          b.dir = 1;
+          b.target = Math.random() * 0.55 + 0.1;
+        }
+        const bx = (b.col + 1) * w / (COLS + 1);
+        const bh = b.currentH * h * 0.78;
+        const bw = w / (COLS + 1) * 0.36;
+        const by = h - bh;
+
+        const barGrad = ctx.createLinearGradient(0, by, 0, h);
+        barGrad.addColorStop(0, 'rgba(184,50,31,0.95)');
+        barGrad.addColorStop(1, 'rgba(184,50,31,0.20)');
+        ctx.fillStyle = barGrad;
+        ctx.beginPath();
+        ctx.roundRect(bx - bw / 2, by, bw, bh, [4, 4, 2, 2]);
+        ctx.fill();
+
+        // Brillo superior
+        ctx.fillStyle = 'rgba(255,130,100,0.85)';
+        ctx.beginPath();
+        ctx.roundRect(bx - bw / 2, by, bw, 2.5, 2);
+        ctx.fill();
+      });
+
+      // Línea de tendencia
+      const linePoints = bars.map(b => ({
+        x: (b.col + 1) * w / (COLS + 1),
+        y: h - b.currentH * h * 0.78 - 6
+      }));
+      ctx.beginPath();
+      linePoints.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+      ctx.strokeStyle = 'rgba(255,180,150,0.85)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      linePoints.forEach(p => {
+        // Halo
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 7, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(255,190,160,0.25)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        // Punto central
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,190,160,1)';
+        ctx.fill();
+      });
+
+      // Puntos flotantes
+      pts.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+        if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,200,180,0.45)';
+        ctx.fill();
+      });
+
+      // Conexiones entre puntos
+      for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+          const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+          const d  = Math.sqrt(dx * dx + dy * dy);
+          if (d < 80) {
+            ctx.beginPath();
+            ctx.moveTo(pts[i].x, pts[i].y);
+            ctx.lineTo(pts[j].x, pts[j].y);
+            ctx.strokeStyle = `rgba(255,180,150,${0.18 * (1 - d / 80)})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(tick);
+    }
+    tick();
+  })();
+
+
+  // ══════════════════════════════════════════
+  // ANIMACIÓN CANVAS — EVIDENCIAS
+  // ══════════════════════════════════════════
+  (function initEvidenciasCanvas() {
+    const canvas = document.getElementById('evidencias-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width  = canvas.offsetWidth  * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const W = () => canvas.offsetWidth;
+    const H = () => canvas.offsetHeight;
+
+    const nodes = Array.from({ length: 13 }, () => ({
+      x:     Math.random() * (W() - 80) + 40,
+      y:     Math.random() * (H() - 80) + 40,
+      vx:    (Math.random() - 0.5) * 0.42,
+      vy:    (Math.random() - 0.5) * 0.42,
+      big:   Math.random() > 0.65,
+      pulse: Math.random() * Math.PI * 2
+    }));
+
+    function drawDoc(x, y, w, h, glow) {
+      if (glow) {
+        ctx.shadowColor = 'rgba(184,50,31,0.7)';
+        ctx.shadowBlur  = 12;
+      }
+      ctx.fillStyle   = 'rgba(245,235,228,0.93)';
+      ctx.strokeStyle = glow ? 'rgba(255,130,100,0.95)' : 'rgba(255,180,150,0.5)';
+      ctx.lineWidth   = glow ? 1.3 : 0.7;
+      ctx.beginPath();
+      ctx.roundRect(x - w / 2, y - h / 2, w, h, 3);
+      ctx.fill();
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // Línea roja (título)
+      ctx.fillStyle = 'rgba(184,50,31,0.7)';
+      ctx.beginPath();
+      ctx.roundRect(x - w * 0.3, y - h * 0.22, w * 0.55, 2, 1);
+      ctx.fill();
+
+      // Líneas de contenido
+      [0, 1].forEach(i => {
+        ctx.fillStyle = `rgba(200,180,170,${0.55 - i * 0.12})`;
+        ctx.beginPath();
+        ctx.roundRect(x - w * 0.3, y - h * 0.02 + i * 6, w * (0.58 - i * 0.1), 1.5, 1);
+        ctx.fill();
+      });
+    }
+
+    function tick() {
+      const w = W(), h = H();
+
+      // Fondo oscuro
+      const bg = ctx.createLinearGradient(0, 0, w, h);
+      bg.addColorStop(0, '#150c0a');
+      bg.addColorStop(1, '#221008');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, w, h);
+
+      // Conexiones entre nodos
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+          const d  = Math.sqrt(dx * dx + dy * dy);
+          if (d < 110) {
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.strokeStyle = `rgba(255,150,100,${0.25 * (1 - d / 110)})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+
+            // Punto en el centro
+            if (d < 65) {
+              const mx = (nodes[i].x + nodes[j].x) / 2;
+              const my = (nodes[i].y + nodes[j].y) / 2;
+              ctx.beginPath();
+              ctx.arc(mx, my, 1.8, 0, Math.PI * 2);
+              ctx.fillStyle = 'rgba(255,160,120,0.45)';
+              ctx.fill();
+            }
+          }
+        }
+      }
+
+      // Documentos
+      nodes.forEach(n => {
+        n.x += n.vx; n.y += n.vy;
+        n.pulse += 0.025;
+        if (n.x < 22)     { n.x = 22;     n.vx *= -1; }
+        if (n.x > w - 22) { n.x = w - 22; n.vx *= -1; }
+        if (n.y < 22)     { n.y = 22;     n.vy *= -1; }
+        if (n.y > h - 22) { n.y = h - 22; n.vy *= -1; }
+
+        const glow = n.big && Math.sin(n.pulse) > 0.4;
+        if (n.big) drawDoc(n.x, n.y, 30, 37, glow);
+        else       drawDoc(n.x, n.y, 18, 22, false);
+      });
+
+      requestAnimationFrame(tick);
+    }
+    tick();
+  })();
 
 });
