@@ -1,5 +1,141 @@
 document.addEventListener('DOMContentLoaded', async () => {
 
+  // ══════════════════════════════════════════
+  // 0. HEADER MEJORADO - CONFIGURACIÓN INICIAL
+  // ══════════════════════════════════════════
+  const header = document.querySelector('.header');
+  const navToggle = document.querySelector('.nav__toggle');
+  const navMenu = document.querySelector('.nav__menu');
+  const navOverlay = document.getElementById('nav-overlay');
+  const navLinks = document.querySelectorAll('.nav__menu a');
+  
+  // Función mejorada para el cambio de estilo del header con scroll
+  function updateNavbar() {
+    if (!header) return;
+    const scrollY = window.scrollY;
+    const isScrolled = scrollY > 50;
+    
+    header.classList.toggle('scrolled', isScrolled);
+    
+    // Añadir/remover clase en el body para espaciador (opcional)
+    if (isScrolled) {
+      document.body.classList.add('has-scrolled');
+    } else {
+      document.body.classList.remove('has-scrolled');
+    }
+  }
+  
+  // Inicializar header
+  updateNavbar();
+  window.addEventListener('scroll', updateNavbar, { passive: true });
+  
+  // Funciones mejoradas para menú móvil
+  function openMobileMenu() {
+    if (!navMenu || !navOverlay) return;
+    navMenu.classList.add('open');
+    navOverlay.classList.add('visible');
+    if (navToggle) navToggle.textContent = '✕';
+    document.body.style.overflow = 'hidden';
+    // Opcional: animación de entrada para los items del menú
+    const menuItems = navMenu.querySelectorAll('li');
+    menuItems.forEach((item, index) => {
+      item.style.animation = `menuItemFadeIn 0.3s ease forwards ${index * 0.05}s`;
+    });
+  }
+  
+  function closeMobileMenu() {
+    if (!navMenu || !navOverlay) return;
+    navMenu.classList.remove('open');
+    navOverlay.classList.remove('visible');
+    if (navToggle) navToggle.textContent = '☰';
+    if (!pdfModal || !pdfModal.classList.contains('active')) {
+      if (!worksModal || !worksModal.classList.contains('wmodal--open')) {
+        document.body.style.overflow = '';
+      }
+    }
+  }
+  
+  // Event listeners para menú móvil (sin duplicar)
+  if (navToggle) {
+    // Remover event listener anterior si existe para evitar duplicados
+    navToggle.removeEventListener('click', null);
+    navToggle.addEventListener('click', () => {
+      navMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
+    });
+  }
+  
+  if (navOverlay) {
+    navOverlay.removeEventListener('click', null);
+    navOverlay.addEventListener('click', closeMobileMenu);
+  }
+  
+  if (navMenu) {
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.removeEventListener('click', null);
+      link.addEventListener('click', closeMobileMenu);
+    });
+  }
+  
+  // Añadir animación CSS para los items del menú (si no existe)
+  if (!document.querySelector('#header-animation-styles')) {
+    const style = document.createElement('style');
+    style.id = 'header-animation-styles';
+    style.textContent = `
+      @keyframes menuItemFadeIn {
+        from {
+          opacity: 0;
+          transform: translateX(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      .nav__menu li {
+        opacity: 0;
+      }
+      .nav__menu.open li {
+        opacity: 1;
+      }
+      .header.scrolled::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(184, 50, 31, 0.6), transparent);
+        opacity: 0.5;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Función mejorada para detectar sección activa
+  function updateActiveLink() {
+    const scrollMid = window.scrollY + window.innerHeight * 0.35;
+    let current = null;
+    let minDistance = Infinity;
+    
+    sectionMap.forEach(item => {
+      const sectionTop = item.el.offsetTop;
+      const distance = Math.abs(sectionTop - scrollMid);
+      if (distance < minDistance && sectionTop <= scrollMid + 100) {
+        minDistance = distance;
+        current = item;
+      }
+    });
+    
+    navLinks.forEach(l => l.classList.remove('active'));
+    if (current) {
+      current.link.classList.add('active');
+      // Animación sutil al cambiar de sección
+      current.link.style.transform = 'scale(1.02)';
+      setTimeout(() => {
+        if (current.link) current.link.style.transform = '';
+      }, 200);
+    }
+  }
 
   // ══════════════════════════════════════════
   // 1. CONFIGURACIÓN GOOGLE SHEET
@@ -11,14 +147,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     individual: 'Individual',
     grupal:     'Grupal',
     mapas:      'Mapa Mental',
-    // practica: 'Práctica',
   };
 
   const typeConfig = [
     { type: 'individual', label: 'Individual',    color: 'individual' },
     { type: 'grupal',     label: 'Grupal',         color: 'grupal'     },
     { type: 'mapas',      label: 'Mapa Mental', color: 'mapas'      },
-    // { type: 'practica', label: 'Práctica',       color: 'practica'   },
   ];
 
 
@@ -138,74 +272,37 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
   // ══════════════════════════════════════════
-  // 3. NAVBAR — scrolled + activo por sección
+  // 3. NAVBAR — activo por sección (MEJORADO)
   // ══════════════════════════════════════════
-  const mainHeader = document.getElementById('main-header');
-  const navLinks   = document.querySelectorAll('.nav__menu a');
-
-  function updateNavbar() {
-    if (!mainHeader) return;
-    mainHeader.classList.toggle('scrolled', window.scrollY > window.innerHeight * 0.08);
-  }
-  updateNavbar();
-  window.addEventListener('scroll', updateNavbar, { passive: true });
-
   const sectionMap = [];
   navLinks.forEach(link => {
-    const id = link.getAttribute('href').replace('#', '');
-    const el = document.getElementById(id);
-    if (el) sectionMap.push({ link, el });
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      const id = href.replace('#', '');
+      const el = document.getElementById(id);
+      if (el) sectionMap.push({ link, el });
+    }
   });
 
-  function updateActiveLink() {
-    const scrollMid = window.scrollY + window.innerHeight * 0.35;
-    let current = sectionMap[0];
-    sectionMap.forEach(item => { if (item.el.offsetTop <= scrollMid) current = item; });
-    navLinks.forEach(l => l.classList.remove('active'));
-    if (current) current.link.classList.add('active');
-  }
+  // Actualizar enlace activo con mejor precisión
   updateActiveLink();
   window.addEventListener('scroll', updateActiveLink, { passive: true });
 
-  // — Reveal al scroll —
+  // — Reveal al scroll (mejorado) —
   const revealObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+      if (e.isIntersecting) { 
+        e.target.classList.add('visible'); 
+        revealObs.unobserve(e.target);
+      }
     });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-
-  // — Menú móvil —
-  const mobileToggle = document.querySelector('.nav__toggle');
-  const navMenu      = document.querySelector('.nav__menu');
-  const navOverlay   = document.getElementById('nav-overlay');
-
-  function openMobileMenu() {
-    if (!navMenu || !navOverlay) return;
-    navMenu.classList.add('open');
-    navOverlay.classList.add('visible');
-    mobileToggle.textContent = '✕';
-    document.body.style.overflow = 'hidden';
-  }
-  function closeMobileMenu() {
-    if (!navMenu || !navOverlay) return;
-    navMenu.classList.remove('open');
-    navOverlay.classList.remove('visible');
-    mobileToggle.textContent = '☰';
-    document.body.style.overflow = '';
-  }
-
-  if (mobileToggle) {
-    mobileToggle.addEventListener('click', () => {
-      navMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
-    });
-  }
-  if (navOverlay) navOverlay.addEventListener('click', closeMobileMenu);
-  if (navMenu)    navMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMobileMenu));
+  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+  
+  document.querySelectorAll('.reveal, .silabo__unit-card').forEach(el => revealObs.observe(el));
 
 
   // ══════════════════════════════════════════
-  // 4. MODAL VISOR PDF
+  // 4. MODAL VISOR PDF (MEJORADO - cerrar con overlay)
   // ══════════════════════════════════════════
   const pdfModal   = document.getElementById('pdf-modal');
   const pdfFrame   = document.getElementById('pdf-frame');
@@ -219,6 +316,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     pdfModal.classList.add('active');
     pdfModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    // Pequeña animación de entrada
+    pdfModal.style.animation = 'modalFadeIn 0.3s ease';
+    setTimeout(() => { if (pdfModal) pdfModal.style.animation = ''; }, 300);
   }
 
   function closePdfModal() {
@@ -231,19 +331,53 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  if (modalClose) modalClose.addEventListener('click', closePdfModal);
-  if (pdfModal)   pdfModal.addEventListener('click', e => { if (e.target === pdfModal) closePdfModal(); });
+  if (modalClose) {
+    modalClose.removeEventListener('click', null);
+    modalClose.addEventListener('click', closePdfModal);
+  }
+  
+  if (pdfModal) {
+    pdfModal.removeEventListener('click', null);
+    pdfModal.addEventListener('click', e => { 
+      if (e.target === pdfModal) closePdfModal(); 
+    });
+  }
 
   document.querySelectorAll('.open-preview').forEach(btn => {
+    btn.removeEventListener('click', null);
     btn.addEventListener('click', () => openPdfModal(btn.dataset.title, btn.dataset.file));
   });
 
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-      if (pdfModal   && pdfModal.classList.contains('active'))        { closePdfModal();   return; }
-      if (worksModal && worksModal.classList.contains('wmodal--open')) { closeWorksModal(); }
+      if (pdfModal && pdfModal.classList.contains('active')) { 
+        closePdfModal();   
+        return; 
+      }
+      if (worksModal && worksModal.classList.contains('wmodal--open')) { 
+        closeWorksModal(); 
+      }
     }
   });
+
+  // Añadir animación para modales
+  if (!document.querySelector('#modal-animation-styles')) {
+    const style = document.createElement('style');
+    style.id = 'modal-animation-styles';
+    style.textContent = `
+      @keyframes modalFadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }
 
 
   // ══════════════════════════════════════════
@@ -269,9 +403,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   let worksLoaded   = false;
   let currentFilter = 'todos';
 
-  // ══════════════════════════════════════════
-  // 5. CARGA DE DATOS — Google Sheet CSV
-  // ══════════════════════════════════════════
   const loader         = document.getElementById('page-loader');
   const loaderProgress = document.getElementById('loader-progress');
 
@@ -282,11 +413,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   function hideLoader() {
     if (!loader) return;
     loader.classList.add('loader--hidden');
-    // Elimina del DOM después de la transición para no bloquear nada
     loader.addEventListener('transitionend', () => loader.remove(), { once: true });
   }
 
-  // Simula progreso visual mientras espera el fetch
   setLoaderProgress(15);
   const progressSim = setInterval(() => {
     const current = parseFloat(loaderProgress?.style.width || '15');
@@ -305,7 +434,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     setLoaderProgress(100);
   } finally {
     clearInterval(progressSim);
-    // Pequeño delay para que el 100% sea visible antes de desaparecer
     setTimeout(hideLoader, 380);
   }
 
@@ -314,13 +442,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 6. ESTADÍSTICAS Y BARRAS DE PROGRESO
   // ══════════════════════════════════════════
   function updateWorksUI(works) {
-    // Stats banner
     const statIds = {
       'stat-total':      () => works.length,
       'stat-individual': () => works.filter(w => w.type === 'individual').length,
       'stat-grupal':     () => works.filter(w => w.type === 'grupal').length,
       'stat-mapas':      () => works.filter(w => w.type === 'mapas').length,
-      // 'stat-practica':() => works.filter(w => w.type === 'practica').length,
     };
     Object.entries(statIds).forEach(([id, fn]) => {
       const el = document.getElementById(id);
@@ -410,6 +536,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelectorAll('.ev__progress-row').forEach(row => observer.observe(row));
   }
 
+
   // ══════════════════════════════════════════
   // 7. MODAL FULLSCREEN — VISOR DE TRABAJOS
   // ══════════════════════════════════════════
@@ -442,7 +569,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (openWorksBtn) openWorksBtn.focus();
   }
 
-  // Filtra por tipo + búsqueda de texto
   function applyFilters() {
     const query = currentSearch.toLowerCase().trim();
 
@@ -461,30 +587,36 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderWorksInModal(filtered);
   }
 
-  // Buscador
   if (searchInput) {
     searchInput.addEventListener('input', () => {
       currentSearch = searchInput.value;
-      searchClear.classList.toggle('visible', currentSearch.length > 0);
+      if (searchClear) searchClear.classList.toggle('visible', currentSearch.length > 0);
       applyFilters();
     });
   }
 
   if (searchClear) {
     searchClear.addEventListener('click', () => {
-      searchInput.value = '';
+      if (searchInput) searchInput.value = '';
       currentSearch = '';
-      searchClear.classList.remove('visible');
-      searchInput.focus();
+      if (searchClear) searchClear.classList.remove('visible');
+      if (searchInput) searchInput.focus();
       applyFilters();
     });
   }
 
-  // Filtros por tipo
-  if (openWorksBtn)  openWorksBtn.addEventListener('click', openWorksModal);
-  if (closeWorksBtn) closeWorksBtn.addEventListener('click', closeWorksModal);
+  if (openWorksBtn) {
+    openWorksBtn.removeEventListener('click', null);
+    openWorksBtn.addEventListener('click', openWorksModal);
+  }
+  
+  if (closeWorksBtn) {
+    closeWorksBtn.removeEventListener('click', null);
+    closeWorksBtn.addEventListener('click', closeWorksModal);
+  }
 
   wmodalFilters.forEach(btn => {
+    btn.removeEventListener('click', null);
     btn.addEventListener('click', () => {
       wmodalFilters.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -546,13 +678,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       const iframe  = card.querySelector('iframe');
       const overlay = card.querySelector('.wcard__skeleton-overlay');
 
-      iframe.addEventListener('load', () => {
-        overlay.style.opacity = '0';
-        setTimeout(() => overlay.remove(), 400);
-      }, { once: true });
+      if (iframe) {
+        iframe.addEventListener('load', () => {
+          if (overlay) {
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.remove(), 400);
+          }
+        }, { once: true });
+      }
 
       setTimeout(() => {
-        if (overlay.parentNode) {
+        if (overlay && overlay.parentNode) {
           overlay.style.opacity = '0';
           setTimeout(() => overlay.remove(), 400);
         }
@@ -562,7 +698,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Resalta el texto buscado dentro del título/descripción
   function highlightMatch(text, query) {
     if (!query || !text) return text || '';
     const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -579,7 +714,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  ////////////////////////////////////////////////
 
   // ══════════════════════════════════════════
   // ANIMACIÓN CANVAS — SÍLABO
@@ -621,14 +755,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     function tick() {
       const w = W(), h = H();
 
-      // Fondo oscuro
       const bg = ctx.createLinearGradient(0, 0, w, h);
       bg.addColorStop(0, '#1a0f0c');
       bg.addColorStop(1, '#2d1510');
       ctx.fillStyle = bg;
       ctx.fillRect(0, 0, w, h);
 
-      // Grid sutil
       ctx.strokeStyle = 'rgba(255,255,255,0.04)';
       ctx.lineWidth = 0.5;
       for (let i = 1; i < 5; i++) {
@@ -636,7 +768,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
       }
 
-      // Barras animadas
       bars.forEach(b => {
         b.currentH += b.speed * b.dir;
         if (b.currentH >= b.target) { b.dir = -1; }
@@ -657,14 +788,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         ctx.roundRect(bx - bw / 2, by, bw, bh, [4, 4, 2, 2]);
         ctx.fill();
 
-        // Brillo superior
         ctx.fillStyle = 'rgba(255,130,100,0.85)';
         ctx.beginPath();
         ctx.roundRect(bx - bw / 2, by, bw, 2.5, 2);
         ctx.fill();
       });
 
-      // Línea de tendencia
       const linePoints = bars.map(b => ({
         x: (b.col + 1) * w / (COLS + 1),
         y: h - b.currentH * h * 0.78 - 6
@@ -676,20 +805,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       ctx.stroke();
 
       linePoints.forEach(p => {
-        // Halo
         ctx.beginPath();
         ctx.arc(p.x, p.y, 7, 0, Math.PI * 2);
         ctx.strokeStyle = 'rgba(255,190,160,0.25)';
         ctx.lineWidth = 1.5;
         ctx.stroke();
-        // Punto central
         ctx.beginPath();
         ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(255,190,160,1)';
         ctx.fill();
       });
 
-      // Puntos flotantes
       pts.forEach(p => {
         p.x += p.vx; p.y += p.vy;
         if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
@@ -700,7 +826,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         ctx.fill();
       });
 
-      // Conexiones entre puntos
       for (let i = 0; i < pts.length; i++) {
         for (let j = i + 1; j < pts.length; j++) {
           const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
@@ -765,13 +890,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       ctx.stroke();
       ctx.shadowBlur = 0;
 
-      // Línea roja (título)
       ctx.fillStyle = 'rgba(184,50,31,0.7)';
       ctx.beginPath();
       ctx.roundRect(x - w * 0.3, y - h * 0.22, w * 0.55, 2, 1);
       ctx.fill();
 
-      // Líneas de contenido
       [0, 1].forEach(i => {
         ctx.fillStyle = `rgba(200,180,170,${0.55 - i * 0.12})`;
         ctx.beginPath();
@@ -783,14 +906,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     function tick() {
       const w = W(), h = H();
 
-      // Fondo oscuro
       const bg = ctx.createLinearGradient(0, 0, w, h);
       bg.addColorStop(0, '#150c0a');
       bg.addColorStop(1, '#221008');
       ctx.fillStyle = bg;
       ctx.fillRect(0, 0, w, h);
 
-      // Conexiones entre nodos
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
@@ -803,7 +924,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             ctx.lineWidth = 0.8;
             ctx.stroke();
 
-            // Punto en el centro
             if (d < 65) {
               const mx = (nodes[i].x + nodes[j].x) / 2;
               const my = (nodes[i].y + nodes[j].y) / 2;
@@ -816,7 +936,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       }
 
-      // Documentos
       nodes.forEach(n => {
         n.x += n.vx; n.y += n.vy;
         n.pulse += 0.025;

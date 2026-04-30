@@ -1,74 +1,391 @@
-.evidencias { padding: 6rem 0; background: var(--bg); border-top: 1px solid var(--border); position: relative; overflow: hidden; }
+/* =========================================
+   css/evidencias.css - VERSIÓN CORREGIDA
+   Respeta todas las clases del JavaScript
+   ========================================= */
+
+.evidencias {
+  padding: 5rem 0;
+  background: linear-gradient(180deg, #130704 0%, #0f0603 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glow superior */
+.evidencias::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  width: 70%;
+  max-width: 600px;
+  height: 160px;
+  background: radial-gradient(ellipse, rgba(184, 50, 31, 0.2) 0%, transparent 70%);
+  transform: translateX(-50%);
+  pointer-events: none;
+  opacity: 0.4;
+  z-index: 0;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== ENCABEZADO ===== */
 .evidencias__header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 0.7fr;
+  gap: 3rem;
   align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-}
-
-.evidencias__header-img {
-  flex-shrink: 0;
-  width: 280px;
-}
-
-.evidencias__header-img svg {
-  width: 100%;
-  height: auto;
+  margin-bottom: 4rem;
 }
 
 .evidencias__eyebrow {
-  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--primary); margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.5rem;
-}
-.evidencias__eyebrow::before { content: ''; display: inline-block; width: 20px; height: 1.5px; background: var(--primary); }
-.evidencias__title { font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 400; color: var(--text); line-height: 1.15; }
-.evidencias__title em { font-style: italic; color: var(--primary); }
-.evidencias__desc { font-size: 0.92rem; color: var(--text-light); line-height: 1.7; margin-top: 0.75rem; max-width: 520px; }
-
-/* Barras de progreso */
-.ev__progress-section { margin-bottom: 2rem; }
-
-/* CTA */
-.ev__cta { display: flex; justify-content: center; margin-top: 1.5rem; }
-.ev__cta-btn {
-  display: flex; align-items: center; gap: 0.45rem;
-  background: var(--primary); border: none; border-radius: 10px;
-  cursor: pointer; font-family: var(--font); overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-  margin: 0 auto;
-}
-.ev__cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(17, 15, 15, 0.18); }
-.ev__cta-btn-inner {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.75rem 1.4rem; color: white; font-size: 0.88rem; font-weight: 600;
-}
-.ev__cta-btn-count {
-  background: var(--primary); color: white; font-size: 0.82rem; font-weight: 700;
-  padding: 0.75rem 1.1rem; font-family: var(--serif); min-width: 42px; text-align: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 190, 160, 0.85);
+  margin-bottom: 1rem;
+  position: relative;
+  padding-left: 0.6rem;
 }
 
+.evidencias__eyebrow::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 14px;
+  background: var(--primary, #b8321f);
+  border-radius: 2px;
+}
+
+.evidencias__title {
+  font-family: var(--serif, 'DM Serif Display', serif);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0 0 1rem;
+  line-height: 1.1;
+}
+
+.evidencias__title em {
+  font-style: italic;
+  color: var(--primary-light, #e88a6a);
+}
+
+.evidencias__desc {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Canvas */
 .evidencias__canvas {
   width: 100%;
-  height: 200px;
-  border-radius: 18px;
-  background: #150c0a;
-  border: 1px solid rgba(184,50,31,0.25);
-  display: block;
+  height: auto;
+  max-height: 200px;
+  border-radius: 16px;
+  background: rgba(10, 5, 3, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(184, 50, 31, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.evidencias__canvas:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(184, 50, 31, 0.3);
+}
+
+/* ===== BARRAS DE PROGRESO - CLASES QUE USA TU JS ===== */
+.ev__progress-section {
+  margin: 3rem 0;
+}
+
+.ev__progress-row {
+  margin-bottom: 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 16px;
+  padding: 1rem 1rem 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.ev__progress-row:hover {
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateX(5px);
+}
+
+.ev__progress-label-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.ev__progress-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.02em;
+}
+
+.ev__progress-count {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.ev__progress-track {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  height: 8px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.ev__progress-fill {
+  width: 0%;
+  height: 100%;
+  border-radius: 10px;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Colores de las barras - IMPORTANTE: estas clases las usa tu JS */
+.ev__progress-fill--individual {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.ev__progress-fill--grupal {
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
+
+.ev__progress-fill--mapas {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+/* Efecto de brillo en las barras */
+.ev__progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent);
+  border-radius: 10px 10px 0 0;
+}
+
+.ev__progress-value {
+  position: absolute;
+  right: 8px;
+  top: -18px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Animación de entrada */
+@keyframes barGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(184, 50, 31, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 6px rgba(184, 50, 31, 0);
+  }
+}
+
+.ev__progress-fill.animate {
+  animation: barGlow 0.6s ease-out;
+}
+
+/* Leyenda */
+.ev__legend {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding: 0.8rem 1.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+}
+
+.ev__legend-item {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.ev__legend-item strong {
+  color: var(--primary-light, #e88a6a);
+}
+
+/* ===== BOTÓN CTA ===== */
+.ev__cta {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.ev__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, rgba(184, 50, 31, 0.9), rgba(138, 37, 23, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  padding: 0.9rem 2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(184, 50, 31, 0.2);
+}
+
+.ev__cta-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.ev__cta-btn:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #c93e28, #9e2a1a);
+  box-shadow: 0 8px 25px rgba(184, 50, 31, 0.4);
+  border-color: rgba(184, 50, 31, 0.4);
+}
+
+.ev__cta-btn:hover::before {
+  left: 100%;
+}
+
+.ev__cta-btn-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.ev__cta-btn-count {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.2rem 0.6rem;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ===== REVEAL ANIMATION ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .evidencias__header {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+  
+  .evidencias__eyebrow {
+    display: inline-block;
+    padding-left: 0;
+  }
+  
+  .evidencias__eyebrow::before {
+    display: none;
+  }
+  
+  .ev__legend {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
 }
 
 @media (max-width: 768px) {
-  .evidencias__header {
+  .evidencias {
+    padding: 3rem 0;
+  }
+  
+  .ev__progress-label-row {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
+    gap: 0.3rem;
   }
-
-  .evidencias__header-img {
-    width: 100%;
+  
+  .ev__progress-row {
+    padding: 0.8rem 0.8rem 0.3rem;
   }
+  
+  .ev__progress-row:hover {
+    transform: translateX(0);
+  }
+  
+  .ev__cta-btn {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.85rem;
+  }
+  
+  .evidencias__canvas:hover {
+    transform: translateY(0);
+  }
+}
 
-  .evidencias__canvas {
-    max-width: 100%;
-    height: 180px;
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .evidencias__title {
+    font-size: 1.8rem;
+  }
+  
+  .ev__progress-value {
+    display: none;
+  }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .ev__progress-fill,
+  .ev__cta-btn,
+  .ev__progress-row,
+  .ev__progress-fill::after,
+  .ev__cta-btn::before,
+  .evidencias__canvas,
+  .ev__progress-fill.animate {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
   }
 }
