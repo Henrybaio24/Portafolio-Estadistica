@@ -62,14 +62,18 @@
 
 .ev__progress-row {
   margin-bottom: 1.5rem;
-  background: rgba(37,99,235,0.03);
+  background: #ffffff;
   border-radius: 16px; padding: 1rem 1rem 0.5rem;
   transition: all 0.3s ease;
+  border: 1px solid rgba(37,99,235,0.12);
+  box-shadow: 0 2px 8px rgba(37,99,235,0.06);
 }
 
 .ev__progress-row:hover {
-  background: rgba(37,99,235,0.06);
+  background: #ffffff;
   transform: translateX(5px);
+  border-color: rgba(37,99,235,0.3);
+  box-shadow: 0 12px 30px rgba(37,99,235,0.12);
 }
 
 .ev__progress-label-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
@@ -115,7 +119,9 @@
   display: flex; justify-content: space-between; align-items: center;
   margin-top: 1.5rem; padding: 0.8rem 1.2rem;
   border-top: 1px solid rgba(37,99,235,0.1);
-  background: rgba(37,99,235,0.03); border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid rgba(37,99,235,0.12);
+  border-radius: 12px;
 }
 
 .ev__legend-item { font-size: 0.75rem; color: var(--text-light); }
