@@ -33,12 +33,14 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.65;
+  overflow-x: hidden; /* 🔥 evita desbordes */
 }
 
-.container { 
-  max-width: 1080px; 
-  margin: 0 auto; 
-  padding: 0 2rem; 
+.container {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
 
 /* ===== ACCESIBILIDAD & FOCO ===== */
