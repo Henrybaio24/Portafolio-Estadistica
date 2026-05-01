@@ -76,40 +76,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
   
-  // Añadir animación CSS para los items del menú (si no existe)
-  if (!document.querySelector('#header-animation-styles')) {
-    const style = document.createElement('style');
-    style.id = 'header-animation-styles';
-    style.textContent = `
-      @keyframes menuItemFadeIn {
-        from {
-          opacity: 0;
-          transform: translateX(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-      .nav__menu li {
-        opacity: 0;
-      }
-      .nav__menu.open li {
-        opacity: 1;
-      }
-      .header.scrolled::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(184, 50, 31, 0.6), transparent);
-        opacity: 0.5;
-      }
-    `;
-    document.head.appendChild(style);
-  }
   
   // Función mejorada para detectar sección activa
   function updateActiveLink() {
