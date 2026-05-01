@@ -19,7 +19,10 @@
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --glass-bg: rgba(234, 229, 221, 0.85);
   --glass-blur: blur(12px);
+  --max-width: 1280px;
+  --padding-x: 1.5rem;
 }
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html {
   scroll-behavior: smooth;
@@ -35,9 +38,9 @@ body {
 }
 .container {
   width: 100%;
-  max-width: 1080px;
+  max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 var(--padding-x);
 }
 :focus-visible {
   outline: 2px solid var(--primary);

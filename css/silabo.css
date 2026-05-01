@@ -20,12 +20,6 @@
   background: linear-gradient(90deg, transparent, rgba(184, 50, 31, 0.3), transparent);
 }
 
-.container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
 /* ===== HEADER SÍLABO ===== */
 .silabo__header {
   display: grid;

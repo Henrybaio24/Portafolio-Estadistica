@@ -65,8 +65,8 @@ html {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
-  max-width: 1080px;
+  max-width: var(--max-width);
+  padding: 0 var(--padding-x);
   width: 100%;
   margin: 0 auto;
   gap: 1.5rem;
