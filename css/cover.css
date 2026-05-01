@@ -391,8 +391,12 @@
   .welcome__title { text-align: center; }
   .cover__name-block { border-left: none; border-top: 3px solid rgba(37,99,235,0.5); padding: 1rem 0 0.5rem; text-align: center; width: 100%; }
   .welcome__meta { justify-content: center; }
-  .cover__col-right { order: 1; padding-left: 0; transform: none; margin-top: 0; }
-  .cover__avatar-full { max-width: 350px; }
+  .cover__col-right { order: 1; padding-left: 0; transform: none; margin-top: 0; align-items: center; justify-content: center; width: 100%; }
+  .cover__col-left { align-items: center; justify-content: center; width: 100%; }
+  .cover__avatar-full { max-width: 350px; margin: 0 auto; }
+  .cover__actions { justify-content: center; width: 100%; }
+  .cover__content { align-items: center; padding: 0 1.5rem; }
+  .welcome__text { align-items: center; width: 100%; }
 }
 
 @media (max-width: 768px) {
