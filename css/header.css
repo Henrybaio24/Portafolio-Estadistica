@@ -179,8 +179,10 @@ html {
   align-items: center;
 }
 
-.nav__menu li {
-  list-style: none;
+@media (min-width: 769px) {
+  .nav__menu li {
+    animation: menuFadeIn 0.5s var(--transition-smooth) both;
+  }
 }
 
 .nav__menu a {
