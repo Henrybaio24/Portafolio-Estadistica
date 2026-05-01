@@ -1,3 +1,9 @@
+/* ===================================================
+   COVER — Portada principal
+   Desktop : layout original intacto
+   Móvil   : columna única centrada, limpia
+   =================================================== */
+
 .cover {
   min-height: 100svh;
   background:
@@ -27,10 +33,8 @@
 .cover::after {
   content: '';
   position: absolute;
-  top: -20%;
-  right: 0%;
-  width: 60%;
-  height: 120%;
+  top: -20%; right: 0%;
+  width: 60%; height: 120%;
   background: radial-gradient(ellipse at center, rgba(37,99,235,0.08) 0%, transparent 70%);
   pointer-events: none;
   z-index: 1;
@@ -51,7 +55,7 @@
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 #cover-title {
@@ -82,7 +86,7 @@
 
 @keyframes pulseBlink {
   0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; }
+  50%       { opacity: 1; }
 }
 
 .cover__columns {
@@ -111,7 +115,6 @@
   align-items: center;
   gap: 0.8rem;
   margin-bottom: 0.5rem;
-  position: relative;
   background: linear-gradient(90deg, rgba(37,99,235,0.2), transparent);
   padding: 0.5rem 1rem 0.5rem 0;
   width: fit-content;
@@ -146,9 +149,7 @@
 .welcome__title em::after {
   content: '';
   position: absolute;
-  bottom: 5px;
-  left: 0;
-  right: 0;
+  bottom: 5px; left: 0; right: 0;
   height: 4px;
   background: linear-gradient(90deg, rgba(37,99,235,0.4), transparent);
   border-radius: 2px;
@@ -161,9 +162,7 @@
   transition: border-left-color 0.3s ease;
 }
 
-.cover__name-block:hover {
-  border-left-color: var(--primary);
-}
+.cover__name-block:hover { border-left-color: var(--primary); }
 
 .cover__name-label {
   font-size: 0.7rem;
@@ -282,8 +281,7 @@
 .cover__actions::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 50%;
+  top: 0; left: 50%;
   transform: translateX(-50%);
   width: 60%;
   max-width: 200px;
@@ -343,6 +341,7 @@
   color: #ffffff;
 }
 
+/* ── FLECHA SCROLL (desktop) ── */
 .cover__scroll {
   position: absolute;
   bottom: 2rem;
@@ -366,7 +365,7 @@
 }
 
 @keyframes bounceDown {
-  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  0%, 100% { transform: translateY(0);   opacity: 0.5; }
   50%       { transform: translateY(8px); opacity: 1; }
 }
 
@@ -379,88 +378,10 @@
   color: rgba(255,255,255,0.5);
 }
 
-.cover__scroll:hover { color: rgba(147,197,253,0.9); }
+.cover__scroll:hover,
 .cover__scroll:hover::after { color: rgba(147,197,253,0.9); }
 
-/* ── RESPONSIVE ── */
-
-@media (max-width: 1024px) {
-  .cover__columns { gap: 2rem; }
-}
-
-@media (max-width: 900px) {
-  .cover__columns {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    text-align: center;
-    justify-items: center;
-    padding-right: 0;
-  }
-  .cover__col-left {
-    align-items: center;
-    order: 2;
-  }
-  .welcome__eyebrow {
-    margin: 0 auto 0.5rem;
-    padding: 0.5rem 1rem;
-  }
-  .welcome__title { text-align: center; }
-  .cover__name-block {
-    border-left: none;
-    border-top: 3px solid rgba(37,99,235,0.5);
-    padding: 1rem 0 0.5rem;
-    text-align: center;
-    width: 100%;
-  }
-  .welcome__meta { justify-content: center; }
-  .cover__col-right {
-    order: 1;
-    padding-left: 0;
-    transform: none;
-    margin-top: 0;
-  }
-  .cover__avatar-full { max-width: 350px; }
-}
-
-@media (max-width: 768px) {
-  .cover { padding: 70px 1.2rem 5rem; }
-  .cover__actions {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.8rem;
-  }
-  .cover__btn-primary,
-  .cover__btn-ghost {
-    width: 100%;
-    max-width: 260px;
-  }
-  .cover__avatar-full .avatar-svg { max-height: 300px; }
-}
-
-@media (max-width: 480px) {
-  .cover { padding-top: 60px; }
-  .cover__avatar-full { max-width: 280px; }
-  .cover__avatar-full .avatar-svg { max-height: 250px; }
-  .welcome__title { font-size: clamp(2rem, 6vw, 2.5rem); }
-  .cover__name-main { font-size: clamp(1.2rem, 4vw, 1.6rem); }
-  .cover__chip { font-size: 0.7rem; padding: 0.4rem 1rem; }
-  #cover-title { font-size: 0.7rem; padding: 0.5rem 1.2rem; margin-bottom: 1.5rem; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cover__content, .cover__scroll svg, .cover__avatar-full::before,
-  #cover-title::before, .cover__btn-primary, .cover__btn-ghost,
-  .cover__chip, .cover__avatar-full .avatar-svg {
-    animation: none !important;
-    transition: none !important;
-    transform: none !important;
-  }
-}
-
-.cover, .cover__content { width: 100%; }
-.cover__columns { width: 100%; }
-
-/* ===== CAMPANA DE GAUSS DINÁMICA ===== */
+/* ── CAMPANA DE GAUSS (desktop: absoluta central) ── */
 .cover__gauss-wrapper {
   position: absolute;
   left: 50%;
@@ -494,7 +415,6 @@
   font-size: 1rem;
   font-style: italic;
   color: rgba(147, 197, 253, 0.95);
-  letter-spacing: 0.01em;
   text-shadow: 0 0 20px rgba(96,165,250,0.5);
 }
 
@@ -506,15 +426,14 @@
   text-transform: uppercase;
 }
 
-.gauss__canvas {
-  width: 100%;
-  height: auto;
-}
+.gauss__canvas { width: 100%; height: auto; }
 
 .gauss__label-bottom {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .gauss__tag {
@@ -533,6 +452,145 @@
   border-color: rgba(37, 99, 235, 0.45);
 }
 
+/* ================================================================
+   RESPONSIVE ≤ 900px
+   ================================================================ */
 @media (max-width: 900px) {
-  .cover__gauss-wrapper { display: none; }
+
+  /* ── Sección: altura automática, padding justo ── */
+  .cover {
+    min-height: 100svh;
+    justify-content: center;
+    /* top: espacio para el header fijo (~60px) + aire
+       bottom: espacio suficiente para el contenido        */
+    padding: 70px 1.4rem 2rem;
+  }
+
+  /* Badge superior */
+  #cover-title {
+    font-size: 0.66rem;
+    padding: 0.45rem 1.1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  /* Grid → columna única */
+  .cover__columns {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-right: 0;
+    justify-items: center;
+  }
+
+  /* Ocultar todo lo de la derecha (avatar + botones de escritorio) */
+  .cover__col-right { display: none; }
+
+  /* Ocultar campana de Gauss absoluta */
+  .cover__gauss-wrapper { display: none !important; }
+
+  /* Ocultar la flecha "DESCUBRIR" en móvil — interfiere con layout */
+  .cover__scroll { display: none !important; }
+
+  /* Columna izquierda: única, centrada */
+  .cover__col-left {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    gap: 0;
+  }
+
+  /* Eyebrow como pill */
+  .welcome__eyebrow {
+    justify-content: center;
+    margin: 0 auto 0.7rem;
+    padding: 0.4rem 1.1rem;
+    background: rgba(37,99,235,0.12);
+    border-radius: 99px;
+    font-size: 0.66rem;
+    letter-spacing: 0.2em;
+    gap: 0;
+  }
+  .welcome__eyebrow::before { display: none; }
+
+  /* Título */
+  .welcome__title {
+    font-size: clamp(2.2rem, 7.5vw, 2.8rem);
+    text-align: center;
+    margin: 0 0 0.6rem;
+    line-height: 1.15;
+  }
+
+  /* Bloque nombre */
+  .cover__name-block {
+    border-left: none;
+    border-top: 2px solid rgba(37,99,235,0.4);
+    padding: 0.8rem 0 0.6rem;
+    margin: 0 0 0.6rem;
+    text-align: center;
+    width: 100%;
+  }
+
+  .cover__name-label { margin-bottom: 0.4rem; }
+
+  .cover__name-main {
+    font-size: clamp(1.3rem, 5vw, 1.7rem);
+  }
+
+  /* Chips */
+  .welcome__meta {
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.1rem;
+  }
+
+  .cover__chip {
+    font-size: 0.75rem;
+    padding: 0.42rem 1rem;
+  }
+
+  /* Botones dentro de col-left (los del HTML original están en col-right,
+     pero también están en col-left si usas la estructura corregida).
+     Por si acaso, sobrescribimos .cover__actions en cualquier posición  */
+  .cover__col-left .cover__actions,
+  .cover__actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+    padding-top: 1rem;
+    width: 100%;
+    position: static;        /* sacar del flujo absoluto si lo hubiera */
+  }
+
+  .cover__col-left .cover__actions::before,
+  .cover__actions::before { display: none; }
+
+  .cover__btn-primary,
+  .cover__btn-ghost {
+    width: 100%;
+    max-width: 290px;
+    padding: 0.9rem 1.5rem;
+    font-size: 0.92rem;
+  }
 }
+
+/* ── Móvil muy pequeño ── */
+@media (max-width: 380px) {
+  .cover { padding: 65px 1rem 1.5rem; }
+  .welcome__title  { font-size: 2rem; }
+  .cover__name-main { font-size: 1.25rem; }
+  .cover__chip { font-size: 0.7rem; padding: 0.38rem 0.85rem; }
+  #cover-title { font-size: 0.62rem; }
+}
+
+/* ── Sin animaciones ── */
+@media (prefers-reduced-motion: reduce) {
+  .cover__content, .cover__scroll svg, .cover__avatar-full::before,
+  #cover-title::before, .cover__btn-primary, .cover__btn-ghost,
+  .cover__chip, .cover__avatar-full .avatar-svg, .cover__gauss-wrapper {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+.cover, .cover__content, .cover__columns { width: 100%; }
