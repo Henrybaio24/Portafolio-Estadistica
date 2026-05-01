@@ -722,8 +722,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       const w = W(), h = H();
 
       const bg = ctx.createLinearGradient(0, 0, w, h);
-      bg.addColorStop(0, '#1a0f0c');
-      bg.addColorStop(1, '#2d1510');
+      bg.addColorStop(0, '#1e3a5f');
+      bg.addColorStop(1, '#0d2444');
       ctx.fillStyle = bg;
       ctx.fillRect(0, 0, w, h);
 
@@ -747,14 +747,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         const by = h - bh;
 
         const barGrad = ctx.createLinearGradient(0, by, 0, h);
-        barGrad.addColorStop(0, 'rgba(184,50,31,0.95)');
-        barGrad.addColorStop(1, 'rgba(184,50,31,0.20)');
+        barGrad.addColorStop(0, 'rgba(37,99,235,0.95)');
+        barGrad.addColorStop(1, 'rgba(37,99,235,0.20)');
         ctx.fillStyle = barGrad;
         ctx.beginPath();
         ctx.roundRect(bx - bw / 2, by, bw, bh, [4, 4, 2, 2]);
         ctx.fill();
 
-        ctx.fillStyle = 'rgba(255,130,100,0.85)';
+        ctx.fillStyle = 'rgba(96,165,250,0.85)';
         ctx.beginPath();
         ctx.roundRect(bx - bw / 2, by, bw, 2.5, 2);
         ctx.fill();
@@ -766,7 +766,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }));
       ctx.beginPath();
       linePoints.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
-      ctx.strokeStyle = 'rgba(255,180,150,0.85)';
+      ctx.strokeStyle = 'rgba(147,197,253,0.85)';
       ctx.lineWidth = 2;
       ctx.stroke();
 
@@ -820,7 +820,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const canvas = document.getElementById('evidencias-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-
     function resize() {
       const dpr = window.devicePixelRatio || 1;
       canvas.width  = canvas.offsetWidth  * dpr;
@@ -829,10 +828,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     resize();
     window.addEventListener('resize', resize);
-
     const W = () => canvas.offsetWidth;
     const H = () => canvas.offsetHeight;
-
     const nodes = Array.from({ length: 13 }, () => ({
       x:     Math.random() * (W() - 80) + 40,
       y:     Math.random() * (H() - 80) + 40,
@@ -841,43 +838,37 @@ document.addEventListener('DOMContentLoaded', async () => {
       big:   Math.random() > 0.65,
       pulse: Math.random() * Math.PI * 2
     }));
-
     function drawDoc(x, y, w, h, glow) {
       if (glow) {
-        ctx.shadowColor = 'rgba(184,50,31,0.7)';
+        ctx.shadowColor = 'rgba(37,99,235,0.7)';
         ctx.shadowBlur  = 12;
       }
-      ctx.fillStyle   = 'rgba(245,235,228,0.93)';
-      ctx.strokeStyle = glow ? 'rgba(255,130,100,0.95)' : 'rgba(255,180,150,0.5)';
+      ctx.fillStyle   = 'rgba(219,234,254,0.93)';
+      ctx.strokeStyle = glow ? 'rgba(96,165,250,0.95)' : 'rgba(147,197,253,0.5)';
       ctx.lineWidth   = glow ? 1.3 : 0.7;
       ctx.beginPath();
       ctx.roundRect(x - w / 2, y - h / 2, w, h, 3);
       ctx.fill();
       ctx.stroke();
       ctx.shadowBlur = 0;
-
-      ctx.fillStyle = 'rgba(184,50,31,0.7)';
+      ctx.fillStyle = 'rgba(37,99,235,0.7)';
       ctx.beginPath();
       ctx.roundRect(x - w * 0.3, y - h * 0.22, w * 0.55, 2, 1);
       ctx.fill();
-
       [0, 1].forEach(i => {
-        ctx.fillStyle = `rgba(200,180,170,${0.55 - i * 0.12})`;
+        ctx.fillStyle = `rgba(147,197,253,${0.55 - i * 0.12})`;
         ctx.beginPath();
         ctx.roundRect(x - w * 0.3, y - h * 0.02 + i * 6, w * (0.58 - i * 0.1), 1.5, 1);
         ctx.fill();
       });
     }
-
     function tick() {
       const w = W(), h = H();
-
       const bg = ctx.createLinearGradient(0, 0, w, h);
-      bg.addColorStop(0, '#150c0a');
-      bg.addColorStop(1, '#221008');
+      bg.addColorStop(0, '#0d1f3c');
+      bg.addColorStop(1, '#060e1e');
       ctx.fillStyle = bg;
       ctx.fillRect(0, 0, w, h);
-
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
@@ -886,22 +877,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.strokeStyle = `rgba(255,150,100,${0.25 * (1 - d / 110)})`;
+            ctx.strokeStyle = `rgba(96,165,250,${0.25 * (1 - d / 110)})`;
             ctx.lineWidth = 0.8;
             ctx.stroke();
-
             if (d < 65) {
               const mx = (nodes[i].x + nodes[j].x) / 2;
               const my = (nodes[i].y + nodes[j].y) / 2;
               ctx.beginPath();
               ctx.arc(mx, my, 1.8, 0, Math.PI * 2);
-              ctx.fillStyle = 'rgba(255,160,120,0.45)';
+              ctx.fillStyle = 'rgba(147,197,253,0.45)';
               ctx.fill();
             }
           }
         }
       }
-
       nodes.forEach(n => {
         n.x += n.vx; n.y += n.vy;
         n.pulse += 0.025;
@@ -909,12 +898,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (n.x > w - 22) { n.x = w - 22; n.vx *= -1; }
         if (n.y < 22)     { n.y = 22;     n.vy *= -1; }
         if (n.y > h - 22) { n.y = h - 22; n.vy *= -1; }
-
         const glow = n.big && Math.sin(n.pulse) > 0.4;
         if (n.big) drawDoc(n.x, n.y, 30, 37, glow);
         else       drawDoc(n.x, n.y, 18, 22, false);
       });
-
       requestAnimationFrame(tick);
     }
     tick();
