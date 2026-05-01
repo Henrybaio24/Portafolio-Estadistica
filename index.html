@@ -55,6 +55,19 @@
 
       <!-- COLUMNAS -->
       <div class="cover__columns">
+        <!-- CAMPANA DE GAUSS DINÁMICA -->
+        <div class="cover__gauss-wrapper" aria-hidden="true">
+          <div class="gauss__label-top">
+            <span class="gauss__label-sub">Campana de Gauss</span>
+          </div>
+          <canvas id="gauss-canvas" class="gauss__canvas" width="380" height="200"></canvas>
+          <div class="gauss__label-bottom">
+            <span class="gauss__tag">μ = media</span>
+            <span class="gauss__tag gauss__tag--mid">σ = desv. típica</span>
+            <span class="gauss__tag">N(μ, σ²)</span>
+          </div>
+        </div>
+
 
         <!-- COLUMNA IZQUIERDA -->
         <div class="cover__col-left">
@@ -501,5 +514,6 @@
 
   <script src="js/main.js"></script>
   <script src="js/estilos.js"></script>
+  <script src="js/gauss.js"></script>
 </body>
 </html>

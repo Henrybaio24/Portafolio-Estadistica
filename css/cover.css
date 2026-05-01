@@ -87,10 +87,11 @@
 
 .cover__columns {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 1,5rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
   align-items: center;
   width: 100%;
+  padding-right: 2rem;
 }
 
 .cover__col-left {
@@ -219,6 +220,9 @@
   align-items: center;
   justify-content: center;
   gap: 1.5rem;
+  padding-left: 3rem;
+  transform: translateX(5rem);
+  margin-top: -4rem
 }
 
 .cover__avatar-full {
@@ -387,7 +391,7 @@
   .welcome__title { text-align: center; }
   .cover__name-block { border-left: none; border-top: 3px solid rgba(37,99,235,0.5); padding: 1rem 0 0.5rem; text-align: center; width: 100%; }
   .welcome__meta { justify-content: center; }
-  .cover__col-right { order: 1; }
+  .cover__col-right { order: 1; padding-left: 0; transform: none; margin-top: 0; }
   .cover__avatar-full { max-width: 350px; }
 }
 
@@ -418,3 +422,71 @@
 
 .cover, .cover__content { width: 100%; }
 .cover__columns { width: 100%; }
+
+/* ===== CAMPANA DE GAUSS DINÁMICA ===== */
+.cover__gauss-wrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  animation: gaussAppear 1s ease forwards 0.6s;
+}
+
+@keyframes gaussAppear {
+  from { opacity: 0; transform: translate(-50%, -46%) scale(0.94); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.gauss__label-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.gauss__label-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  color: rgba(96, 165, 250, 0.55);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.gauss__canvas {
+  width: 100%;
+  height: auto;
+}
+
+.gauss__label-bottom {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.gauss__tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: rgba(147, 197, 253, 0.6);
+  background: rgba(37, 99, 235, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  padding: 0.2rem 0.6rem;
+  border-radius: 99px;
+}
+
+.gauss__tag--mid {
+  color: rgba(147, 197, 253, 0.85);
+  background: rgba(37, 99, 235, 0.18);
+  border-color: rgba(37, 99, 235, 0.45);
+}
+
+@media (max-width: 900px) {
+  .cover__gauss-wrapper { display: none; }
+}
