@@ -278,13 +278,22 @@ document.addEventListener('DOMContentLoaded', async () => {
   function openPdfModal(title, file) {
     if (!pdfModal) return;
     modalTitle.textContent = title;
-    pdfFrame.src = file;
+
+    // ── detectar si es Excel ──────────────────────────
+    const isExcel = /\.(xlsx|xls|xlsm)$/i.test(file) || file.includes('excel');
+    
+    if (isExcel) {
+      // Usar el visor de Office de Microsoft (renderiza gráficas reales)
+      const officeViewer = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(file)}`;
+      pdfFrame.src = officeViewer;
+    } else {
+      pdfFrame.src = file;
+    }
+    // ─────────────────────────────────────────────────
+
     pdfModal.classList.add('active');
     pdfModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    // Pequeña animación de entrada
-    pdfModal.style.animation = 'modalFadeIn 0.3s ease';
-    setTimeout(() => { if (pdfModal) pdfModal.style.animation = ''; }, 300);
   }
 
   function closePdfModal() {
