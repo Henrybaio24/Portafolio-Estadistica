@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 480" fill="none" class="avatar-svg">
+  <defs>
+    <filter id="sh" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="rgba(0,0,0,0.13)"/>
+    </filter>
+    <filter id="sh2" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.10)"/>
+    </filter>
+  </defs>
+  <rect x="55" y="390" width="210" height="14" rx="7" fill="#D1D5DB"/>
+  <rect x="75" y="404" width="170" height="10" rx="5" fill="#E5E7EB"/>
+  <rect x="115" y="414" width="90" height="30" rx="5" fill="#9CA3AF"/>
+  <rect x="108" y="442" width="104" height="12" rx="6" fill="#6B7280"/>
+  <rect x="90" y="452" width="140" height="10" rx="5" fill="#4B5563"/>
+  <rect x="60" y="300" width="200" height="92" rx="10" fill="#1F2937"/>
+  <rect x="65" y="305" width="190" height="82" rx="7" fill="#111827"/>
+  <rect x="72" y="312" width="55" height="62" rx="3" fill="#1a2332"/>
+  <rect x="75" y="316" width="8" height="40" rx="2" fill="#B8321F" opacity="0.55"/>
+  <rect x="85" y="310" width="8" height="46" rx="2" fill="#B8321F" opacity="0.75"/>
+  <rect x="95" y="313" width="8" height="43" rx="2" fill="#B8321F" opacity="0.60"/>
+  <rect x="105" y="307" width="8" height="49" rx="2" fill="#B8321F" opacity="0.85"/>
+  <rect x="115" y="316" width="8" height="40" rx="2" fill="#B8321F" opacity="0.50"/>
+  <polyline points="79,316 89,310 99,313 109,307 119,316" stroke="rgba(255,180,150,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <rect x="134" y="312" width="113" height="62" rx="3" fill="#1a2332"/>
+  <rect x="139" y="317" width="50" height="5" rx="2" fill="#B8321F" opacity="0.6"/>
+  <rect x="139" y="326" width="72" height="4" rx="2" fill="#6B7280" opacity="0.5"/>
+  <rect x="139" y="334" width="60" height="4" rx="2" fill="#6366F1" opacity="0.5"/>
+  <rect x="139" y="342" width="80" height="4" rx="2" fill="#10B981" opacity="0.45"/>
+  <rect x="139" y="350" width="55" height="4" rx="2" fill="#F59E0B" opacity="0.5"/>
+  <rect x="139" y="358" width="68" height="4" rx="2" fill="#6B7280" opacity="0.4"/>
+  <rect x="55" y="390" width="210" height="10" rx="5" fill="#374151"/>
+  <rect x="100" y="270" width="120" height="8" rx="4" fill="#9CA3AF"/>
+  <rect x="95" y="200" width="130" height="80" rx="8" fill="#B8321F"/>
+  <path d="M130 200 L160 225 L190 200" fill="#8A2517"/>
+  <rect x="103" y="213" width="22" height="18" rx="3" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  <rect x="106" y="215" width="16" height="12" rx="1" fill="rgba(255,255,255,0.08)"/>
+  <rect x="100" y="265" width="16" height="14" rx="7" fill="#F5CBA7"/>
+  <rect x="204" y="265" width="16" height="14" rx="7" fill="#F5CBA7"/>
+  <path d="M95 205 Q75 210 68 240 Q62 265 72 285 Q80 298 100 290" stroke="#B8321F" stroke-width="22" stroke-linecap="round" fill="none"/>
+  <path d="M225 205 Q245 210 252 240 Q258 265 248 285 Q240 298 220 290" stroke="#B8321F" stroke-width="22" stroke-linecap="round" fill="none"/>
+  <ellipse cx="74" cy="278" rx="18" ry="13" fill="#F5CBA7"/>
+  <ellipse cx="246" cy="278" rx="18" ry="13" fill="#F5CBA7"/>
+  <rect x="60" y="280" width="10" height="14" rx="5" fill="#F5CBA7"/>
+  <rect x="72" y="282" width="10" height="15" rx="5" fill="#F5CBA7"/>
+  <rect x="84" y="280" width="10" height="14" rx="5" fill="#F5CBA7"/>
+  <rect x="236" y="280" width="10" height="14" rx="5" fill="#F5CBA7"/>
+  <rect x="248" y="282" width="10" height="15" rx="5" fill="#F5CBA7"/>
+  <rect x="260" y="280" width="10" height="14" rx="5" fill="#F5CBA7"/>
+  <ellipse cx="160" cy="148" rx="50" ry="52" fill="#F5CBA7"/>
+  <ellipse cx="110" cy="152" rx="9" ry="12" fill="#F5CBA7"/>
+  <ellipse cx="210" cy="152" rx="9" ry="12" fill="#F5CBA7"/>
+  <path d="M110 130 Q110 86 160 84 Q210 86 210 130 Q210 106 194 97 Q178 90 160 90 Q142 90 126 97 Q110 106 110 130Z" fill="#1C1C1C"/>
+  <rect x="108" y="128" width="10" height="22" rx="5" fill="#1C1C1C"/>
+  <rect x="202" y="128" width="10" height="22" rx="5" fill="#1C1C1C"/>
+  <path d="M108 118 Q125 105 160 103 Q195 105 212 118 Q216 112 216 125 Q216 100 160 96 Q104 100 104 125 Q104 112 108 118Z" fill="#B8321F"/>
+  <rect x="104" y="114" width="112" height="14" rx="7" fill="#B8321F"/>
+  <path d="M104 121 Q108 108 160 106 Q212 108 216 121" fill="#B8321F"/>
+  <rect x="140" y="106" width="40" height="6" rx="3" fill="#8A2517"/>
+  <rect x="128" y="108" width="64" height="6" rx="3" fill="#8A2517"/>
+  <rect x="104" y="118" width="112" height="8" rx="4" fill="#8A2517"/>
+  <ellipse cx="144" cy="150" rx="8" ry="9" fill="white"/>
+  <ellipse cx="176" cy="150" rx="8" ry="9" fill="white"/>
+  <circle cx="146" cy="152" r="5" fill="#1C1C1C"/>
+  <circle cx="178" cy="152" r="5" fill="#1C1C1C"/>
+  <circle cx="148" cy="150" r="2" fill="white"/>
+  <circle cx="180" cy="150" r="2" fill="white"/>
+  <path d="M136 140 Q144 136 152 140" stroke="#1C1C1C" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <path d="M168 140 Q176 136 184 140" stroke="#1C1C1C" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <path d="M157 160 Q156 167 160 168 Q164 167 163 160" stroke="#E8A87C" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  <path d="M148 174 Q160 183 172 174" stroke="#C27A4A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+  <g class="av-chip1" filter="url(#sh2)">
+    <rect x="244" y="115" width="58" height="36" rx="9" fill="white"/>
+    <rect x="251" y="122" width="16" height="16" rx="3" fill="#EEF2FF"/>
+    <text x="254" y="134" font-family="monospace" font-size="11" fill="#6366F1" font-weight="700">{}</text>
+    <rect x="272" y="126" width="22" height="3" rx="1" fill="#D1D5DB"/>
+    <rect x="272" y="132" width="16" height="3" rx="1" fill="#E5E7EB"/>
+  </g>
+  <g class="av-chip2" filter="url(#sh2)">
+    <rect x="18" y="148" width="58" height="36" rx="9" fill="white"/>
+    <rect x="25" y="159" width="6" height="18" rx="2" fill="#B8321F" opacity="0.5"/>
+    <rect x="33" y="153" width="6" height="24" rx="2" fill="#B8321F" opacity="0.75"/>
+    <rect x="41" y="156" width="6" height="21" rx="2" fill="#B8321F" opacity="0.6"/>
+    <rect x="49" y="149" width="6" height="28" rx="2" fill="#B8321F"/>
+    <polyline points="28,159 36,153 44,156 52,149" stroke="rgba(184,50,31,0.7)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+  <g class="av-chip3" filter="url(#sh2)">
+    <rect x="20" y="240" width="52" height="36" rx="9" fill="white"/>
+    <text x="28" y="264" font-family="Georgia,serif" font-size="22" fill="#B8321F" font-weight="700">Σ</text>
+  </g>
+</svg>

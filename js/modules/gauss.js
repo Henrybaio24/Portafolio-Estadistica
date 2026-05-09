@@ -1,4 +1,4 @@
-(function () {
+function initGauss() {
   const canvas = document.getElementById('gauss-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
@@ -236,4 +236,4 @@
 
   initParticles();
   draw();
-})();
+};
