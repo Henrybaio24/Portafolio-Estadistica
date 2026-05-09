@@ -478,8 +478,10 @@
   .cover__columns {
     grid-template-columns: 1fr;
     gap: 0;
-    padding-right: 0;
+    padding-right: 0;   /* ← reset del 2rem de desktop */
+    padding-left: 0;
     justify-items: center;
+    width: 100%;
   }
 
   /* Ocultar todo lo de la derecha (avatar + botones de escritorio) */
@@ -496,6 +498,8 @@
     align-items: center;
     text-align: center;
     width: 100%;
+    padding-left: 0;    /* ← ESTO FALTABA */
+    padding-right: 0;   /* ← por simetría */
     gap: 0;
   }
 
