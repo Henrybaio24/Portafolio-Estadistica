@@ -73,4 +73,12 @@ function initModalPdf() {
     `;
     document.head.appendChild(style);
   }
+  
+  document.querySelectorAll('.open-preview').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const title = btn.dataset.title || 'Documento';
+      const file  = btn.dataset.file  || '';
+      if (file) window.openPdfModal(title, file);
+    });
+  });
 }
