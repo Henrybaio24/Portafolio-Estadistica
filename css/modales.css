@@ -204,6 +204,56 @@
 #wmodal-search-clear:hover { color: var(--primary); }
 #wmodal-search-clear.visible { display: flex; }
 
+.wmodal__search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 200px;
+}
+
+.wmodal__search {
+  flex: 1;
+  min-width: 0; /* evita overflow en flex */
+}
+
+.wmodal__sort-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px; /* misma altura que el search */
+  padding: 0 12px;
+  background: rgba(37, 99, 235, 0.04);
+  border: 1px solid rgba(37, 99, 235, 0.12);
+  border-radius: 10px; /* igual que .wmodal__search */
+  font-size: 0.8rem;
+  font-weight: 500;
+  font-family: var(--font);
+  color: var(--text-light);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.wmodal__sort-btn:hover {
+  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--primary);
+}
+
+.wmodal__sort-btn.wmodal__sort--active {
+  background: rgba(37, 99, 235, 0.08);
+  border-color: rgba(37, 99, 235, 0.3);
+  color: var(--primary);
+}
+
+/* Responsive: en móvil ocupa el ancho completo */
+@media (max-width: 768px) {
+  .wmodal__search-bar {
+    width: 100%;
+  }
+}
+
 @media (max-width: 1100px) { .wmodal__grid { grid-template-columns: repeat(4, 1fr); } }
 @media (max-width: 860px)  { .wmodal__grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 600px)  { .wmodal__grid { grid-template-columns: repeat(2, 1fr); } }

@@ -22,6 +22,8 @@
 .ev__progress-row:nth-child(2) { animation-delay: 0.2s; }
 .ev__progress-row:nth-child(3) { animation-delay: 0.3s; }
 .ev__progress-row:nth-child(4) { animation-delay: 0.4s; }
+.ev__progress-row:nth-child(5) { animation-delay: 0.5s; }
+.ev__progress-row:nth-child(6) { animation-delay: 0.6s; }
 
 @keyframes slideInRight {
   to {
@@ -140,8 +142,14 @@
 .ev__progress-fill--mapas { 
   background: linear-gradient(90deg, #059669 0%, #10b981 100%);
 }
-.ev__progress-fill--practica { 
+.ev__progress-fill--pruebas { 
   background: linear-gradient(90deg, #d97706 0%, #f59e0b 100%);
+}
+.ev__progress-fill--diapositivas { 
+  background: linear-gradient(90deg, #8b5cf6 0%, #a78bfa 100%);
+}
+.ev__progress-fill--otros { 
+  background: linear-gradient(90deg, #6b7280 0%, #9ca3af 100%);
 }
 
 /* Leyenda estadística inferior */

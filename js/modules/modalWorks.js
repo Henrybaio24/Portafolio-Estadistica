@@ -4,24 +4,55 @@ const typeLabels = {
   individual: 'Individual',
   grupal: 'Grupal',
   mapas: 'Mapa Mental',
+  pruebas: 'Pruebas',
+  diapositivas: 'Diapositivas',
+  otros: 'Otros',
 };
 
 function initModalWorks(works) {
-  const worksModal = document.getElementById('works-modal');
-  const openWorksBtn = document.getElementById('open-works-modal');
+  const worksModal    = document.getElementById('works-modal');
+  const openWorksBtn  = document.getElementById('open-works-modal');
   const closeWorksBtn = document.getElementById('close-works-modal');
-  const wmodalGrid = document.getElementById('wmodal-grid');
-  const wmodalEmpty = document.getElementById('wmodal-empty');
+  const wmodalGrid    = document.getElementById('wmodal-grid');
+  const wmodalEmpty   = document.getElementById('wmodal-empty');
   const wmodalFilters = document.querySelectorAll('.wmodal__filter');
-  const searchInput = document.getElementById('wmodal-search');
-  const searchClear = document.getElementById('wmodal-search-clear');
+  const searchInput   = document.getElementById('wmodal-search');
+  const searchClear   = document.getElementById('wmodal-search-clear');
+  const sortBtn       = document.getElementById('wmodal-sort-btn');
+  const sortIcon      = document.getElementById('wmodal-sort-icon');
+  const sortLabel     = document.getElementById('wmodal-sort-label');
 
   let currentFilter = 'todos';
   let currentSearch = '';
-  let worksLoaded = false;
+  let sortAsc       = true;   // true = más antiguos primero, false = más recientes
+  let worksLoaded   = false;
 
   if (!worksModal) return;
 
+  // ── ORDENAR ──────────────────────────────────────────────
+  function getSortedWorks(list) {
+    return [...list].sort((a, b) => {
+      const da = new Date(a.date);
+      const db = new Date(b.date);
+      return sortAsc ? da - db : db - da;
+    });
+  }
+
+  function updateSortBtn() {
+    if (!sortBtn) return;
+    sortBtn.classList.toggle('wmodal__sort--active', !sortAsc);
+    if (sortIcon)  sortIcon.className = sortAsc ? 'ti ti-sort-ascending' : 'ti ti-sort-descending';
+    if (sortLabel) sortLabel.textContent = sortAsc ? 'Más antiguos' : 'Más recientes';
+    sortBtn.setAttribute('aria-label', sortAsc ? 'Ordenar: más antiguos primero' : 'Ordenar: más recientes primero');
+  }
+
+  sortBtn?.addEventListener('click', () => {
+    sortAsc = !sortAsc;
+    updateSortBtn();
+    applyFilters();
+  });
+
+  // ── MODAL ─────────────────────────────────────────────────
   function openWorksModal() {
     worksModal.classList.add('wmodal--open');
     worksModal.setAttribute('aria-hidden', 'false');
@@ -29,6 +60,7 @@ function initModalWorks(works) {
 
     setTimeout(() => {
       if (!worksLoaded) {
+        updateSortBtn();
         applyFilters();
         worksLoaded = true;
       }
@@ -48,6 +80,7 @@ function initModalWorks(works) {
     openWorksBtn?.focus();
   }
 
+  // ── FILTROS + BÚSQUEDA ────────────────────────────────────
   function applyFilters() {
     const query = currentSearch.toLowerCase().trim();
 
@@ -58,14 +91,16 @@ function initModalWorks(works) {
     if (query) {
       filtered = filtered.filter(w =>
         (w.title || '').toLowerCase().includes(query) ||
-        (w.desc || '').toLowerCase().includes(query) ||
-        (w.type || '').toLowerCase().includes(query)
+        (w.desc  || '').toLowerCase().includes(query) ||
+        (w.type  || '').toLowerCase().includes(query)
       );
     }
 
+    filtered = getSortedWorks(filtered);
     renderWorksInModal(filtered);
   }
 
+  // ── RENDER ────────────────────────────────────────────────
   function renderWorksInModal(filtered) {
     if (!wmodalGrid) return;
     wmodalGrid.innerHTML = '';
@@ -87,14 +122,14 @@ function initModalWorks(works) {
       const card = document.createElement('article');
       card.className = 'wcard';
       card.style.animationDelay = (i * 0.07) + 's';
-      card.dataset.file = work.file;
+      card.dataset.file  = work.file;
       card.dataset.title = work.title;
 
       card.innerHTML = `
         <div class="wcard__thumb">
           <div class="wcard__skeleton-overlay"></div>
           <iframe src="${work.file}#toolbar=0&navpanes=0&scrollbar=0&page=1&view=FitH"
-                tabindex="-1" aria-hidden="true"></iframe>
+                  tabindex="-1" aria-hidden="true"></iframe>
           <div class="wcard__thumb-overlay">
             <div class="wcard__view-btn">
               <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -117,39 +152,32 @@ function initModalWorks(works) {
           </div>
         </div>`;
 
-      const iframe = card.querySelector('iframe');
+      const iframe  = card.querySelector('iframe');
       const overlay = card.querySelector('.wcard__skeleton-overlay');
       let loaded = false;
 
-      if (iframe) {
-        iframe.addEventListener('load', () => {
-          loaded = true;
-          if (overlay) {
-            overlay.style.opacity = '0';
-            setTimeout(() => overlay.remove(), 400);
-          }
-        }, { once: true });
-      }
+      iframe?.addEventListener('load', () => {
+        loaded = true;
+        if (overlay) {
+          overlay.style.opacity = '0';
+          setTimeout(() => overlay.remove(), 400);
+        }
+      }, { once: true });
 
-      // Timeout con fallback de error
-            // Timeout con fallback: thumbnail de Drive o icono del tipo
       setTimeout(() => {
         if (!loaded && overlay && overlay.parentNode) {
-          const fileUrl = work.file;
-          const fileIdMatch = fileUrl.match(/\/d\/([^\/]+)/);
+          const fileIdMatch = work.file.match(/\/d\/([^\/]+)/);
           const fileId = fileIdMatch ? fileIdMatch[1] : null;
-          
+
           if (fileId) {
-            // Mostrar thumbnail de Google Drive
             overlay.innerHTML = `
               <div style="position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#F8FAFC;">
-                <img src="https://drive.google.com/thumbnail?id=${fileId}&sz=w400-h300" 
+                <img src="https://drive.google.com/thumbnail?id=${fileId}&sz=w400-h300"
                      style="width:100%;height:100%;object-fit:cover;border-radius:8px;"
                      alt="Vista previa de ${work.title}"
                      onerror="this.parentElement.innerHTML='<div style=\\'display:flex;flex-direction:column;align-items:center;gap:0.5rem;color:#6B7280;\\'><svg width=\\'32\\' height=\\'32\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'1.5\\'><path d=\\'M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z\\'/><polyline points=\\'14 2 14 8 20 8\\'/></svg><span style=\\'font-size:0.75rem;\\'>${typeLabels[work.type] || work.type}</span></div>'">
               </div>`;
           } else {
-            // Sin file ID → icono del tipo de trabajo
             const icon = work.type === 'individual' ? '📄' : work.type === 'grupal' ? '👥' : '🧠';
             overlay.innerHTML = `
               <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:0.5rem;color:#6B7280;">
@@ -178,7 +206,7 @@ function initModalWorks(works) {
     );
   }
 
-  // Event listeners
+  // ── EVENT LISTENERS ───────────────────────────────────────
   openWorksBtn?.addEventListener('click', openWorksModal);
   closeWorksBtn?.addEventListener('click', closeWorksModal);
 
@@ -205,7 +233,6 @@ function initModalWorks(works) {
     applyFilters();
   });
 
-  // Click en tarjeta → abrir PDF
   wmodalGrid?.addEventListener('click', e => {
     const card = e.target.closest('.wcard');
     if (card && window.openPdfModal) {
@@ -213,7 +240,6 @@ function initModalWorks(works) {
     }
   });
 
-  // Escape para cerrar
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && worksModal.classList.contains('wmodal--open')) {
       closeWorksModal();

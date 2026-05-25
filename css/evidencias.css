@@ -95,6 +95,9 @@
 .ev__progress-fill--individual { background: linear-gradient(90deg, #10b981, #34d399); }
 .ev__progress-fill--grupal     { background: linear-gradient(90deg, #2563EB, #60A5FA); }
 .ev__progress-fill--mapas      { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.ev__progress-fill--pruebas    { background: linear-gradient(90deg, #ef4444, #f87171); }
+.ev__progress-fill--diapositivas { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+.ev__progress-fill--otros      { background: linear-gradient(90deg, #6b7280, #9ca3af); }
 
 .ev__progress-fill::after {
   content: '';
@@ -110,6 +113,97 @@
 }
 
 .ev__progress-fill.animate { animation: barGlow 0.6s ease-out; }
+
+/* ============================================
+   BARRAS OCULTAS - VER MÁS
+   ============================================ */
+.ev__progress-row--oculta {
+  display: none;
+  opacity: 0;
+  transform: translateY(-15px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.ev__progress-row--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   BOTÓN VER MÁS — integrado como fila
+   ============================================ */
+.ev__ver-mas-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  background: rgba(37, 99, 235, 0.03);
+  border-radius: 16px;
+  padding: 0.85rem 1rem;
+  border: 1px dashed rgba(37, 99, 235, 0.25);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.ev__ver-mas-row:hover {
+  background: rgba(37, 99, 235, 0.07);
+  border-color: rgba(37, 99, 235, 0.45);
+  transform: translateX(5px);
+}
+
+.ev__ver-mas-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ev__ver-mas-pill {
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+
+.ev__ver-mas-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.ev__ver-mas-dots {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.ev__ver-mas-dots span {
+  display: block;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: rgba(37, 99, 235, 0.25);
+  transition: background 0.2s;
+}
+
+.ev__ver-mas-row:hover .ev__ver-mas-dots span {
+  background: rgba(37, 99, 235, 0.5);
+}
+
+.ev__ver-mas-chevron {
+  color: var(--primary);
+  opacity: 0.7;
+  transition: transform 0.3s ease;
+}
+
+/* Quita los estilos viejos del wrapper y btn */
+.ev__ver-mas-wrapper,
+.ev__ver-mas-btn,
+.ev__ver-mas-btn:hover,
+.ev__ver-mas-btn.expandido { all: unset; }
+
 @keyframes barGlow {
   0% { box-shadow: 0 0 0 0 rgba(37,99,235,0); }
   100% { box-shadow: 0 0 0 6px rgba(37,99,235,0); }
