@@ -136,6 +136,23 @@
 .wcard__type--individual { background: rgba(37,99,235,0.08); color: var(--primary); border-color: rgba(37,99,235,0.18); }
 .wcard__type--grupal     { background: rgba(16,185,129,0.08); color: #059669; border-color: rgba(16,185,129,0.18); }
 .wcard__type--mapas      { background: rgba(245,158,11,0.08); color: #d97706; border-color: rgba(245,158,11,0.18); }
+.wcard__type--pruebas {
+    background: rgba(239, 68, 68, 0.12);
+    color: #dc2626;
+    border-color: rgba(239, 68, 68, 0.25);
+}
+
+.wcard__type--diapositivas {
+    background: rgba(59, 130, 246, 0.12);
+    color: #2563eb;
+    border-color: rgba(59, 130, 246, 0.25);
+}
+
+.wcard__type--otros {
+    background: rgba(107, 114, 128, 0.12);
+    color: #4b5563;
+    border-color: rgba(107, 114, 128, 0.25);
+}
 
 .wcard__title { font-size: 0.86rem; font-weight: 600; line-height: 1.38; color: var(--text); margin: 0; }
 .wcard__desc  { font-size: 0.76rem; color: var(--text-light); line-height: 1.55; margin: 0; flex: 1; }
