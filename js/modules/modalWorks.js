@@ -9,7 +9,93 @@ const typeLabels = {
   otros: 'Otros',
 };
 
+function injectWorksThumbStyles() {
+  if (document.querySelector('#wcard-thumb-styles')) return;
+  const style = document.createElement('style');
+  style.id = 'wcard-thumb-styles';
+  style.textContent = `
+    .wcard__thumb {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #F1F5F9;
+    }
+
+    /* Skeleton shimmer mientras carga la miniatura */
+    .wcard__skeleton {
+      position: absolute; inset: 0;
+      background: linear-gradient(100deg, #F1F5F9 30%, #E2E8F0 50%, #F1F5F9 70%);
+      background-size: 200% 100%;
+      animation: wcardShimmer 1.4s ease-in-out infinite;
+      transition: opacity 0.35s ease;
+      z-index: 1;
+    }
+    @keyframes wcardShimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Imagen: fade-in suave + ligero zoom al hover */
+    .wcard__img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.02);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      display: block;
+      position: relative;
+      z-index: 0;
+    }
+    .wcard__img--loaded { opacity: 1; }
+    .wcard__thumb:hover .wcard__img { transform: scale(1.06); }
+
+    /* Fallback (cuando no hay miniatura disponible) */
+    .wcard__fallback {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.5rem;
+      background: linear-gradient(160deg, rgba(184,50,31,0.06), rgba(184,50,31,0.02));
+      color: var(--primary, #B8321F);
+      animation: wcardFadeIn 0.3s ease;
+    }
+    .wcard__fallback span {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: #64748B;
+    }
+    @keyframes wcardFadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+
+    /* Overlay "Ver" al hacer hover (oscurece levemente la miniatura) */
+    .wcard__thumb-overlay {
+      position: absolute; inset: 0; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(15, 23, 42, 0);
+      opacity: 0;
+      transition: opacity 0.25s ease, background 0.25s ease;
+    }
+    .wcard__thumb:hover .wcard__thumb-overlay {
+      opacity: 1;
+      background: rgba(15, 23, 42, 0.35);
+    }
+    .wcard__view-btn {
+      display: flex; align-items: center; gap: 0.4rem;
+      background: #fff; color: #1E293B;
+      font-size: 0.78rem; font-weight: 600;
+      padding: 0.45rem 0.9rem; border-radius: 999px;
+      transform: translateY(6px);
+      transition: transform 0.25s ease;
+    }
+    .wcard__thumb:hover .wcard__view-btn { transform: translateY(0); }
+  `;
+  document.head.appendChild(style);
+}
+
 function initModalWorks(works) {
+  injectWorksThumbStyles();
   const worksModal    = document.getElementById('works-modal');
   const openWorksBtn  = document.getElementById('open-works-modal');
   const closeWorksBtn = document.getElementById('close-works-modal');
@@ -125,11 +211,49 @@ function initModalWorks(works) {
       card.dataset.file  = work.file;
       card.dataset.title = work.title;
 
+      // ── MINIATURA LIGERA ─────────────────────────────────
+      // Antes: se creaba un <iframe> por cada tarjeta apuntando directo
+      // al documento completo en Drive. Con 26+ trabajos, eso disparaba
+      // 26+ cargas pesadas simultáneas al abrir la pestaña "Todos",
+      // saturando la conexión y haciendo que Drive respondiera lento
+      // incluso para el documento que el usuario quería abrir después.
+      //
+      // Ahora: se usa directamente la miniatura liviana de Drive
+      // (drive.google.com/thumbnail) en mayor resolución, con un
+      // skeleton "shimmer" mientras carga y un fade-in al terminar.
+      // El documento pesado (iframe) solo se carga cuando el usuario
+      // hace click para verlo, dentro de modalPdf.js.
+      const fileIdMatch = work.file.match(/\/d\/([^\/]+)/);
+      const fileId = fileIdMatch ? fileIdMatch[1] : null;
+
+      const typeIcons = {
+        individual: '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>',
+        grupal:     '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>',
+        mapas:      '<circle cx="12" cy="12" r="4"/><circle cx="4" cy="6" r="2"/><circle cx="20" cy="6" r="2"/><circle cx="4" cy="18" r="2"/><circle cx="20" cy="18" r="2"/><path d="M8.5 10L6 7.5M15.5 10L18 7.5M8.5 14L6 16.5M15.5 14L18 16.5"/>',
+        pruebas:    '<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>',
+        diapositivas: '<rect x="2" y="4" width="20" height="14" rx="1.5"/><path d="M8 21h8M12 18v3"/>',
+        otros:      '<circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>',
+      };
+      const iconSvg = typeIcons[work.type] || typeIcons.otros;
+      const fallbackHtml = `
+        <div class="wcard__fallback">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${iconSvg}</svg>
+          <span>${typeLabels[work.type] || work.type}</span>
+        </div>`;
+
+      const thumbContent = fileId
+        ? `<div class="wcard__skeleton"></div>
+           <img src="https://drive.google.com/thumbnail?id=${fileId}&sz=w800-h600"
+                loading="lazy"
+                class="wcard__img"
+                alt="Vista previa de ${work.title}"
+                onload="this.previousElementSibling.style.opacity='0';this.classList.add('wcard__img--loaded')"
+                onerror="this.previousElementSibling.remove();this.replaceWith(Object.assign(document.createElement('div'),{className:'wcard__fallback',innerHTML:this.parentElement.dataset.fallback}))">`
+        : fallbackHtml;
+
       card.innerHTML = `
-        <div class="wcard__thumb">
-          <div class="wcard__skeleton-overlay"></div>
-          <iframe src="${work.file}#toolbar=0&navpanes=0&scrollbar=0&page=1&view=FitH"
-                  tabindex="-1" aria-hidden="true"></iframe>
+        <div class="wcard__thumb" data-fallback="${fallbackHtml.replace(/"/g, '&quot;')}">
+          ${thumbContent}
           <div class="wcard__thumb-overlay">
             <div class="wcard__view-btn">
               <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -151,47 +275,6 @@ function initModalWorks(works) {
             ${new Date(work.date + 'T00:00:00').toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
           </div>
         </div>`;
-
-      const iframe  = card.querySelector('iframe');
-      const overlay = card.querySelector('.wcard__skeleton-overlay');
-      let loaded = false;
-
-      iframe?.addEventListener('load', () => {
-        loaded = true;
-        if (overlay) {
-          overlay.style.opacity = '0';
-          setTimeout(() => overlay.remove(), 400);
-        }
-      }, { once: true });
-
-      setTimeout(() => {
-        if (!loaded && overlay && overlay.parentNode) {
-          const fileIdMatch = work.file.match(/\/d\/([^\/]+)/);
-          const fileId = fileIdMatch ? fileIdMatch[1] : null;
-
-          if (fileId) {
-            overlay.innerHTML = `
-              <div style="position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#F8FAFC;">
-                <img src="https://drive.google.com/thumbnail?id=${fileId}&sz=w400-h300"
-                     style="width:100%;height:100%;object-fit:cover;border-radius:8px;"
-                     alt="Vista previa de ${work.title}"
-                     onerror="this.parentElement.innerHTML='<div style=\\'display:flex;flex-direction:column;align-items:center;gap:0.5rem;color:#6B7280;\\'><svg width=\\'32\\' height=\\'32\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'1.5\\'><path d=\\'M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z\\'/><polyline points=\\'14 2 14 8 20 8\\'/></svg><span style=\\'font-size:0.75rem;\\'>${typeLabels[work.type] || work.type}</span></div>'">
-              </div>`;
-          } else {
-            const icon = work.type === 'individual' ? '📄' : work.type === 'grupal' ? '👥' : '🧠';
-            overlay.innerHTML = `
-              <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:0.5rem;color:#6B7280;">
-                <span style="font-size:2rem;">${icon}</span>
-                <span style="font-size:0.75rem;font-weight:500;">${typeLabels[work.type] || work.type}</span>
-                <span style="font-size:0.65rem;color:#9CA3AF;">Click para ver</span>
-              </div>`;
-          }
-          overlay.style.background = '#F8FAFC';
-        } else if (overlay && overlay.parentNode) {
-          overlay.style.opacity = '0';
-          setTimeout(() => overlay.remove(), 400);
-        }
-      }, 8000);
 
       wmodalGrid.appendChild(card);
     });

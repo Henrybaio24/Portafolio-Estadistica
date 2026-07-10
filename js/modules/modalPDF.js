@@ -27,6 +27,11 @@ function initModalPdf() {
 
   function showLoading() {
     loadingOverlay.classList.add('modal__loading--visible');
+    // Restaurar el texto original cada vez que se abre un documento nuevo
+    const textEl = loadingOverlay.querySelector('.modal__loading-text');
+    if (textEl) {
+      textEl.innerHTML = `Cargando documento<span class="modal__loading-dots"></span>`;
+    }
   }
 
   function hideLoading() {
@@ -59,8 +64,15 @@ function initModalPdf() {
       ? `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(file)}`
       : file;
 
-    // 4. Timeout de seguridad: si tarda más de 12 s, ocultar overlay igualmente
-    loadTimeout = setTimeout(hideLoading, 12000);
+    // 4. Timeout de seguridad: si tarda más de 25 s, ofrecer abrir en pestaña nueva
+    //    (antes eran 12s, muy poco para conexiones lentas o cuando Drive tarda)
+    loadTimeout = setTimeout(() => {
+      const textEl = loadingOverlay.querySelector('.modal__loading-text');
+      if (textEl) {
+        textEl.innerHTML = `Esto está tardando más de lo normal.<br>
+          <a href="${src}" target="_blank" rel="noopener" style="color:#2563EB;text-decoration:underline;">Abrir en una pestaña nueva</a>`;
+      }
+    }, 25000);
 
     // 5. Escuchar el load del iframe para ocultar el overlay
     pdfFrame.addEventListener('load', hideLoading, { once: true });
