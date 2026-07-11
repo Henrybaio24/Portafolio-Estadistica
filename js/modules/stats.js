@@ -96,7 +96,6 @@ function renderProgressBars(works) {
     container.appendChild(row);
   });
 
-  // Botón "Ver más" integrado como fila
   if (totalTipos > BARRAS_VISIBLES) {
     const ocultas = totalTipos - BARRAS_VISIBLES;
     const btnWrapper = document.createElement('div');
@@ -158,9 +157,6 @@ function renderProgressBars(works) {
   document.querySelectorAll('.ev__progress-row').forEach(row => observer.observe(row));
 }
 
-// ============================================
-// TOGGLE MOSTRAR/OCULTAR BARRAS
-// ============================================
 function toggleBarrasOcultas() {
   const btn      = document.getElementById('btn-ver-mas-barras');
   const label    = document.getElementById('ev-ver-mas-label');
@@ -196,7 +192,6 @@ function toggleBarrasOcultas() {
     }
   });
 
-  // Actualizar estado visual del botón
   btn.classList.toggle('expandido', !estaExpandido);
   label.textContent           = estaExpandido ? 'Ver más tipos' : 'Ver menos';
   chevron.style.transform     = estaExpandido ? 'rotate(0deg)' : 'rotate(180deg)';
