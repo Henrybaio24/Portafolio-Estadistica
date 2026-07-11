@@ -7,8 +7,6 @@ function initModalPdf() {
   const modalClose = document.getElementById('modal-close');
   if (!pdfModal) return;
 
-  // ── OVERLAY DE CARGA ──────────────────────────────────────
-  // Se inyecta una sola vez dentro del .modal__viewer
   let loadingOverlay = pdfModal.querySelector('.modal__loading');
   if (!loadingOverlay) {
     loadingOverlay = document.createElement('div');
@@ -27,7 +25,6 @@ function initModalPdf() {
 
   function showLoading() {
     loadingOverlay.classList.add('modal__loading--visible');
-    // Restaurar el texto original cada vez que se abre un documento nuevo
     const textEl = loadingOverlay.querySelector('.modal__loading-text');
     if (textEl) {
       textEl.innerHTML = `Cargando documento<span class="modal__loading-dots"></span>`;
@@ -39,7 +36,6 @@ function initModalPdf() {
     loadingOverlay.classList.remove('modal__loading--visible');
   }
 
-  // ── ABRIR MODAL ───────────────────────────────────────────
   window.openPdfModal = function(title, file) {
     const isExcel = /\.(xlsx|xls|xlsm)$/i.test(file) || file.includes('excel');
     const isPDF   = /\.pdf$/i.test(file) ||
@@ -52,20 +48,15 @@ function initModalPdf() {
       return;
     }
 
-    // 1. Limpiar iframe ANTES de asignar nuevo src → evita ver el documento anterior
     pdfFrame.src = '';
 
-    // 2. Mostrar overlay inmediatamente
     showLoading();
 
-    // 3. Asignar título y nuevo src
     modalTitle.textContent = title;
     const src = isExcel
       ? `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(file)}`
       : file;
 
-    // 4. Timeout de seguridad: si tarda más de 25 s, ofrecer abrir en pestaña nueva
-    //    (antes eran 12s, muy poco para conexiones lentas o cuando Drive tarda)
     loadTimeout = setTimeout(() => {
       const textEl = loadingOverlay.querySelector('.modal__loading-text');
       if (textEl) {
@@ -74,10 +65,8 @@ function initModalPdf() {
       }
     }, 25000);
 
-    // 5. Escuchar el load del iframe para ocultar el overlay
     pdfFrame.addEventListener('load', hideLoading, { once: true });
 
-    // 6. Asignar src (después de registrar el listener)
     pdfFrame.src = src;
 
     pdfModal.classList.add('active');
@@ -85,7 +74,6 @@ function initModalPdf() {
     document.body.style.overflow = 'hidden';
   };
 
-  // ── CERRAR MODAL ──────────────────────────────────────────
   function closePdfModal() {
     pdfModal.classList.remove('active');
     pdfModal.setAttribute('aria-hidden', 'true');
@@ -108,7 +96,6 @@ function initModalPdf() {
     }
   });
 
-  // ── ESTILOS ───────────────────────────────────────────────
   if (!document.querySelector('#modal-pdf-styles')) {
     const style = document.createElement('style');
     style.id = 'modal-pdf-styles';
@@ -170,7 +157,6 @@ function initModalPdf() {
     document.head.appendChild(style);
   }
 
-  // ── BOTONES .open-preview ─────────────────────────────────
   document.querySelectorAll('.open-preview').forEach(btn => {
     btn.addEventListener('click', () => {
       const title = btn.dataset.title || 'Documento';
