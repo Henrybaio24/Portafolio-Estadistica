@@ -90,8 +90,36 @@ function injectWorksThumbStyles() {
       transition: transform 0.25s ease;
     }
     .wcard__thumb:hover .wcard__view-btn { transform: translateY(0); }
+
+    /* Badge para el archivo fijado (carátula) */
+    .wcard--pinned {
+      position: relative;
+    }
+    .wcard--pinned .wcard__pin-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(184,50,31,0.92);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.25rem 0.55rem;
+      border-radius: 999px;
+      backdrop-filter: blur(4px);
+    }
   `;
   document.head.appendChild(style);
+}
+
+// Interpreta el valor de la columna "pinned" del Sheet.
+// Acepta true / TRUE / Si / si / 1 como "verdadero", cualquier otra cosa (o vacío) como "falso".
+function isPinned(work) {
+  const v = (work.pinned || '').toString().trim().toLowerCase();
+  return v === 'true' || v === 'si' || v === 'sí' || v === '1';
 }
 
 function initModalWorks(works) {
@@ -170,9 +198,11 @@ function initModalWorks(works) {
   function applyFilters() {
     const query = currentSearch.toLowerCase().trim();
 
+    // El archivo "pinned" (ej. la carátula) aparece en cualquier filtro,
+    // no solo en "todos" o en su categoría propia.
     let filtered = currentFilter === 'todos'
       ? works
-      : works.filter(w => w.type === currentFilter);
+      : works.filter(w => w.type === currentFilter || isPinned(w));
 
     if (query) {
       filtered = filtered.filter(w =>
@@ -183,6 +213,11 @@ function initModalWorks(works) {
     }
 
     filtered = getSortedWorks(filtered);
+
+    // El/los archivo(s) pinned siempre van primero en el grid,
+    // sin importar el orden de fecha elegido.
+    filtered.sort((a, b) => (isPinned(b) ? 1 : 0) - (isPinned(a) ? 1 : 0));
+
     renderWorksInModal(filtered);
   }
 
@@ -205,8 +240,10 @@ function initModalWorks(works) {
     if (wmodalEmpty) wmodalEmpty.style.display = 'none';
 
     filtered.forEach((work, i) => {
+      const pinned = isPinned(work);
+
       const card = document.createElement('article');
-      card.className = 'wcard';
+      card.className = 'wcard' + (pinned ? ' wcard--pinned' : '');
       card.style.animationDelay = (i * 0.07) + 's';
       card.dataset.file  = work.file;
       card.dataset.title = work.title;
@@ -251,8 +288,18 @@ function initModalWorks(works) {
                 onerror="this.previousElementSibling.remove();this.replaceWith(Object.assign(document.createElement('div'),{className:'wcard__fallback',innerHTML:this.parentElement.dataset.fallback}))">`
         : fallbackHtml;
 
+      const pinBadge = pinned
+        ? `<div class="wcard__pin-badge">
+             <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+               <path d="M16 3l5 5-5 5v3l-2 2-3-3-5 5-2-2 5-5-3-3 2-2h3l5-5z"/>
+             </svg>
+             Carátula
+           </div>`
+        : '';
+
       card.innerHTML = `
         <div class="wcard__thumb" data-fallback="${fallbackHtml.replace(/"/g, '&quot;')}">
+          ${pinBadge}
           ${thumbContent}
           <div class="wcard__thumb-overlay">
             <div class="wcard__view-btn">
