@@ -7,9 +7,6 @@ function initHeader() {
   const navOverlay = document.getElementById('nav-overlay');
   const navLinks = document.querySelectorAll('.nav__menu a');
 
-  // ══════════════════════════════════════════
-  // SCROLL
-  // ══════════════════════════════════════════
   function updateNavbar() {
     if (!header) return;
     const isScrolled = window.scrollY > 50;
@@ -20,9 +17,6 @@ function initHeader() {
   updateNavbar();
   window.addEventListener('scroll', updateNavbar, { passive: true });
 
-  // ══════════════════════════════════════════
-  // MENÚ MÓVIL
-  // ══════════════════════════════════════════
   function openMobileMenu() {
     if (!navMenu || !navOverlay) return;
     navMenu.classList.add('open');
@@ -54,9 +48,6 @@ function initHeader() {
     link.addEventListener('click', closeMobileMenu);
   });
 
-  // ══════════════════════════════════════════
-  // ACTIVE LINK POR SECCIÓN
-  // ══════════════════════════════════════════
   const sectionMap = [];
   navLinks.forEach(link => {
     const href = link.getAttribute('href');
@@ -91,9 +82,6 @@ function initHeader() {
   updateActiveLink();
   window.addEventListener('scroll', updateActiveLink, { passive: true });
 
-  // ══════════════════════════════════════════
-  // REVEAL ANIMATIONS
-  // ══════════════════════════════════════════
   const revealObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -105,9 +93,6 @@ function initHeader() {
 
   document.querySelectorAll('.reveal, .silabo__unit-card').forEach(el => revealObs.observe(el));
 
-  // ══════════════════════════════════════════
-  // EFECTO MÁQUINA DE ESCRIBIR (typewriter)
-  // ══════════════════════════════════════════
   const coverTitle = document.getElementById('cover-title');
   if (coverTitle) {
     const text = 'Pedagogia de las Ciencias Experimentales — Informática';

@@ -1,9 +1,3 @@
-/* ===================================================
-   COVER — Portada principal
-   Desktop : layout original intacto
-   Móvil   : columna única centrada, limpia
-   =================================================== */
-
 .cover {
   min-height: 100svh;
   background:

@@ -35,7 +35,6 @@
 }
 .wmodal.wmodal--open { visibility: visible; pointer-events: auto; }
 
-/* POR ESTO */
 .wmodal__panel {
   position: absolute; inset: 0;
   background: var(--bg);
@@ -230,18 +229,18 @@
 
 .wmodal__search {
   flex: 1;
-  min-width: 0; /* evita overflow en flex */
+  min-width: 0; 
 }
 
 .wmodal__sort-btn {
   display: flex;
   align-items: center;
   gap: 6px;
-  height: 34px; /* misma altura que el search */
+  height: 34px;
   padding: 0 12px;
   background: rgba(37, 99, 235, 0.04);
   border: 1px solid rgba(37, 99, 235, 0.12);
-  border-radius: 10px; /* igual que .wmodal__search */
+  border-radius: 10px; 
   font-size: 0.8rem;
   font-weight: 500;
   font-family: var(--font);
@@ -264,7 +263,6 @@
   color: var(--primary);
 }
 
-/* Responsive: en móvil ocupa el ancho completo */
 @media (max-width: 768px) {
   .wmodal__search-bar {
     width: 100%;

@@ -138,12 +138,11 @@ function initModalWorks(works) {
 
   let currentFilter = 'todos';
   let currentSearch = '';
-  let sortAsc       = true;   // true = más antiguos primero, false = más recientes
+  let sortAsc       = true;   
   let worksLoaded   = false;
 
   if (!worksModal) return;
 
-  // ── ORDENAR ──────────────────────────────────────────────
   function getSortedWorks(list) {
     return [...list].sort((a, b) => {
       const da = new Date(a.date);
@@ -166,7 +165,6 @@ function initModalWorks(works) {
     applyFilters();
   });
 
-  // ── MODAL ─────────────────────────────────────────────────
   function openWorksModal() {
     worksModal.classList.add('wmodal--open');
     worksModal.setAttribute('aria-hidden', 'false');
@@ -194,7 +192,6 @@ function initModalWorks(works) {
     openWorksBtn?.focus();
   }
 
-  // ── FILTROS + BÚSQUEDA ────────────────────────────────────
   function applyFilters() {
     const query = currentSearch.toLowerCase().trim();
 
@@ -221,7 +218,6 @@ function initModalWorks(works) {
     renderWorksInModal(filtered);
   }
 
-  // ── RENDER ────────────────────────────────────────────────
   function renderWorksInModal(filtered) {
     if (!wmodalGrid) return;
     wmodalGrid.innerHTML = '';
@@ -248,18 +244,6 @@ function initModalWorks(works) {
       card.dataset.file  = work.file;
       card.dataset.title = work.title;
 
-      // ── MINIATURA LIGERA ─────────────────────────────────
-      // Antes: se creaba un <iframe> por cada tarjeta apuntando directo
-      // al documento completo en Drive. Con 26+ trabajos, eso disparaba
-      // 26+ cargas pesadas simultáneas al abrir la pestaña "Todos",
-      // saturando la conexión y haciendo que Drive respondiera lento
-      // incluso para el documento que el usuario quería abrir después.
-      //
-      // Ahora: se usa directamente la miniatura liviana de Drive
-      // (drive.google.com/thumbnail) en mayor resolución, con un
-      // skeleton "shimmer" mientras carga y un fade-in al terminar.
-      // El documento pesado (iframe) solo se carga cuando el usuario
-      // hace click para verlo, dentro de modalPdf.js.
       const fileIdMatch = work.file.match(/\/d\/([^\/]+)/);
       const fileId = fileIdMatch ? fileIdMatch[1] : null;
 
@@ -336,7 +320,6 @@ function initModalWorks(works) {
     );
   }
 
-  // ── EVENT LISTENERS ───────────────────────────────────────
   openWorksBtn?.addEventListener('click', openWorksModal);
   closeWorksBtn?.addEventListener('click', closeWorksModal);
 

@@ -26,7 +26,6 @@
 
 <body>
 
-  <!-- ===== LOADING SCREEN ===== -->
   <div id="page-loader" role="status" aria-live="polite" aria-label="Cargando portafolio">
     <span class="loader__sigma" aria-hidden="true">Σ</span>
 
@@ -50,11 +49,9 @@
     </div>
   </div>
 
-  <!-- ==================== HEADER ==================== -->
   <header class="header" id="main-header">
     <nav class="nav container">
 
-      <!-- LOGO: institución completa -->
       <a href="#portada" class="nav__logo">
         <div class="nav__logo-icon">
           <svg width="22" height="22" viewBox="0 0 40 40" fill="none">
@@ -71,13 +68,11 @@
           </svg>
         </div>
 
-        <!-- Se ve en la portada (sin scroll) -->
         <div class="nav__logo-text nav__logo--cover">
           <span class="nav__logo-uni">Universidad Central del Ecuador</span>
           <span class="nav__logo-faculty">Facultad de Filosofía, Letras y Ciencias de la Educación</span>
         </div>
 
-        <!-- Se ve al hacer scroll -->
         <div class="nav__logo-text nav__logo--scrolled">
           <span class="nav__logo-uni">Mi Portafolio</span>
           <span class="nav__logo-faculty">Henry Montenegro Alvarez</span>
@@ -97,15 +92,12 @@
   <div id="nav-overlay" class="nav__overlay"></div>
 
   <main>
-    <!-- ==================== PORTADA ==================== -->
     <section class="cover" id="portada">
       <canvas id="cover-canvas"></canvas>
       <div class="cover__content">
         <h2 id="cover-title"></h2>
 
-        <!-- COLUMNAS -->
         <div class="cover__columns">
-          <!-- CAMPANA DE GAUSS DINÁMICA -->
           <div class="cover__gauss-wrapper" aria-hidden="true">
             <div class="gauss__label-top">
               <span class="gauss__label-sub">Campana de Gauss</span>
@@ -118,8 +110,6 @@
             </div>
           </div>
 
-
-          <!-- COLUMNA IZQUIERDA -->
           <div class="cover__col-left">
             <div class="welcome__text reveal">
               <p class="welcome__eyebrow">Portafolio Académico</p>
@@ -149,7 +139,6 @@
             </div>
           </div>
 
-          <!-- COLUMNA DERECHA -->
           <div class="cover__col-right">
 
             <div class="cover__avatar-full">
@@ -158,18 +147,16 @@
               </div>
             </div>
 
-            <!-- ✅ FIX: botones FUERA de cover__avatar-full, hijo directo de cover__col-right -->
             <div class="cover__actions">
               <a href="#silabo" class="cover__btn-primary">Ver Portafolio</a>
               <button class="cover__btn-ghost open-preview" data-title="Currículum Vitae"
                 data-file="https://henrybaio24.github.io/mi_cv/">Ver CV</button>
             </div>
 
-          </div><!-- fin .cover__col-right -->
+          </div>
 
-        </div><!-- fin .cover__columns -->
+        </div>
 
-        <!-- FLECHA SCROLL -->
         <a href="#inicio" class="cover__scroll" aria-label="Ir al contenido">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.8"
             stroke-linecap="round">
@@ -177,14 +164,12 @@
           </svg>
         </a>
 
-      </div><!-- fin .cover__content -->
+      </div>
     </section>
 
-    <!-- ==================== SÍLABO ==================== -->
     <section id="silabo" class="section silabo-section">
       <div class="container">
 
-        <!-- ENCABEZADO EN 2 COLUMNAS -->
         <div class="silabo__header reveal">
           <div class="silabo__header-left">
             <p class="evidencias__eyebrow">Contenido del Curso</p>
@@ -194,13 +179,11 @@
               instrumentos y uso de software especializado.</p>
           </div>
           <div class="silabo__header-right reveal delay-1">
-            <!-- ==================== SVG ==================== -->
             <img src="./assets/img/silabo.svg" alt="" class="svg-animated" aria-hidden="true" style="width:100%;">
           </div>
 
         </div>
 
-        <!-- UNIDADES -->
         <div class="silabo__units">
           <div class="silabo__unit-card reveal delay-1">
             <div class="silabo__unit-num">01</div>
@@ -279,7 +262,6 @@
           </div>
         </div>
 
-        <!-- BOTÓN AL FINAL -->
         <div class="silabo__cta reveal">
           <button class="silabo__btn open-preview" data-title="Sílabo del Curso"
             data-file="https://drive.google.com/file/d/18E24WpOY2Jx7rh2B8nomHSlnk_9hw8Ye/preview">
@@ -297,11 +279,9 @@
       </div>
     </section>
 
-    <!-- ==================== TRABAJOS & EVIDENCIAS ==================== -->
     <section id="trabajos" class="evidencias">
       <div class="container">
 
-        <!-- ENCABEZADO -->
         <div class="evidencias__header reveal">
           <div>
             <p class="evidencias__eyebrow">Colección del Semestre</p>
@@ -316,10 +296,8 @@
           </div>
         </div>
 
-        <!-- BARRAS DE PROGRESO -->
         <div class="ev__progress-section reveal delay-2" id="ev-progress"></div>
 
-        <!-- CTA ÚNICO -->
         <div class="ev__cta reveal delay-3">
           <button class="ev__cta-btn" id="open-works-modal">
             <span class="ev__cta-btn-inner">
@@ -341,7 +319,6 @@
 
   </main>
 
-  <!-- ==================== CONTACTO ==================== -->
   <footer class="site-footer">
     <div class="footer-inner container">
 
@@ -390,7 +367,6 @@
 
   </footer>
 
-  <!-- ==================== MODAL VISOR DE TRABAJOS ==================== -->
   <div id="works-modal" class="wmodal" aria-hidden="true" role="dialog" aria-label="Visor de trabajos">
     <div class="wmodal__panel">
       <div class="wmodal__header">
@@ -454,7 +430,6 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL VISOR PDF ==================== -->
   <div id="pdf-modal" class="modal" aria-hidden="true">
     <div class="modal__content">
       <div class="modal__header">
