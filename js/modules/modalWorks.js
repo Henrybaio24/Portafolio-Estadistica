@@ -6,7 +6,9 @@ const typeLabels = {
   mapas: 'Mapa Mental',
   pruebas: 'Pruebas',
   diapositivas: 'Diapositivas',
-  otros: 'Otros',
+  laboratorios: 'Laboratorios',
+  ensayos: 'Ensayos',
+  otros: 'Glosario',
 };
 
 function injectWorksThumbStyles() {
@@ -116,10 +118,29 @@ function injectWorksThumbStyles() {
 }
 
 // Interpreta el valor de la columna "pinned" del Sheet.
-// Acepta true / TRUE / Si / si / 1 como "verdadero", cualquier otra cosa (o vacío) como "falso".
-function isPinned(work) {
+// Acepta: true / TRUE / Si / si / 1 → "Carátula"
+//         silabo / Sílabo / silabo → "Sílabo"
+//         cv / CV → "CV"
+// Cualquier otra cosa (o vacío) → no es pinned.
+function getPinBadge(work) {
   const v = (work.pinned || '').toString().trim().toLowerCase();
-  return v === 'true' || v === 'si' || v === 'sí' || v === '1';
+  
+  if (v === 'true' || v === 'si' || v === 'sí' || v === '1') {
+    return { isPinned: true, label: 'Carátula', icon: '<path d="M16 3l5 5-5 5v3l-2 2-3-3-5 5-2-2 5-5-3-3 2-2h3l5-5z"/>' };
+  }
+  if (v === 'silabo' || v === 'sílabo') {
+    return { isPinned: true, label: 'Sílabo', icon: '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>' };
+  }
+  if (v === 'cv') {
+    return { isPinned: true, label: 'CV', icon: '<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>' };
+  }
+  
+  return { isPinned: false, label: '', icon: '' };
+}
+
+// Función auxiliar para compatibilidad con código existente
+function isPinned(work) {
+  return getPinBadge(work).isPinned;
 }
 
 function initModalWorks(works) {
@@ -253,6 +274,8 @@ function initModalWorks(works) {
         mapas:      '<circle cx="12" cy="12" r="4"/><circle cx="4" cy="6" r="2"/><circle cx="20" cy="6" r="2"/><circle cx="4" cy="18" r="2"/><circle cx="20" cy="18" r="2"/><path d="M8.5 10L6 7.5M15.5 10L18 7.5M8.5 14L6 16.5M15.5 14L18 16.5"/>',
         pruebas:    '<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>',
         diapositivas: '<rect x="2" y="4" width="20" height="14" rx="1.5"/><path d="M8 21h8M12 18v3"/>',
+        laboratorios: '<path d="M9 3L9 21M15 3L15 21M3 9L21 9M3 15L21 15"/><rect x="2" y="2" width="20" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>',
+        ensayos:    '<path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><path d="M8 7h8M8 11h8M8 15h5"/>',
         otros:      '<circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>',
       };
       const iconSvg = typeIcons[work.type] || typeIcons.otros;
@@ -272,12 +295,13 @@ function initModalWorks(works) {
                 onerror="this.previousElementSibling.remove();this.replaceWith(Object.assign(document.createElement('div'),{className:'wcard__fallback',innerHTML:this.parentElement.dataset.fallback}))">`
         : fallbackHtml;
 
-      const pinBadge = pinned
+      const pinInfo = getPinBadge(work);
+      const pinBadge = pinInfo.isPinned
         ? `<div class="wcard__pin-badge">
              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-               <path d="M16 3l5 5-5 5v3l-2 2-3-3-5 5-2-2 5-5-3-3 2-2h3l5-5z"/>
+               ${pinInfo.icon}
              </svg>
-             Carátula
+             ${pinInfo.label}
            </div>`
         : '';
 

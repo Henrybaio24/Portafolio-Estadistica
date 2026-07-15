@@ -6,7 +6,9 @@ const typeConfig = [
   { type: 'mapas', label: 'Mapa Mental', color: 'mapas' },
   { type: 'pruebas', label: 'Pruebas', color: 'pruebas' },
   { type: 'diapositivas', label: 'Diapositivas', color: 'diapositivas' },
-  { type: 'otros', label: 'Otros', color: 'otros' },
+  { type: 'laboratorios', label: 'Laboratorios', color: 'laboratorios' },
+  { type: 'ensayos', label: 'Ensayos', color: 'ensayos' },
+  { type: 'otros', label: 'Glosario', color: 'otros' },
 ];
 
 const BARRAS_VISIBLES = 3;
@@ -19,6 +21,8 @@ function initStats(works) {
     'stat-mapas':        () => works.filter(w => w.type === 'mapas').length,
     'stat-pruebas':      () => works.filter(w => w.type === 'pruebas').length,
     'stat-diapositivas': () => works.filter(w => w.type === 'diapositivas').length,
+    'stat-laboratorios': () => works.filter(w => w.type === 'laboratorios').length,
+    'stat-ensayos':      () => works.filter(w => w.type === 'ensayos').length,
     'stat-otros':        () => works.filter(w => w.type === 'otros').length,
   };
 
