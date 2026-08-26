@@ -1,5 +1,3 @@
-// js/main.js — Orquestador: solo inicializa módulos en orden
-
 document.addEventListener('DOMContentLoaded', async () => {
 
   initHeader();
@@ -11,6 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initStats(works);
   initModalPdf();
   initModalWorks(works);
+  initReveal();
 
   hideLoader();
 
